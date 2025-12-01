@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+body {
+  font-family: var(--font-dm-sans);
+  background-color: #000000;
+  scrollbar-width: smooth;
+  box-sizing: border-box;
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 1s ease-out forwards;
+}
