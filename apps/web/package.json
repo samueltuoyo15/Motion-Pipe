@@ -14,8 +14,12 @@
     "@repo/ui": "workspace:*",
     "@tailwindcss/postcss": "^4.1.17",
     "lucide-react": "^0.562.0",
+<<<<<<< HEAD
     "next": "^16.0.1",
     "next-themes": "^0.4.6",
+=======
+    "next": "16.0.10",
+>>>>>>> 6d4c3e6a884df1dc316a54e24107fd2d2fd0f7d2
     "postcss": "^8.5.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
