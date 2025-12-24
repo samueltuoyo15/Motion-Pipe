@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="bg-[#1C1C1C] text-[#A1A1A1] text-[14px] w-full py-10 px-6">
-      {/* Main grid */}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-10">
         <div>
           <h2 className="text-[16px] text-[#FFFFFF] font-semibold mb-3">
@@ -53,13 +53,13 @@ export default function Footer() {
         </ul>
       </div>
 
-      {/* Divider */}
+
       <div className="border-t border-[#333] pt-6 flex justify-between items-center">
         <div>
           &copy; {new Date().getFullYear()} Motion Pipe. All rights reserved.
         </div>
 
-        {/* GitHub icon */}
+
         <a href="#" className="cursor-pointer" aria-label="GitHub">
           <svg
             width="26"

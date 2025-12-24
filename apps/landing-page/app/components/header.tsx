@@ -48,30 +48,41 @@ export default function Header() {
           )}
         </button>
 
-        {/* Desktop menu */}
+
         <div className="hidden md:flex">
           <ul className="flex items-center gap-8">
-            <li className="cursor-pointer">Features</li>
-            <li className="cursor-pointer">How it Works</li>
-            <li className="cursor-pointer">Pricing</li>
-            <li className="bg-[#FF6C00] text-[#FFFFFF] text-[16px] px-[3px] rounded-lg py-[9px] cursor-pointer">
-              Get Started
+            <li className="cursor-pointer hover:text-[#FF6C00] transition-colors">
+              <a href="#features">Features</a>
+            </li>
+            <li className="cursor-pointer hover:text-[#FF6C00] transition-colors">
+              <a href="#how-it-works">How it Works</a>
+            </li>
+            <li className="cursor-pointer hover:text-[#FF6C00] transition-colors">
+              <a href="#pricing">Pricing</a>
+            </li>
+            <li className="bg-[#FF6C00] text-[#FFFFFF] text-[16px] px-5 rounded-full py-2 cursor-pointer hover:bg-[#FF8833] transition-colors font-medium">
+              <a href="/login">Get Started</a>
             </li>
           </ul>
         </div>
       </nav>
 
       <div
-        className={`md:hidden px-6 transition-all duration-600 overflow-hidden ${
-          open ? "max-h-96 mt-4" : "max-h-0 mt-0"
-        }`}
+        className={`md:hidden px-6 transition-all duration-600 overflow-hidden ${open ? "max-h-96 mt-4" : "max-h-0 mt-0"
+          }`}
       >
         <ul className="flex flex-col gap-4">
-          <li className="cursor-pointer">Features</li>
-          <li className="cursor-pointer">How it Works</li>
-          <li className="cursor-pointer">Pricing</li>
-          <li className="bg-[#FF6C00] text-[#FFFFFF] text-[16px] px-[3px] rounded-lg py-[9px] cursor-pointer w-fit">
-            Get Started
+          <li className="cursor-pointer hover:text-[#FF6C00]">
+            <a href="#features" onClick={() => setOpen(false)}>Features</a>
+          </li>
+          <li className="cursor-pointer hover:text-[#FF6C00]">
+            <a href="#how-it-works" onClick={() => setOpen(false)}>How it Works</a>
+          </li>
+          <li className="cursor-pointer hover:text-[#FF6C00]">
+            <a href="#pricing" onClick={() => setOpen(false)}>Pricing</a>
+          </li>
+          <li className="bg-[#FF6C00] text-[#FFFFFF] text-[16px] px-5 rounded-full py-2 cursor-pointer w-fit">
+            <a href="/login">Get Started</a>
           </li>
         </ul>
       </div>
