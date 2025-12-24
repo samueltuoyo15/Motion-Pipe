@@ -15,7 +15,6 @@ export default function Header() {
           <span className="text-lg text-white font-bold tracking-tight">Motion Pipe</span>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-white"
           onClick={() => setOpen((prev) => !prev)}
@@ -27,7 +26,6 @@ export default function Header() {
           </div>
         </button>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex">
           <ul className="flex items-center gap-8 text-sm font-medium text-[#a1a1aa]">
             <li className="cursor-pointer hover:text-white transition-colors">
@@ -50,7 +48,6 @@ export default function Header() {
           </ul>
         </div>
 
-        {/* Mobile Nav Overlay */}
         {open && (
           <div className="absolute top-16 left-0 right-0 bg-[#09090b] border-b border-[#27272a] p-6 md:hidden flex flex-col gap-6 text-center animate-slide-up-fade">
             <Link href="#features" className="text-[#a1a1aa] hover:text-white text-lg font-medium" onClick={() => setOpen(false)}>Capabilities</Link>
@@ -60,7 +57,6 @@ export default function Header() {
             <Link href="/login" className="text-white text-lg font-medium" onClick={() => setOpen(false)}>Login</Link>
             <Link href="/register" className="bg-[#3b82f6] text-white py-3 rounded text-lg font-bold" onClick={() => setOpen(false)}>Get Started</Link>
 
-            {/* Language / Country Mock */}
             <div className="flex justify-center gap-4 mt-4">
               <button className="text-xs text-[#52525b] hover:text-white flex items-center gap-1">
                 🌍 EN (US)

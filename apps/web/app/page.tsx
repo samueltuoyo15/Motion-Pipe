@@ -11,43 +11,43 @@ export default function Home() {
   const features = [
     {
       title: "AI Video Generation",
-      icon: "/camera.svg",
+      icon: "/icons/camera.svg",
       description: "Google Veo 3 API creates stunning visual flows and animations.",
     },
     {
       title: "Professional Voiceover",
-      icon: "/microphone.svg",
+      icon: "/icons/microphone.svg",
       description: "ElevenLabs generates natural, broadcast-quality narration.",
     },
     {
       title: "AI Sound Agent",
-      icon: "/music.svg",
+      icon: "/icons/music.svg",
       description: "Curated licensed music and SFX, matched to mood.",
     },
     {
       title: "Escrow Protection",
-      icon: "/shield.svg",
+      icon: "/icons/shield.svg",
       description: "Funds only held. Released upon your approval.",
     },
     {
       title: "Real-Time Updates",
-      icon: "/bolt.svg",
+      icon: "/icons/bolt.svg",
       description: "WebSocket-powered live progress tracking.",
     },
     {
       title: "Smart Asset Discovery",
-      icon: "/robot.svg",
+      icon: "/icons/robot.svg",
       description: "Selenium agents find brand assets automatically.",
     },
   ];
 
   const technologies = [
-    { title: "Golang Backend", icon: "/go.svg", desc: "Concurrent Orchestration" },
-    { title: "Google Veo 3", icon: "/google.svg", desc: "Video Synthesis" },
-    { title: "FFmpeg", icon: "/ffmpeg.svg", desc: "Media Assembly" },
-    { title: "Cloudflare R2", icon: "/cloud.svg", desc: "Zero-Egress Storage" },
-    { title: "Paystack", icon: "/card.svg", desc: "Escrow Payments" },
-    { title: "Redis", icon: "/cache.svg", desc: "High-Speed Cache" },
+    { title: "Golang Backend", icon: "/icons/go.svg", desc: "Concurrent Orchestration" },
+    { title: "Google Veo 3", icon: "/icons/google.svg", desc: "Video Synthesis" },
+    { title: "FFmpeg", icon: "/icons/ffmpeg.svg", desc: "Media Assembly" },
+    { title: "Cloudflare R2", icon: "/icons/cloud.svg", desc: "Zero-Egress Storage" },
+    { title: "Paystack", icon: "/icons/card.svg", desc: "Escrow Payments" },
+    { title: "Redis", icon: "/icons/cache.svg", desc: "High-Speed Cache" },
   ];
 
   return (
@@ -80,23 +80,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Product Showcase / "Don't Pay" Section */}
-        <div className="w-full bg-[#0c0c0e] py-20 mt-20 border-t border-[#27272a]">
-          <div className="max-w-7xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Generate Motion Design.</h2>
-            <p className="text-[#3b82f6] text-xl font-bold mb-12 tracking-wide uppercase">Don't Pay for Motion Designers.</p>
-
-            <div className="flex flex-wrap justify-center gap-8">
-              {/* Product Cards */}
-              <ProductCard label="Beverages" image="/water_bottle_mockup.png" />
-              <ProductCard label="Tech" image="/laptop_mock.png" />
-              <ProductCard label="Fashion" image="/shirt_mock.png" />
-              <ProductCard label="Cosmetics" image="/cream_mock.png" />
-              <ProductCard label="Supplements" image="/jar_mock.png" />
-            </div>
-          </div>
-        </div>
-
         <div className="w-full max-w-6xl mx-auto mt-0 px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-[#27272a]">
             <StatItem value="2 Min" label="Delivery Time" />
@@ -124,6 +107,21 @@ export default function Home() {
                 <p className="text-[#a1a1aa] leading-relaxed">{feature.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full bg-[#0c0c0e] py-24 border-t border-[#27272a]">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Generate Motion Design.</h2>
+          <p className="text-[#3b82f6] text-xl font-bold mb-12 tracking-wide uppercase">Don't Pay for Motion Designers.</p>
+
+          <div className="flex flex-wrap justify-center gap-8">
+            <ProductCard label="Beverages" image="/water_bottle_mockup.png" />
+            <ProductCard label="Tech" image="/laptop_mock.png" />
+            <ProductCard label="Fashion" image="/shirt_mock.png" />
+            <ProductCard label="Cosmetics" image="/cream_mock.png" />
+            <ProductCard label="Supplements" image="/jar_mock.png" />
           </div>
         </div>
       </div>

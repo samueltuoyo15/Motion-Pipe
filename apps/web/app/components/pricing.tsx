@@ -12,7 +12,6 @@ export default function Pricing() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#27272a] border border-[#27272a]">
 
-                    {/* Free Tier */}
                     <div className="bg-[#09090b] p-8 flex flex-col items-start">
                         <h3 className="text-white font-bold text-xl mb-2">Starter</h3>
                         <p className="text-[#a1a1aa] text-sm mb-6 h-10">For testing the waters.</p>
@@ -30,7 +29,6 @@ export default function Pricing() {
                         </button>
                     </div>
 
-                    {/* Pro Tier */}
                     <div className="bg-[#09090b] p-8 flex flex-col items-start relative group">
                         <div className="absolute top-0 left-0 right-0 h-1 bg-[#3b82f6]" />
                         <h3 className="text-white font-bold text-xl mb-2">Pay-As-You-Go</h3>
@@ -55,7 +53,6 @@ export default function Pricing() {
                         </button>
                     </div>
 
-                    {/* Enterprise */}
                     <div className="bg-[#09090b] p-8 flex flex-col items-start">
                         <h3 className="text-white font-bold text-xl mb-2">Enterprise</h3>
                         <p className="text-[#a1a1aa] text-sm mb-6 h-10">High volume infrastructure.</p>

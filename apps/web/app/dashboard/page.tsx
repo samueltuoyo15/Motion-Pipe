@@ -25,9 +25,7 @@ export default function EditorPage() {
                 </div>
             </header>
 
-
             <div className="flex-1 flex overflow-hidden">
-
 
                 <div className="w-80 border-r border-[#27272a] bg-[#0c0c0e] flex flex-col">
                     <div className="p-4 border-b border-[#27272a]">
@@ -58,10 +56,8 @@ export default function EditorPage() {
                     </div>
                 </div>
 
-
                 <div className="flex-1 bg-[#050505] relative flex items-center justify-center">
                     <div className="absolute inset-0 bg-grid-pattern opacity-[0.05] pointer-events-none" />
-
 
                     <div className="w-[80%] aspect-video bg-[#09090b] border border-[#27272a] rounded flex flex-col items-center justify-center text-center p-8">
                         <div className="w-16 h-16 bg-[#18181b] rounded-full flex items-center justify-center mb-4">
@@ -71,7 +67,6 @@ export default function EditorPage() {
                         <p className="text-[#52525b] text-sm max-w-md">Initialize the generation sequence from the right panel to begin construction.</p>
                     </div>
                 </div>
-
 
                 <div className="w-96 border-l border-[#27272a] bg-[#0c0c0e] flex flex-col overflow-y-auto">
                     <div className="p-6">
