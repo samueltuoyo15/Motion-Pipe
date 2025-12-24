@@ -9,7 +9,7 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#09090b]/80 backdrop-blur-md border-b border-[#27272a]">
       <nav className="flex justify-between items-center max-w-full px-6 h-16">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-[#ea580c] rounded-sm" />
+          <img src="/logo.png" alt="Motion Pipe Logo" className="w-8 h-8 rounded-sm" />
           <span className="text-lg text-white font-bold tracking-tight">Motion Pipe</span>
         </div>
 
@@ -35,8 +35,11 @@ export default function Header() {
               <a href="#pricing">Pricing</a>
             </li>
             <li>
-              <a href="/login" className="bg-white text-black px-5 py-2 rounded text-sm font-semibold hover:bg-[#e4e4e7] transition-colors">
+              <a href="/login" className="text-[#a1a1aa] hover:text-white transition-colors text-sm font-medium mr-4">
                 Login
+              </a>
+              <a href="/register" className="bg-white text-black px-5 py-2 rounded text-sm font-semibold hover:bg-[#e4e4e7] transition-colors">
+                Sign Up
               </a>
             </li>
           </ul>

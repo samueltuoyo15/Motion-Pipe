@@ -26,10 +26,10 @@ export default function DashboardLayout({
 
     return (
         <div className="min-h-screen bg-[#09090b] flex font-sans text-[#a1a1aa]">
-            {/* Sidebar */}
+
             <aside className="w-64 border-r border-[#27272a] flex flex-col fixed h-full bg-[#0c0c0e]">
                 <div className="h-16 flex items-center px-6 border-b border-[#27272a]">
-                    <div className="w-6 h-6 bg-[#ea580c] rounded-sm mr-3" />
+                    <img src="/logo.png" alt="Motion Pipe Logo" className="w-8 h-8 rounded-sm mr-3" />
                     <span className="text-white font-bold tracking-tight">Motion Pipe</span>
                 </div>
 
@@ -59,7 +59,7 @@ export default function DashboardLayout({
                 </div>
             </aside>
 
-            {/* Main Content */}
+
             <main className="flex-1 pl-64">
                 {children}
             </main>
@@ -72,8 +72,8 @@ function NavItem({ icon: Icon, label, active, onClick }: { icon: any, label: str
         <button
             onClick={onClick}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-md transition-colors text-sm font-medium ${active
-                    ? "bg-[#27272a] text-white"
-                    : "hover:bg-[#18181b] hover:text-white"
+                ? "bg-[#27272a] text-white"
+                : "hover:bg-[#18181b] hover:text-white"
                 }`}
         >
             <Icon className={`w-4 h-4 ${active ? "text-[#ea580c]" : "text-[#52525b]"}`} />

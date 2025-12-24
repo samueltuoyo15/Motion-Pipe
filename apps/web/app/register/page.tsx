@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 export default function Register() {
     return (
         <div className="min-h-screen bg-[#09090b] flex flex-col justify-center items-center relative overflow-hidden">
-            {/* Grid Background */}
+
             <div className="absolute inset-0 bg-grid-pattern opacity-[0.1] z-0 pointer-events-none" />
 
             <div className="z-10 w-full max-w-md px-6">
@@ -17,9 +17,7 @@ export default function Register() {
 
                 <div className="text-center mb-10">
                     <div className="flex justify-center mb-6">
-                        <div className="w-12 h-12 bg-[#ea580c] rounded-lg flex items-center justify-center">
-                            <span className="font-bold text-white text-xl">M</span>
-                        </div>
+                        <img src="/logo.png" alt="Motion Pipe Logo" className="w-16 h-16 rounded-xl" />
                     </div>
                     <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Create Workspace</h1>
                     <p className="text-[#a1a1aa] text-sm">Initialize new motion design environment.</p>

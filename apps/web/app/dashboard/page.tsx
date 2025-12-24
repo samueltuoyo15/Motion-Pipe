@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { Terminal, Play, Loader2, Globe, AlertTriangle } from "lucide-react";
+import Image from "next/image";
 
 export default function EditorPage() {
     return (
         <div className="h-screen flex flex-col">
-            {/* Top Bar */}
+
             <header className="h-16 border-b border-[#27272a] flex items-center justify-between px-6 bg-[#09090b]">
                 <div className="flex items-center gap-4">
                     <h1 className="text-white font-bold tracking-tight">Project: Black Friday Promo</h1>
@@ -24,10 +25,10 @@ export default function EditorPage() {
                 </div>
             </header>
 
-            {/* Editor Workspace */}
+
             <div className="flex-1 flex overflow-hidden">
 
-                {/* Left Panel: Logs & Context */}
+
                 <div className="w-80 border-r border-[#27272a] bg-[#0c0c0e] flex flex-col">
                     <div className="p-4 border-b border-[#27272a]">
                         <h2 className="text-xs font-mono text-[#52525b] uppercase tracking-widest mb-4">Command Center</h2>
@@ -57,11 +58,11 @@ export default function EditorPage() {
                     </div>
                 </div>
 
-                {/* Center: Preview Area */}
+
                 <div className="flex-1 bg-[#050505] relative flex items-center justify-center">
                     <div className="absolute inset-0 bg-grid-pattern opacity-[0.05] pointer-events-none" />
 
-                    {/* Empty State / Video Player */}
+
                     <div className="w-[80%] aspect-video bg-[#09090b] border border-[#27272a] rounded flex flex-col items-center justify-center text-center p-8">
                         <div className="w-16 h-16 bg-[#18181b] rounded-full flex items-center justify-center mb-4">
                             <Play className="w-6 h-6 text-[#27272a] ml-1" />
@@ -71,12 +72,29 @@ export default function EditorPage() {
                     </div>
                 </div>
 
-                {/* Right Panel: Controls */}
-                <div className="w-96 border-l border-[#27272a] bg-[#0c0c0e] flex flex-col">
+
+                <div className="w-96 border-l border-[#27272a] bg-[#0c0c0e] flex flex-col overflow-y-auto">
                     <div className="p-6">
                         <h2 className="text-xs font-mono text-[#52525b] uppercase tracking-widest mb-6">Brief Configuration</h2>
 
                         <div className="space-y-6">
+
+                            <div>
+                                <label className="block text-xs text-[#a1a1aa] mb-2 font-medium">Product Asset</label>
+                                <div className="border border-dashed border-[#27272a] bg-[#18181b] p-4 rounded text-center hover:border-[#ea580c] transition-colors cursor-pointer group">
+                                    <div className="mb-3 flex justify-center">
+                                        <div className="w-full h-32 bg-[#09090b] rounded overflow-hidden relative border border-[#27272a]">
+                                            <Image src="/water_bottle_mockup.png" width={200} height={200} alt="Product Preview" className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" />
+                                            <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <span className="text-xs text-white font-medium">Change Asset</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-[#a1a1aa]">Drag & drop product image or <span className="text-[#ea580c]">Browse</span></p>
+                                    <p className="text-[10px] text-[#52525b] mt-1">Supports PNG, JPG, WEBP (Max 10MB)</p>
+                                </div>
+                            </div>
+
                             <div>
                                 <label className="block text-xs text-[#a1a1aa] mb-2 font-medium">Product URL</label>
                                 <input type="text" className="w-full bg-[#18181b] border border-[#27272a] px-3 py-2 text-white text-sm focus:border-[#ea580c] focus:outline-none" placeholder="https://..." />

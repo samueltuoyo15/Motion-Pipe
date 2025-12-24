@@ -4,16 +4,23 @@
   --background: #09090b;
   --surface: #18181b;
   --border: #27272a;
-  --primary: #ea580c; 
+  --primary: #ea580c;
   --foreground: #fafafa;
   --muted: #a1a1aa;
 }
 
 body {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono), monospace;
 }
 
 /* Industrial Grid Pattern */
@@ -30,6 +37,7 @@ body {
     transform: translateY(20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -39,4 +47,3 @@ body {
 .animate-enter {
   animation: slide-up-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-

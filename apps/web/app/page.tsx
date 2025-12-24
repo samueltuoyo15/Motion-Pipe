@@ -1,11 +1,11 @@
-"use client";
-
+import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import Header from "./components/header";
 import HowItWorks from "./components/how-it-works";
 import Pricing from "./components/pricing";
 import FAQ from "./components/faq";
 import CTA from "./components/cta";
+import Footer from "./components/footer";
 
 export default function Home() {
   const features = [
@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col w-full bg-[#09090b]">
-
+      <Header />
       <section className="relative min-h-[90vh] flex flex-col justify-center items-center overflow-hidden border-b border-[#27272a]">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.15] z-0 pointer-events-none" />
 
@@ -140,6 +140,7 @@ export default function Home() {
 
       <CTA />
 
+      <Footer />
     </main>
   );
 }

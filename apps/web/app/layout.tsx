@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/header";
-import Footer from "./components/footer";
 
-const dmSans = DM_Sans({
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-sans",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
   title: "Motion Pipe",
-  description: "Generate ads",
+  description: "AI-Powered Motion Design Infrastructure",
 };
 
 export default function RootLayout({
@@ -21,10 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={dmSans.className}>
-        <Header />
+      <body className={`${sans.variable} ${mono.variable} font-sans antialiased`}>
         {children}
-        <Footer />
       </body>
     </html>
   );

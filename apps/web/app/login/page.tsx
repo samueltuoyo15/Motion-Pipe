@@ -10,9 +10,7 @@ export default function Login() {
             <div className="z-10 w-full max-w-md px-6">
                 <div className="text-center mb-10">
                     <div className="flex justify-center mb-6">
-                        <div className="w-12 h-12 bg-[#ea580c] rounded-lg flex items-center justify-center">
-                            <span className="font-bold text-white text-xl">M</span>
-                        </div>
+                        <img src="/logo.png" alt="Motion Pipe Logo" className="w-16 h-16 rounded-xl" />
                     </div>
                     <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">System Login</h1>
                     <p className="text-[#a1a1aa] text-sm">Enter credentials to access workspace.</p>
