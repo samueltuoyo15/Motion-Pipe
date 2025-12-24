@@ -57,14 +57,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.15] z-0 pointer-events-none" />
 
         <div className="z-10 text-center max-w-5xl px-4 mt-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#27272a] bg-[#18181b] mb-8">
-            <div className="w-2 h-2 rounded-full bg-[#ea580c] animate-pulse" />
-            <span className="text-xs text-[#a1a1aa] font-medium tracking-wide">SYSTEM OPERATIONAL v1.0</span>
-          </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-[88px] font-bold text-white tracking-tighter leading-[1.1] mb-6 animate-enter">
             Your New <br />
-            <span className="text-[#ea580c]">AI Freelancer.</span>
+            <span className="text-[#3b82f6]">AI Freelancer.</span>
           </h1>
 
           <p className="text-lg md:text-xl text-[#a1a1aa] max-w-2xl mx-auto leading-relaxed mb-10 animate-enter" style={{ animationDelay: "100ms" }}>
@@ -73,7 +69,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 animate-enter" style={{ animationDelay: "200ms" }}>
-            <button className="bg-[#ea580c] hover:bg-[#c2410c] text-white font-medium text-lg px-8 py-4 rounded-lg transition-all flex items-center justify-center gap-2">
+            <button className="bg-[#3b82f6] hover:bg-blue-600 text-white font-medium text-lg px-8 py-4 rounded-lg transition-all flex items-center justify-center gap-2">
               Start Project
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </button>
@@ -103,7 +99,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#27272a] border border-[#27272a]">
             {features.map((feature, index) => (
               <div key={index} className="bg-[#09090b] p-8 hover:bg-[#18181b] transition-colors group">
-                <div className="w-10 h-10 border border-[#27272a] bg-[#18181b] rounded-lg flex items-center justify-center mb-6 text-[#ea580c]">
+                <div className="w-10 h-10 border border-[#27272a] bg-[#18181b] rounded-lg flex items-center justify-center mb-6 text-[#3b82f6]">
                   <Image src={feature.icon} width={20} height={20} alt="" className="invert opacity-80" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>

@@ -6,10 +6,9 @@ import { ArrowLeft } from "lucide-react";
 export default function Register() {
     return (
         <div className="min-h-screen bg-[#09090b] flex flex-col justify-center items-center relative overflow-hidden">
-
             <div className="absolute inset-0 bg-grid-pattern opacity-[0.1] z-0 pointer-events-none" />
 
-            <div className="z-10 w-full max-w-md px-6">
+            <div className="z-10 w-full max-w-sm px-6">
                 <Link href="/" className="flex items-center text-[#a1a1aa] hover:text-white mb-8 transition-colors text-sm font-mono">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     BACK TO HOME
@@ -19,12 +18,12 @@ export default function Register() {
                     <div className="flex justify-center mb-6">
                         <img src="/logo.png" alt="Motion Pipe Logo" className="w-16 h-16 rounded-xl" />
                     </div>
-                    <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Create Workspace</h1>
-                    <p className="text-[#a1a1aa] text-sm">Initialize new motion design environment.</p>
+                    <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Join Motion Pipe</h1>
+                    <p className="text-[#a1a1aa] text-sm">Start your motion design journey.</p>
                 </div>
 
-                <div className="bg-[#09090b] border border-[#27272a] p-8 shadow-sm">
-                    <button className="w-full bg-[#18181b] border border-[#27272a] text-white py-3 flex items-center justify-center gap-2 hover:bg-[#27272a] transition-all mb-6 font-medium text-sm">
+                <div className="bg-[#09090b] border border-[#27272a] p-8 shadow-sm space-y-4">
+                    <button className="w-full bg-[#18181b] border border-[#27272a] text-white py-3 flex items-center justify-center gap-3 hover:bg-[#27272a] transition-all font-medium text-sm">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
                             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
@@ -34,58 +33,18 @@ export default function Register() {
                         Continue with Google
                     </button>
 
-                    <div className="relative mb-6">
-                        <div className="absolute inset-0 flex items-center">
-                            <span className="w-full border-t border-[#27272a]" />
-                        </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-[#09090b] px-2 text-[#a1a1aa] font-mono tracking-widest">Or Register</span>
-                        </div>
-                    </div>
+                    <button className="w-full bg-[#18181b] border border-[#27272a] text-white py-3 flex items-center justify-center gap-3 hover:bg-[#27272a] transition-all font-medium text-sm">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                        Continue with X
+                    </button>
 
-                    <form className="space-y-4">
-                        <div>
-                            <label className="block text-xs font-mono text-[#a1a1aa] mb-2 uppercase tracking-widest">
-                                Full Name
-                            </label>
-                            <input
-                                type="text"
-                                className="w-full bg-[#18181b] border border-[#27272a] rounded-none px-4 py-3 text-white focus:outline-none focus:border-[#ea580c] transition-colors placeholder-[#52525b]"
-                                placeholder="John Doe"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-xs font-mono text-[#a1a1aa] mb-2 uppercase tracking-widest">
-                                Email Address
-                            </label>
-                            <input
-                                type="email"
-                                className="w-full bg-[#18181b] border border-[#27272a] rounded-none px-4 py-3 text-white focus:outline-none focus:border-[#ea580c] transition-colors placeholder-[#52525b]"
-                                placeholder="user@company.com"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-xs font-mono text-[#a1a1aa] mb-2 uppercase tracking-widest">
-                                Password
-                            </label>
-                            <input
-                                type="password"
-                                className="w-full bg-[#18181b] border border-[#27272a] rounded-none px-4 py-3 text-white focus:outline-none focus:border-[#ea580c] transition-colors placeholder-[#52525b]"
-                                placeholder="••••••••"
-                            />
-                        </div>
-
-                        <button className="w-full bg-[#ea580c] text-white font-bold py-3 hover:bg-[#c2410c] transition-all">
-                            Initialize Workspace
-                        </button>
-                    </form>
-
-                    <div className="mt-8 pt-8 border-t border-[#27272a] text-center">
+                    <div className="mt-8 pt-6 border-t border-[#27272a] text-center">
                         <p className="text-[#a1a1aa] text-sm">
-                            Already initialized?{" "}
-                            <Link href="/login" className="text-[#ea580c] hover:underline">
-                                Access System
+                            Already have an account?{" "}
+                            <Link href="/login" className="text-[#3b82f6] hover:underline">
+                                Login here
                             </Link>
                         </p>
                     </div>

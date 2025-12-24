@@ -15,11 +15,11 @@ export default function EditorPage() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 text-xs font-mono text-[#ea580c] bg-[#ea580c]/10 px-3 py-1.5 rounded animate-pulse">
-                        <span className="w-2 h-2 bg-[#ea580c] rounded-full" />
+                    <div className="flex items-center gap-2 text-xs font-mono text-[#3b82f6] bg-[#3b82f6]/10 px-3 py-1.5 rounded animate-pulse">
+                        <span className="w-2 h-2 bg-[#3b82f6] rounded-full" />
                         SYSTEM ONLINE
                     </div>
-                    <button className="bg-[#ea580c] hover:bg-[#c2410c] text-white text-sm font-bold px-4 py-2 rounded transition-all">
+                    <button className="bg-[#3b82f6] hover:bg-blue-600 text-white text-sm font-bold px-4 py-2 rounded transition-all">
                         Export to Escrow
                     </button>
                 </div>
@@ -52,9 +52,9 @@ export default function EditorPage() {
 
                     <div className="flex-1 p-4 overflow-y-auto font-mono text-xs space-y-2">
                         <p className="text-[#52525b] border-b border-[#27272a] pb-2 mb-2">SYSTEM LOGS</p>
-                        <div className="text-[#a1a1aa]"><span className="text-[#ea580c]">[19:42:01]</span> Connection established</div>
-                        <div className="text-[#a1a1aa]"><span className="text-[#ea580c]">[19:42:02]</span> Loading cached assets...</div>
-                        <div className="text-white"><span className="text-[#ea580c]">[19:42:05]</span> Ready for input.</div>
+                        <div className="text-[#a1a1aa]"><span className="text-[#3b82f6]">[19:42:01]</span> Connection established</div>
+                        <div className="text-[#a1a1aa]"><span className="text-[#3b82f6]">[19:42:02]</span> Loading cached assets...</div>
+                        <div className="text-white"><span className="text-[#3b82f6]">[19:42:05]</span> Ready for input.</div>
                     </div>
                 </div>
 
@@ -102,20 +102,20 @@ export default function EditorPage() {
 
                             <div>
                                 <label className="block text-xs text-[#a1a1aa] mb-2 font-medium">Ad Goal</label>
-                                <textarea className="w-full h-32 bg-[#18181b] border border-[#27272a] px-3 py-2 text-white text-sm focus:border-[#ea580c] focus:outline-none resize-none" placeholder="Describe the desired outcome (e.g. 'High energy launch video for sneakers')..." />
+                                <textarea className="w-full h-32 bg-[#18181b] border border-[#27272a] px-3 py-2 text-white text-sm focus:border-[#3b82f6] focus:outline-none resize-none" placeholder="Describe the desired outcome (e.g. 'High energy launch video for sneakers')..." />
                             </div>
 
-                            <div className="bg-[#ea580c]/5 border border-[#ea580c]/20 p-4 rounded">
+                            <div className="bg-[#3b82f6]/5 border border-[#3b82f6]/20 p-4 rounded">
                                 <div className="flex items-start gap-3">
-                                    <AlertTriangle className="w-4 h-4 text-[#ea580c] mt-0.5" />
+                                    <AlertTriangle className="w-4 h-4 text-[#3b82f6] mt-0.5" />
                                     <div>
-                                        <p className="text-xs text-[#ea580c] font-bold mb-1">Escrow Estimation</p>
+                                        <p className="text-xs text-[#3b82f6] font-bold mb-1">Escrow Estimation</p>
                                         <p className="text-[#a1a1aa] text-xs">Based on this brief, estimated cost is <span className="text-white font-mono">₦5,000</span>. Funds held safely until approval.</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <button className="w-full bg-[#ea580c] hover:bg-[#c2410c] text-white font-bold py-3 text-sm transition-all">
+                            <button className="w-full bg-[#3b82f6] hover:bg-blue-600 text-white font-bold py-3 text-sm transition-all">
                                 Generate Proposal
                             </button>
                         </div>
