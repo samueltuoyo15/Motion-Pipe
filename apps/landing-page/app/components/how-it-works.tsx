@@ -24,7 +24,7 @@ export default function HowItWorks() {
             step: 4,
             title: "Escrow Release",
             description:
-                "Love it? Release the payment from escrow to download the 4k broadcast-ready file. Hate it? Reject and pay only a $1 processing fee.",
+                "Love it? Release the payment from escrow to download the 4k broadcast-ready file. Hate it? Reject and pay only a ₦500 processing fee.",
         },
     ];
 

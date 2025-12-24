@@ -3,58 +3,55 @@ import Image from "next/image";
 
 export default function Login() {
     return (
-        <div className="min-h-screen bg-black flex flex-col justify-center items-center relative overflow-hidden">
-
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#FF6C00]/20 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#FF6C00]/10 rounded-full blur-[120px]" />
-            </div>
+        <div className="min-h-screen bg-[#09090b] flex flex-col justify-center items-center relative overflow-hidden">
+            {/* Grid Background */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-[0.1] z-0 pointer-events-none" />
 
             <div className="z-10 w-full max-w-md px-6">
                 <div className="text-center mb-10">
                     <div className="flex justify-center mb-6">
-                        <div className="bg-[#FF6C00]/10 p-4 rounded-2xl border border-[#FF6C00]/20">
-                            <Image src="/robot.svg" width={48} height={48} alt="Logo" />
+                        <div className="w-12 h-12 bg-[#ea580c] rounded-lg flex items-center justify-center">
+                            <span className="font-bold text-white text-xl">M</span>
                         </div>
                     </div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-                    <p className="text-[#A1A1A1]">Log in to your AI Freelancer dashboard</p>
+                    <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">System Login</h1>
+                    <p className="text-[#a1a1aa] text-sm">Enter credentials to access workspace.</p>
                 </div>
 
-                <div className="bg-[#1C1C1C] border border-[#333] p-8 rounded-2xl shadow-2xl backdrop-blur-sm">
+                <div className="bg-[#09090b] border border-[#27272a] p-8 shadow-sm">
                     <form className="space-y-6">
                         <div>
-                            <label className="block text-sm font-medium text-[#A1A1A1] mb-2">
+                            <label className="block text-xs font-mono text-[#a1a1aa] mb-2 uppercase tracking-widest">
                                 Email Address
                             </label>
                             <input
                                 type="email"
-                                className="w-full bg-[#000000] border border-[#333] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#FF6C00] transition-colors"
-                                placeholder="you@company.com"
+                                className="w-full bg-[#18181b] border border-[#27272a] rounded-none px-4 py-3 text-white focus:outline-none focus:border-[#ea580c] transition-colors placeholder-[#52525b]"
+                                placeholder="user@company.com"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-[#A1A1A1] mb-2">
+                            <label className="block text-xs font-mono text-[#a1a1aa] mb-2 uppercase tracking-widest">
                                 Password
                             </label>
                             <input
                                 type="password"
-                                className="w-full bg-[#000000] border border-[#333] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#FF6C00] transition-colors"
+                                className="w-full bg-[#18181b] border border-[#27272a] rounded-none px-4 py-3 text-white focus:outline-none focus:border-[#ea580c] transition-colors placeholder-[#52525b]"
                                 placeholder="••••••••"
                             />
                         </div>
 
-                        <button className="w-full bg-[#FF6C00] text-white font-bold py-3 rounded-lg hover:bg-[#FF8833] transition-all transform hover:scale-[1.02]">
-                            Log In
+                        <button className="w-full bg-[#ea580c] text-white font-bold py-3 hover:bg-[#c2410c] transition-all">
+                            Authenticate
                         </button>
                     </form>
 
-                    <div className="mt-8 pt-8 border-t border-[#333] text-center">
-                        <p className="text-[#A1A1A1] text-sm">
-                            Don't have an account?{" "}
-                            <Link href="#" className="text-[#FF6C00] hover:underline">
-                                Sign up
+                    <div className="mt-8 pt-8 border-t border-[#27272a] text-center">
+                        <p className="text-[#a1a1aa] text-sm">
+                            No access token?{" "}
+                            <Link href="#" className="text-[#ea580c] hover:underline">
+                                Request access
                             </Link>
                         </p>
                     </div>

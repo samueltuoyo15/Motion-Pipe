@@ -2,121 +2,88 @@ import Link from "next/link";
 
 export default function Pricing() {
     return (
-        <div className="mt-32 px-4 max-w-7xl mx-auto mb-20">
-            <h2 className="text-center text-[48px] text-[#FFFFFF]">
-                Simple, Risk-Free <span className="text-[#FF6C00]">Pricing</span>
-            </h2>
-            <p className="text-center text-[20px] text-[#A1A1A1] mt-2 mb-16">
-                No hidden fees. Pay for what you keep.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-                <div className="bg-[#1C1C1C] border border-[#333] hover:border-[#FF6C00]/50 rounded-2xl p-8 flex flex-col hover:-translate-y-2 transition-transform duration-300">
-                    <h3 className="text-[#A1A1A1] text-lg font-medium">On-Demand</h3>
-                    <div className="mt-4 flex items-baseline gap-1">
-                        <span className="text-4xl text-white font-bold">$50</span>
-                        <span className="text-[#A1A1A1]">/video</span>
-                    </div>
-                    <p className="mt-4 text-[#A1A1A1] text-sm">
-                        Perfect for one-off campaigns and testing.
-                    </p>
-
-                    <ul className="mt-8 space-y-4 flex-1">
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon /> Pay $1 if rejected
-                        </li>
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon /> 1080p Resolution
-                        </li>
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon /> Standard Assets
-                        </li>
-                    </ul>
-
-                    <button className="mt-8 w-full border border-[#FF6C00] text-[#FF6C00] py-3 rounded-full hover:bg-[#FF6C00] hover:text-white transition-colors">
-                        Start Project
-                    </button>
+        <div className="py-24 px-4 bg-[#0c0c0e]">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                        Transparent <span className="text-[#ea580c]">Pricing</span>
+                    </h2>
+                    <p className="text-[#a1a1aa] text-lg">No hidden fees. Pay for output.</p>
                 </div>
 
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#27272a] border border-[#27272a]">
 
-                <div className="bg-[#FF6C00]/10 border border-[#FF6C00] rounded-2xl p-8 flex flex-col relative scale-105 shadow-[0_0_30px_rgba(255,108,0,0.1)]">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#FF6C00] text-white px-4 py-1 rounded-full text-sm font-semibold">
-                        Most Popular
+                    <div className="bg-[#09090b] p-8 flex flex-col items-start">
+                        <div className="inline-block px-3 py-1 bg-[#27272a] text-[#muted] text-xs font-mono mb-6 uppercase tracking-widest">Single Asset</div>
+                        <h3 className="text-white text-2xl font-bold mb-2">On-Demand</h3>
+                        <div className="flex items-baseline gap-1 mb-6">
+                            <span className="text-4xl font-bold text-white">₦5,000</span>
+                            <span className="text-[#a1a1aa] text-sm">/video</span>
+                        </div>
+                        <p className="text-[#a1a1aa] text-sm mb-8 leading-relaxed">
+                            Perfect for rapid testing and one-off campaigns. Includes full escrow protection.
+                        </p>
+                        <button className="w-full py-4 border border-[#27272a] text-white hover:bg-[#18181b] transition-colors font-medium text-sm">
+                            Start New Project
+                        </button>
+                        <ul className="mt-8 space-y-4 w-full">
+                            <li className="flex gap-3 text-sm text-[#d4d4d8] items-center"><Check /> ₦500 Rejection Fee</li>
+                            <li className="flex gap-3 text-sm text-[#d4d4d8] items-center"><Check /> 1080p Export</li>
+                            <li className="flex gap-3 text-sm text-[#d4d4d8] items-center"><Check /> Standard Assets</li>
+                        </ul>
                     </div>
-                    <h3 className="text-[#FF6C00] text-lg font-medium">Creator</h3>
-                    <div className="mt-4 flex items-baseline gap-1">
-                        <span className="text-4xl text-white font-bold">$99</span>
-                        <span className="text-[#A1A1A1]">/month</span>
+
+
+                    <div className="bg-[#09090b] p-8 flex flex-col items-start relative">
+                        <div className="absolute top-0 right-0 bg-[#ea580c] text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest">Best Value</div>
+                        <div className="inline-block px-3 py-1 bg-[#ea580c]/10 text-[#ea580c] text-xs font-mono mb-6 uppercase tracking-widest">Subscription</div>
+                        <h3 className="text-white text-2xl font-bold mb-2">Creator</h3>
+                        <div className="flex items-baseline gap-1 mb-6">
+                            <span className="text-4xl font-bold text-white">₦20,000</span>
+                            <span className="text-[#a1a1aa] text-sm">/month</span>
+                        </div>
+                        <p className="text-[#a1a1aa] text-sm mb-8 leading-relaxed">
+                            For agencies shipping volume. Priority queue and higher quality renders.
+                        </p>
+                        <button className="w-full py-4 bg-[#ea580c] text-white hover:bg-[#c2410c] transition-colors font-medium text-sm">
+                            Subscribe Now
+                        </button>
+                        <ul className="mt-8 space-y-4 w-full">
+                            <li className="flex gap-3 text-sm text-white items-center"><Check active /> 5 Videos Included</li>
+                            <li className="flex gap-3 text-sm text-white items-center"><Check active /> 4K Ultra HD</li>
+                            <li className="flex gap-3 text-sm text-white items-center"><Check active /> Custom Brand Kit</li>
+                        </ul>
                     </div>
-                    <p className="mt-4 text-[#A1A1A1] text-sm">
-                        For agencies and frequent shippers.
-                    </p>
-
-                    <ul className="mt-8 space-y-4 flex-1">
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon main /> 5 Videos Included
-                        </li>
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon main /> 4K Ultra HD Export
-                        </li>
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon main /> Priority Generation Queue
-                        </li>
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon main /> Custom Brand Kit
-                        </li>
-                    </ul>
-
-                    <button className="mt-8 w-full bg-[#FF6C00] text-white py-3 rounded-full hover:bg-[#FF8833] transition-colors shadow-lg">
-                        Subscribe Now
-                    </button>
-                </div>
 
 
-                <div className="bg-[#1C1C1C] border border-[#333] hover:border-[#FF6C00]/50 rounded-2xl p-8 flex flex-col hover:-translate-y-2 transition-transform duration-300">
-                    <h3 className="text-[#A1A1A1] text-lg font-medium">Enterprise</h3>
-                    <div className="mt-4 flex items-baseline gap-1">
-                        <span className="text-4xl text-white font-bold">Custom</span>
+                    <div className="bg-[#09090b] p-8 flex flex-col items-start">
+                        <div className="inline-block px-3 py-1 bg-[#27272a] text-[#muted] text-xs font-mono mb-6 uppercase tracking-widest">Organization</div>
+                        <h3 className="text-white text-2xl font-bold mb-2">Enterprise</h3>
+                        <div className="flex items-baseline gap-1 mb-6">
+                            <span className="text-4xl font-bold text-white">Custom</span>
+                        </div>
+                        <p className="text-[#a1a1aa] text-sm mb-8 leading-relaxed">
+                            Full API access, dedicated account management, and custom model fine-tuning.
+                        </p>
+                        <button className="w-full py-4 border border-[#27272a] text-white hover:bg-[#18181b] transition-colors font-medium text-sm">
+                            Contact Sales
+                        </button>
+                        <ul className="mt-8 space-y-4 w-full">
+                            <li className="flex gap-3 text-sm text-[#d4d4d8] items-center"><Check /> API Access</li>
+                            <li className="flex gap-3 text-sm text-[#d4d4d8] items-center"><Check /> Custom AI Models</li>
+                            <li className="flex gap-3 text-sm text-[#d4d4d8] items-center"><Check /> SLA Support</li>
+                        </ul>
                     </div>
-                    <p className="mt-4 text-[#A1A1A1] text-sm">
-                        High volume API access and dedicated support.
-                    </p>
-
-                    <ul className="mt-8 space-y-4 flex-1">
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon /> Unlimited Concurrent Jobs
-                        </li>
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon /> Dedicated Account Manager
-                        </li>
-                        <li className="flex items-center gap-3 text-white text-sm">
-                            <CheckIcon /> Custom AI Models
-                        </li>
-                    </ul>
-
-                    <button className="mt-8 w-full border border-[#333] text-white py-3 rounded-full hover:bg-[#333] transition-colors">
-                        Contact Sales
-                    </button>
                 </div>
             </div>
         </div>
     );
 }
 
-function CheckIcon({ main = false }: { main?: boolean }) {
+function Check({ active }: { active?: boolean }) {
     return (
-        <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke={main ? "#FF6C00" : "#A1A1A1"}
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={active ? "#ea580c" : "#52525b"} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12" />
         </svg>
-    );
+    )
 }
