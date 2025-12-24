@@ -16,12 +16,14 @@ import {
     History,
     AlertCircle,
     FolderOpen,
-    Image as ImageIcon,
+    ImageIcon,
     HelpCircle,
     User,
     LogOutIcon,
     Menu,
-    X
+    X,
+    Ticket,
+    UserPlus
 } from "lucide-react";
 
 export default function DashboardLayout({
@@ -31,25 +33,36 @@ export default function DashboardLayout({
 }) {
     const [activeTab, setActiveTab] = useState("editor");
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [inviteEmail, setInviteEmail] = useState("");
 
     const toggleMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
+    const handleInvite = () => {
+        if (inviteEmail) {
+            alert(`Invitation sent to ${inviteEmail}`);
+            setInviteEmail("");
+        }
+    }
+
     return (
-        <div className="min-h-screen bg-[#09090b] flex font-sans text-[#a1a1aa]">
-            {/* Mobile Header */}
-            <div className="fixed top-0 left-0 right-0 h-16 bg-[#0c0c0e] border-b border-[#27272a] flex items-center justify-between px-4 md:hidden z-50">
+        <div className="min-h-screen bg-[#09090b] flex font-sans text-[#a1a1aa] relative">
+            {/* Mobile Header (Simplified) */}
+            <div className="fixed top-0 left-0 right-0 h-16 bg-[#0c0c0e] border-b border-[#27272a] flex items-center justify-between px-4 md:hidden z-40">
                 <div className="flex items-center gap-2">
                     <img src="/logo.png" alt="Motion Pipe Logo" className="w-8 h-8 rounded-sm" />
                     <span className="text-white font-bold tracking-tight">Motion Pipe</span>
                 </div>
-                <button onClick={toggleMenu} className="text-white p-2">
-                    {mobileMenuOpen ? <X /> : <Menu />}
-                </button>
             </div>
 
-            {/* Sidebar (Desktop + Mobile) */}
-            <aside className={`w-64 border-r border-[#27272a] flex flex-col fixed h-full bg-[#0c0c0e] transition-transform duration-300 z-40 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-                } md:translate-x-0 pt-16 md:pt-0`}>
+            {/* Sidebar (Desktop + Mobile Overlay) */}
+            <aside className={`w-64 border-r border-[#27272a] flex flex-col fixed h-full bg-[#0c0c0e] transition-transform duration-300 z-50 ${mobileMenuOpen ? "translate-x-0 bg-black/95 backdrop-blur-xl w-full" : "-translate-x-full"
+                } md:translate-x-0 pt-16 md:pt-0 w-64`}>
+
+                {/* Close button for mobile */}
+                <button onClick={toggleMenu} className="absolute top-4 right-4 md:hidden text-white p-2">
+                    <X />
+                </button>
+
                 <div className="h-16 hidden md:flex items-center px-6 border-b border-[#27272a]">
                     <img src="/logo.png" alt="Motion Pipe Logo" className="w-8 h-8 rounded-sm mr-3" />
                     <span className="text-white font-bold tracking-tight">Motion Pipe</span>
@@ -60,8 +73,26 @@ export default function DashboardLayout({
                         <p className="px-2 text-xs font-mono text-[#52525b] uppercase tracking-widest mb-2">Workspace</p>
                         <NavItem icon={LayoutTemplate} label="Ad Editor" active={activeTab === "editor"} onClick={() => { setActiveTab("editor"); setMobileMenuOpen(false); }} />
                         <NavItem icon={FolderOpen} label="Assets" active={activeTab === "assets"} onClick={() => { setActiveTab("assets"); setMobileMenuOpen(false); }} />
+                        <NavItem icon={Ticket} label="Tickets" active={activeTab === "tickets"} onClick={() => { setActiveTab("tickets"); setMobileMenuOpen(false); }} />
                         <NavItem icon={ImageIcon} label="Templates" active={activeTab === "templates"} onClick={() => { setActiveTab("templates"); setMobileMenuOpen(false); }} />
                         <NavItem icon={History} label="History" active={activeTab === "history"} onClick={() => { setActiveTab("history"); setMobileMenuOpen(false); }} />
+                    </div>
+
+                    {/* Invite User Widget inside Sidebar */}
+                    <div className="px-2 mb-4">
+                        <p className="text-xs font-mono text-[#52525b] uppercase tracking-widest mb-2">Collaborate</p>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="email"
+                                placeholder="teammate@email.com"
+                                value={inviteEmail}
+                                onChange={(e) => setInviteEmail(e.target.value)}
+                                className="bg-[#18181b] border border-[#27272a] rounded px-2 py-1.5 text-xs text-white w-full outline-none focus:border-[#3b82f6]"
+                            />
+                            <button onClick={handleInvite} className="bg-[#3b82f6] text-white p-1.5 rounded hover:bg-blue-600">
+                                <UserPlus className="w-4 h-4" />
+                            </button>
+                        </div>
                     </div>
 
                     <div>
@@ -92,12 +123,23 @@ export default function DashboardLayout({
                 </div>
             </aside>
 
+            {/* Mobile FAB Trigger */}
+            {!mobileMenuOpen && (
+                <button
+                    onClick={toggleMenu}
+                    className="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-[#3b82f6] rounded-full flex items-center justify-center text-white shadow-lg z-50 hover:scale-110 transition-transform"
+                >
+                    <Menu className="w-6 h-6" />
+                </button>
+            )}
 
-            <main className="flex-1 md:pl-64 pt-16 md:pt-0">
+
+            <main className="flex-1 md:pl-64 pt-16 md:pt-0 min-h-screen">
                 {activeTab === "editor" && children}
                 {activeTab === "billing" && <BillingPage />}
                 {activeTab === "profile" && <ProfilePage />}
                 {activeTab === "settings" && <SettingsPage />}
+                {activeTab === "tickets" && <TicketsPage />}
                 {/* Fallback for other tabs */}
                 {["assets", "templates", "history", "support"].includes(activeTab) && (
                     <div className="flex items-center justify-center h-full text-[#52525b] flex-col">
@@ -263,6 +305,44 @@ function BillingPage() {
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    )
+}
+
+function TicketsPage() {
+    return (
+        <div className="h-full flex flex-col">
+            <header className="h-16 border-b border-[#27272a] flex items-center px-6 bg-[#09090b]">
+                <h1 className="text-lg font-bold text-white tracking-tight">Support Tickets</h1>
+            </header>
+            <div className="flex-1 p-6 overflow-y-auto">
+                <div className="max-w-4xl mx-auto">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-white">Active Conversations</h2>
+                        <button className="bg-[#3b82f6] text-white px-4 py-2 rounded text-sm font-bold hover:bg-blue-600 transition-colors">New Ticket</button>
+                    </div>
+
+                    <div className="space-y-2">
+                        <div className="bg-[#0c0c0e] border border-[#27272a] p-4 rounded hover:border-[#3b82f6] transition-colors cursor-pointer group">
+                            <div className="flex justify-between mb-2">
+                                <h3 className="text-white font-medium text-sm group-hover:text-[#3b82f6] transition-colors">Render failed on project "Nike Air"</h3>
+                                <span className="text-[#3b82f6] text-xs bg-[#3b82f6]/10 px-2 py-0.5 rounded">Open</span>
+                            </div>
+                            <p className="text-[#a1a1aa] text-xs line-clamp-1">I tried to generate the video but it got stuck at 98%....</p>
+                            <p className="text-[#52525b] text-[10px] mt-2 font-mono">ID: #T-9923 • 2 hours ago</p>
+                        </div>
+
+                        <div className="bg-[#0c0c0e] border border-[#27272a] p-4 rounded hover:border-[#3b82f6] transition-colors cursor-pointer opacity-70">
+                            <div className="flex justify-between mb-2">
+                                <h3 className="text-white font-medium text-sm">Billing Inquiry</h3>
+                                <span className="text-green-500 text-xs bg-green-500/10 px-2 py-0.5 rounded">Resolved</span>
+                            </div>
+                            <p className="text-[#a1a1aa] text-xs line-clamp-1">Can I get an invoice for last month?</p>
+                            <p className="text-[#52525b] text-[10px] mt-2 font-mono">ID: #T-9920 • 2 days ago</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

@@ -63,9 +63,10 @@ export default function Home() {
             <span className="text-[#3b82f6]">AI Freelancer.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-[#a1a1aa] max-w-2xl mx-auto leading-relaxed mb-10 animate-enter" style={{ animationDelay: "100ms" }}>
-            Generate broadcast-ready product ads in minutes. <br className="hidden md:block" />
-            Pay safely with local escrow.
+          <p className="text-lg md:text-xl text-[#a1a1aa] max-w-3xl mx-auto leading-relaxed mb-10 animate-enter" style={{ animationDelay: "100ms" }}>
+            Motion Pipe is an autonomous infrastructure that continuously generates broadcast-ready product commercials.
+            <br className="hidden md:block" />
+            We replace entire agencies with a single API call. Escrow secured.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 animate-enter" style={{ animationDelay: "200ms" }}>
@@ -79,7 +80,24 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-full max-w-6xl mx-auto mt-20 px-4">
+        {/* Product Showcase / "Don't Pay" Section */}
+        <div className="w-full bg-[#0c0c0e] py-20 mt-20 border-t border-[#27272a]">
+          <div className="max-w-7xl mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">Generate Motion Design.</h2>
+            <p className="text-[#3b82f6] text-xl font-bold mb-12 tracking-wide uppercase">Don't Pay for Motion Designers.</p>
+
+            <div className="flex flex-wrap justify-center gap-8">
+              {/* Product Cards */}
+              <ProductCard label="Beverages" image="/water_bottle_mockup.png" />
+              <ProductCard label="Tech" image="/laptop_mock.png" />
+              <ProductCard label="Fashion" image="/shirt_mock.png" />
+              <ProductCard label="Cosmetics" image="/cream_mock.png" />
+              <ProductCard label="Supplements" image="/jar_mock.png" />
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full max-w-6xl mx-auto mt-0 px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-[#27272a]">
             <StatItem value="2 Min" label="Delivery Time" />
             <StatItem value="100%" label="Escrow Protected" />
@@ -146,6 +164,17 @@ function StatItem({ value, label }: { value: string; label: string }) {
     <div className="p-8 border-r border-b border-[#27272a] text-center">
       <div className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">{value}</div>
       <div className="text-xs uppercase tracking-widest text-[#a1a1aa] font-medium">{label}</div>
+    </div>
+  )
+}
+
+function ProductCard({ label, image }: { label: string, image: string }) {
+  return (
+    <div className="bg-[#18181b] border border-[#27272a] p-4 rounded-xl w-40 flex flex-col items-center hover:border-[#3b82f6] transition-colors group cursor-pointer">
+      <div className="w-24 h-24 bg-[#09090b] rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+        <div className="text-[#27272a] text-xs font-mono group-hover:text-[#3b82f6]">[ASSET]</div>
+      </div>
+      <span className="text-white font-medium text-sm">{label}</span>
     </div>
   )
 }
