@@ -61,19 +61,22 @@ pre {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
+  min-height: 350px;
+  overflow: hidden;
+  padding: 0 1rem;
 }
 
 @media (min-width: 768px) {
   .perspective-center {
     min-height: 500px;
+    padding: 0;
   }
 }
 
 .carousel-box {
   position: relative;
-  width: 180px;
-  height: 280px;
+  width: 140px;
+  height: 220px;
   transform-style: preserve-3d;
   animation: carousel-rotate 30s linear infinite;
 }
@@ -97,7 +100,7 @@ pre {
   height: 100%;
   transform-origin: center;
   transform-style: preserve-3d;
-  transform: rotateY(calc(var(--i) * 72deg)) translateZ(300px);
+  transform: rotateY(calc(var(--i) * 72deg)) translateZ(200px);
 }
 
 @media (min-width: 768px) {
