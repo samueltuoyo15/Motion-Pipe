@@ -41,10 +41,10 @@ export default function DashboardLayout({
             <Toaster position="top-right" theme="dark" />
 
             <div className="fixed top-0 left-0 right-0 h-16 bg-[#0c0c0e] border-b border-[#27272a] flex items-center justify-between px-4 md:hidden z-40">
-                <div className="flex items-center gap-2">
+                <Link href="/" className="flex items-center gap-2">
                     <img src="/logo.png" alt="Motion Pipe Logo" className="w-8 h-8 rounded-sm" />
                     <span className="text-white font-bold tracking-tight">Motion Pipe</span>
-                </div>
+                </Link>
             </div>
 
             <aside className={`w-64 border-r border-[#27272a] flex flex-col fixed h-full bg-[#0c0c0e] transition-transform duration-300 z-50 ${mobileMenuOpen ? "translate-x-0 bg-black/95 backdrop-blur-xl w-full" : "-translate-x-full"
@@ -54,10 +54,10 @@ export default function DashboardLayout({
                     <X />
                 </button>
 
-                <div className="h-16 hidden md:flex items-center px-6 border-b border-[#27272a]">
+                <Link href="/" className="h-16 hidden md:flex items-center px-6 border-b border-[#27272a]">
                     <img src="/logo.png" alt="Motion Pipe Logo" className="w-8 h-8 rounded-sm mr-3" />
                     <span className="text-white font-bold tracking-tight">Motion Pipe</span>
-                </div>
+                </Link>
 
                 <nav className="flex-1 p-4 space-y-6 overflow-y-auto">
                     <div>

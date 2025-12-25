@@ -8,9 +8,9 @@ export default function Login() {
 
             <div className="z-10 w-full max-w-sm px-6">
                 <div className="text-center mb-10">
-                    <div className="flex justify-center mb-6">
+                    <Link href="/" className="flex justify-center mb-6">
                         <img src="/logo.png" alt="Motion Pipe Logo" className="w-16 h-16 rounded-xl" />
-                    </div>
+                    </Link>
                     <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Welcome Back</h1>
                     <p className="text-[#a1a1aa] text-sm">Access your creative workspace.</p>
                 </div>

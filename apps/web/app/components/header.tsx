@@ -10,10 +10,10 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#09090b]/80 backdrop-blur-md border-b border-[#27272a]">
       <nav className="flex justify-between items-center max-w-7xl mx-auto px-6 h-16">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <img src="/logo.png" alt="Motion Pipe Logo" className="w-8 h-8 rounded-sm" />
           <span className="text-lg text-white font-bold tracking-tight">Motion Pipe</span>
-        </div>
+        </Link>
 
         <button
           className="md:hidden text-white"

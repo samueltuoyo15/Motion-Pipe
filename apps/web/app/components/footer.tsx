@@ -7,10 +7,10 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
 
         <div className="col-span-1 md:col-span-2">
-          <div className="flex items-center gap-2 mb-6">
+          <Link href="/" className="flex items-center gap-2 mb-6 w-fit">
             <img src="/logo.png" alt="Motion Pipe Logo" className="w-8 h-8 rounded-sm" />
             <span className="text-xl text-white font-bold tracking-tight">Motion Pipe</span>
-          </div>
+          </Link>
           <p className="text-[#a1a1aa] text-sm max-w-sm leading-relaxed mb-8">
             The automated motion design infrastructure for high-velocity marketing teams.
             Escrow-secured, AI-generated, broadcast-ready.

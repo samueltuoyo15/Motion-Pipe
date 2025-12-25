@@ -15,9 +15,9 @@ export default function Register() {
                 </Link>
 
                 <div className="text-center mb-10">
-                    <div className="flex justify-center mb-6">
+                    <Link href="/" className="flex justify-center mb-6">
                         <img src="/logo.png" alt="Motion Pipe Logo" className="w-16 h-16 rounded-xl" />
-                    </div>
+                    </Link>
                     <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Join Motion Pipe</h1>
                     <p className="text-[#a1a1aa] text-sm">Start your motion design journey.</p>
                 </div>
