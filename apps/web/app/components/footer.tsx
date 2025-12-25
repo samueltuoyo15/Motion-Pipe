@@ -55,33 +55,33 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="text-white font-bold mb-6 text-sm tracking-wide">PLATFORM</h4>
+          <h4 className="text-white font-bold mb-6 text-sm tracking-wide">{t('platform_title')}</h4>
           <ul className="space-y-4 text-sm text-[#a1a1aa]">
-            <li><Link href="/#features" className="hover:text-[#3b82f6] transition-colors">Capabilities</Link></li>
-            <li><Link href="/#how-it-works" className="hover:text-[#3b82f6] transition-colors">Workflow</Link></li>
-            <li><Link href="/#pricing" className="hover:text-[#3b82f6] transition-colors">Pricing</Link></li>
-            <li><Link href="/login" className="hover:text-[#3b82f6] transition-colors">Login</Link></li>
+            <li><Link href="/#features" className="hover:text-[#3b82f6] transition-colors">{t('nav_capabilities')}</Link></li>
+            <li><Link href="/#how-it-works" className="hover:text-[#3b82f6] transition-colors">{t('nav_workflow')}</Link></li>
+            <li><Link href="/#pricing" className="hover:text-[#3b82f6] transition-colors">{t('nav_pricing')}</Link></li>
+            <li><Link href="/login" className="hover:text-[#3b82f6] transition-colors">{t('nav_login')}</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-white font-bold mb-6 text-sm tracking-wide">LEGAL</h4>
+          <h4 className="text-white font-bold mb-6 text-sm tracking-wide">{t('legal_title')}</h4>
           <ul className="space-y-4 text-sm text-[#a1a1aa]">
-            <li><Link href="/terms" className="hover:text-[#3b82f6] transition-colors">Terms of Service</Link></li>
-            <li><Link href="/privacy" className="hover:text-[#3b82f6] transition-colors">Privacy Policy</Link></li>
-            <li><Link href="/escrow" className="hover:text-[#3b82f6] transition-colors">Escrow Agreement</Link></li>
+            <li><Link href="/terms" className="hover:text-[#3b82f6] transition-colors">{t('link_terms')}</Link></li>
+            <li><Link href="/privacy" className="hover:text-[#3b82f6] transition-colors">{t('link_privacy')}</Link></li>
+            <li><Link href="/escrow" className="hover:text-[#3b82f6] transition-colors">{t('link_escrow')}</Link></li>
           </ul>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto border-t border-[#27272a] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#52525b] font-mono">
-        <p>&copy; {new Date().getFullYear()} MOTION PIPE SYSTEMS INC. ALL RIGHTS RESERVED.</p>
+        <p>&copy; {new Date().getFullYear()} {t('rights_reserved')}</p>
         <div className="flex items-center gap-2">
           <span
             className={`w-2 h-2 rounded-full ${statusConfig[healthStatus].color} ${healthStatus === 'online' ? 'animate-pulse' : ''}`}
             aria-label={`System status: ${healthStatus}`}
           />
-          <span>{statusConfig[healthStatus].text}</span>
+          <span>{healthStatus === 'online' ? t('status_online') : healthStatus === 'degraded' ? t('status_degraded') : t('status_offline')}</span>
         </div>
       </div>
     </footer>

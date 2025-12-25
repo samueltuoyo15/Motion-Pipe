@@ -73,7 +73,7 @@ export default function Home() {
             {t('hero_description')}
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4 animate-enter" style={{ animationDelay: "200ms" }}>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 animate-enter mb-12" style={{ animationDelay: "200ms" }}>
             <button className="bg-[#3b82f6] hover:bg-blue-600 text-white font-medium text-lg px-8 py-4 rounded-lg transition-all flex items-center justify-center gap-2">
               {t('start_project')}
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
@@ -128,8 +128,8 @@ export default function Home() {
               <ProductCard index={0} label="AI Assistant" video="/motion-templates/ai.mp4" />
               <ProductCard index={1} label="Crypto DeFi" video="/motion-templates/crypto.mp4" />
               <ProductCard index={2} label="Fintech App" video="/motion-templates/fintech.mp4" />
-              <ProductCard index={3} label="Banking" video="/motion-templates/fintech (2).mp4" />
-              <ProductCard index={4} label="Fintech" video="/motion-templates/fintech (3).mp4" />
+              <ProductCard index={3} label="Banking" video="/motion-templates/fintech2.mp4" />
+              <ProductCard index={4} label="Fintech" video="/motion-templates/fintech3.mp4" />
               <ProductCard index={5} label="Healthcare" video="/motion-templates/healthcare.mp4" />
               <ProductCard index={6} label="Web3 Fintech" video="/motion-templates/web3fintech.mp4" />
             </div>

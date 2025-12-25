@@ -1,58 +1,61 @@
 import Link from "next/link";
+import { useLanguage } from "../context/language-context";
 
 export default function Pricing() {
+    const { t } = useLanguage();
+
     return (
         <div className="py-24 px-4 bg-[#0c0c0e]">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">
-                        Transparent <span className="text-[#3b82f6]">Pricing</span>
+                        {t('pricing_title')} <span className="text-[#3b82f6]">{t('pricing_subtitle')}</span>
                     </h2>
-                    <p className="text-[#a1a1aa] text-lg">No hidden fees. Pay for output.</p>
+                    <p className="text-[#a1a1aa] text-lg">{t('pricing_desc')}</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#27272a] border border-[#27272a]">
 
                     <div className="bg-[#09090b] p-8 flex flex-col items-start relative group">
                         <div className="absolute top-0 left-0 right-0 h-1 bg-[#3b82f6]" />
-                        <h3 className="text-white font-bold text-xl mb-2">Pay-As-You-Go</h3>
-                        <p className="text-[#a1a1aa] text-sm mb-6 h-10">For agencies & brands.</p>
-                        <div className="text-3xl font-bold text-white mb-6">₦10,000 <span className="text-sm font-normal text-[#52525b]">/ Video</span></div>
+                        <h3 className="text-white font-bold text-xl mb-2">{t('pay_go')}</h3>
+                        <p className="text-[#a1a1aa] text-sm mb-6 h-10">{t('pay_go_desc')}</p>
+                        <div className="text-3xl font-bold text-white mb-6">₦10,000 <span className="text-sm font-normal text-[#52525b]">{t('pay_go_price')}</span></div>
                         <ul className="space-y-4 mb-8 flex-1">
                             <li className="flex items-center gap-3 text-sm text-white">
-                                <CheckIcon active /> <span>4K Broadcast Quality</span>
+                                <CheckIcon active /> <span>{t('feat_4k')}</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-white">
-                                <CheckIcon active /> <span>AI Voiceover (ElevenLabs)</span>
+                                <CheckIcon active /> <span>{t('feat_voice')}</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-white">
-                                <CheckIcon active /> <span>No Watermark</span>
+                                <CheckIcon active /> <span>{t('feat_watermark')}</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-white">
-                                <CheckIcon active /> <span>Escrow Protection</span>
+                                <CheckIcon active /> <span>{t('feat_protection')}</span>
                             </li>
                         </ul>
                         <button className="w-full py-3 bg-[#3b82f6] hover:bg-blue-600 text-white font-bold text-sm transition-colors">
-                            Start Project
+                            {t('start_project')}
                         </button>
                     </div>
 
                     <div className="bg-[#09090b] p-8 flex flex-col items-start">
-                        <h3 className="text-white font-bold text-xl mb-2">Enterprise</h3>
-                        <p className="text-[#a1a1aa] text-sm mb-6 h-10">High volume infrastructure.</p>
-                        <div className="text-3xl font-bold text-white mb-6">Custom</div>
+                        <h3 className="text-white font-bold text-xl mb-2">{t('enterprise')}</h3>
+                        <p className="text-[#a1a1aa] text-sm mb-6 h-10">{t('enterprise_desc')}</p>
+                        <div className="text-3xl font-bold text-white mb-6">{t('enterprise_price')}</div>
                         <ul className="space-y-4 mb-8 flex-1">
                             <li className="flex items-center gap-3 text-sm text-[#a1a1aa]">
-                                <CheckIcon /> <span>Dedicated GPU Instances</span>
+                                <CheckIcon /> <span>{t('feat_gpu')}</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-[#a1a1aa]">
-                                <CheckIcon /> <span>Custom Brand Models</span>
+                                <CheckIcon /> <span>{t('feat_models')}</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-[#a1a1aa]">
-                                <CheckIcon /> <span>Priority Support</span>
+                                <CheckIcon /> <span>{t('feat_support')}</span>
                             </li>
                         </ul>
                         <button className="w-full py-3 border border-[#27272a] text-white font-bold text-sm hover:bg-[#18181b] transition-colors">
-                            Contact Sales
+                            {t('btn_contact')}
                         </button>
                     </div>
 
