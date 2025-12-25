@@ -15,44 +15,44 @@ export default function Home() {
 
   const features = [
     {
-      title: "AI Video Generation",
+      title: t('feat_1_title'),
       icon: "/icons/camera.svg",
-      description: "Google Veo 3 API creates stunning visual flows and animations.",
+      description: t('feat_1_desc'),
     },
     {
-      title: "Professional Voiceover",
+      title: t('feat_2_title'),
       icon: "/icons/microphone.svg",
-      description: "ElevenLabs generates natural, broadcast-quality narration.",
+      description: t('feat_2_desc'),
     },
     {
-      title: "AI Sound Agent",
+      title: t('feat_3_title'),
       icon: "/icons/music.svg",
-      description: "Curated licensed music and SFX, matched to mood.",
+      description: t('feat_3_desc'),
     },
     {
-      title: "Escrow Protection",
+      title: t('feat_4_title'),
       icon: "/icons/shield.svg",
-      description: "Funds only held. Released upon your approval.",
+      description: t('feat_4_desc'),
     },
     {
-      title: "Real-Time Updates",
+      title: t('feat_5_title'),
       icon: "/icons/bolt.svg",
-      description: "WebSocket-powered live progress tracking.",
+      description: t('feat_5_desc'),
     },
     {
-      title: "Smart Asset Discovery",
+      title: t('feat_6_title'),
       icon: "/icons/robot.svg",
-      description: "Selenium agents find brand assets automatically.",
+      description: t('feat_6_desc'),
     },
   ];
 
   const technologies = [
-    { title: "Golang Backend", icon: "/icons/go.svg", desc: "Concurrent Orchestration" },
-    { title: "Google Veo 3", icon: "/icons/google.svg", desc: "Video Synthesis" },
-    { title: "FFmpeg", icon: "/icons/ffmpeg.svg", desc: "Media Assembly" },
-    { title: "Cloudflare R2", icon: "/icons/cloud.svg", desc: "Zero-Egress Storage" },
-    { title: "Paystack", icon: "/icons/card.svg", desc: "Escrow Payments" },
-    { title: "Redis", icon: "/icons/cache.svg", desc: "High-Speed Cache" },
+    { title: t('tech_1'), icon: "/icons/go.svg", desc: "Concurrent Orchestration" },
+    { title: t('tech_2'), icon: "/icons/google.svg", desc: "Video Synthesis" },
+    { title: t('tech_3'), icon: "/icons/ffmpeg.svg", desc: "Media Assembly" },
+    { title: t('tech_4'), icon: "/icons/cloud.svg", desc: "Zero-Egress Storage" },
+    { title: t('tech_5'), icon: "/icons/card.svg", desc: "Escrow Payments" },
+    { title: t('tech_6'), icon: "/icons/cache.svg", desc: "High-Speed Cache" },
   ];
 
   return (
@@ -88,7 +88,7 @@ export default function Home() {
             <StatItem value="2 Min" label="Delivery Time" />
             <StatItem value="100%" label="Escrow Protected" />
             <StatItem value="4K" label="Max Resolution" />
-            <StatItem value="₦500" label="Rejection Fee" />
+            <StatItem value="₦1,000" label="Rejection Fee" />
           </div>
         </div>
       </section>
@@ -172,8 +172,14 @@ function StatItem({ value, label }: { value: string; label: string }) {
 function ProductCard({ label, image }: { label: string, image: string }) {
   return (
     <div className="bg-[#18181b] border border-[#27272a] p-4 rounded-xl w-40 flex flex-col items-center hover:border-[#3b82f6] transition-colors group cursor-pointer">
-      <div className="w-24 h-24 bg-[#09090b] rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-        <div className="text-[#27272a] text-xs font-mono group-hover:text-[#3b82f6]">[ASSET]</div>
+      <div className="w-24 h-24 bg-[#09090b] rounded-lg mb-4 flex items-center justify-center overflow-hidden relative border border-[#27272a]">
+        <Image
+          src={image}
+          alt={label}
+          width={96}
+          height={96}
+          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+        />
       </div>
       <span className="text-white font-medium text-sm">{label}</span>
     </div>

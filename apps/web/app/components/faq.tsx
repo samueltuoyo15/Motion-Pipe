@@ -5,7 +5,7 @@ export default function FAQ() {
     const faqs = [
         {
             question: "Escrow Protection Policy",
-            answer: "Funds are held by Paystack Escrow. You inspect the video preview. Approve to release, or reject to get refunded minus a ₦500 compute fee."
+            answer: "Funds are held by Paystack Escrow. You inspect the video preview. Approve to release, or reject to get refunded minus a ₦1,000 compute fee."
         },
         {
             question: "Commercial Rights & Asset Usage",

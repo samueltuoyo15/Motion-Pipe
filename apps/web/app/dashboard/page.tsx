@@ -34,7 +34,7 @@ export default function EditorPage() {
                             <div className="bg-[#18181b] border border-[#27272a] p-3 rounded">
                                 <div className="flex items-center justify-between mb-2">
                                     <span className="text-xs text-white font-medium">Auto-Discovery</span>
-                                    <Globe className="w-3 h-3 text-[#ea580c]" />
+                                    <Globe className="w-3 h-3 text-[#3b82f6]" />
                                 </div>
                                 <p className="text-xs text-[#a1a1aa]">Selenium Active. Crawling product assets...</p>
                             </div>
@@ -76,7 +76,7 @@ export default function EditorPage() {
 
                             <div>
                                 <label className="block text-xs text-[#a1a1aa] mb-2 font-medium">Product Asset</label>
-                                <div className="border border-dashed border-[#27272a] bg-[#18181b] p-4 rounded text-center hover:border-[#ea580c] transition-colors cursor-pointer group">
+                                <div className="border border-dashed border-[#27272a] bg-[#18181b] p-4 rounded text-center hover:border-[#3b82f6] transition-colors cursor-pointer group">
                                     <div className="mb-3 flex justify-center">
                                         <div className="w-full h-32 bg-[#09090b] rounded overflow-hidden relative border border-[#27272a]">
                                             <Image src="/water_bottle_mockup.png" width={200} height={200} alt="Product Preview" className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" />
@@ -85,14 +85,14 @@ export default function EditorPage() {
                                             </div>
                                         </div>
                                     </div>
-                                    <p className="text-xs text-[#a1a1aa]">Drag & drop product image or <span className="text-[#ea580c]">Browse</span></p>
+                                    <p className="text-xs text-[#a1a1aa]">Drag & drop product image or <span className="text-[#3b82f6]">Browse</span></p>
                                     <p className="text-[10px] text-[#52525b] mt-1">Supports PNG, JPG, WEBP (Max 10MB)</p>
                                 </div>
                             </div>
 
                             <div>
                                 <label className="block text-xs text-[#a1a1aa] mb-2 font-medium">Product URL</label>
-                                <input type="text" className="w-full bg-[#18181b] border border-[#27272a] px-3 py-2 text-white text-sm focus:border-[#ea580c] focus:outline-none" placeholder="https://..." />
+                                <input type="text" className="w-full bg-[#18181b] border border-[#27272a] px-3 py-2 text-white text-sm focus:border-[#3b82f6] focus:outline-none" placeholder="https://..." />
                             </div>
 
                             <div>
@@ -105,7 +105,7 @@ export default function EditorPage() {
                                     <AlertTriangle className="w-4 h-4 text-[#3b82f6] mt-0.5" />
                                     <div>
                                         <p className="text-xs text-[#3b82f6] font-bold mb-1">Escrow Estimation</p>
-                                        <p className="text-[#a1a1aa] text-xs">Based on this brief, estimated cost is <span className="text-white font-mono">₦5,000</span>. Funds held safely until approval.</p>
+                                        <p className="text-[#a1a1aa] text-xs">Based on this brief, estimated cost is <span className="text-white font-mono">₦10,000</span>. Funds held safely until approval.</p>
                                     </div>
                                 </div>
                             </div>
