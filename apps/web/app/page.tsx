@@ -129,7 +129,9 @@ export default function Home() {
               <ProductCard index={1} label="Crypto DeFi" video="/motion-templates/crypto.mp4" />
               <ProductCard index={2} label="Fintech App" video="/motion-templates/fintech.mp4" />
               <ProductCard index={3} label="Banking" video="/motion-templates/fintech (2).mp4" />
-              <ProductCard index={4} label="Healthcare" video="/motion-templates/healthcare.mp4" />
+              <ProductCard index={4} label="Fintech" video="/motion-templates/fintech (3).mp4" />
+              <ProductCard index={5} label="Healthcare" video="/motion-templates/healthcare.mp4" />
+              <ProductCard index={6} label="Web3 Fintech" video="/motion-templates/web3fintech.mp4" />
             </div>
           </div>
         </div>
