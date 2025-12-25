@@ -49,7 +49,7 @@ export default function BillingPage() {
                             <p className="text-xs text-[#52525b]">Expires 12/28</p>
                         </div>
                     </div>
-                    <button className="text-[#a1a1aa] hover:text-red-500 text-sm">Remove</button>
+                    <button className="px-3 py-1.5 text-sm font-medium text-[#a1a1aa] hover:text-white hover:bg-red-500/10 border border-transparent hover:border-red-500/50 rounded transition-all">Remove</button>
                 </div>
 
                 {!showAddCard ? (

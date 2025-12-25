@@ -33,15 +33,13 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
-          <h4 className="text-white font-bold mb-6 text-sm tracking-wide">LEGAL</h4>
-          <ul className="space-y-4 text-sm text-[#a1a1aa]">
-            <li><Link href="#" className="hover:text-[#ea580c] transition-colors">Terms of Service</Link></li>
-            <li><Link href="#" className="hover:text-[#ea580c] transition-colors">Privacy Policy</Link></li>
-            <li><Link href="#" className="hover:text-[#ea580c] transition-colors">Escrow Agreement</Link></li>
-            <li><Link href="#" className="hover:text-[#ea580c] transition-colors">Service Level Agreement</Link></li>
-          </ul>
-        </div>
+        <h4 className="text-white font-bold mb-6 text-sm tracking-wide">LEGAL</h4>
+        <ul className="space-y-4 text-sm text-[#a1a1aa]">
+          <li><Link href="/terms" className="hover:text-[#ea580c] transition-colors">Terms of Service</Link></li>
+          <li><Link href="/privacy" className="hover:text-[#ea580c] transition-colors">Privacy Policy</Link></li>
+          <li><Link href="/escrow" className="hover:text-[#ea580c] transition-colors">Escrow Agreement</Link></li>
+          <li><Link href="/sla" className="hover:text-[#ea580c] transition-colors">Service Level Agreement</Link></li>
+        </ul>
       </div>
 
       <div className="max-w-7xl mx-auto border-t border-[#27272a] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#52525b] font-mono">
