@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Cpu, Video, Layers, HardDrive, ShieldCheck, Zap } from "lucide-react";
 import Header from "./components/header";
 import HowItWorks from "./components/how-it-works";
 import Pricing from "./components/pricing";
@@ -47,12 +48,12 @@ export default function Home() {
   ];
 
   const technologies = [
-    { title: t('tech_1'), icon: "/icons/go.svg", desc: "Concurrent Orchestration" },
-    { title: t('tech_2'), icon: "/icons/google.svg", desc: "Video Synthesis" },
-    { title: t('tech_3'), icon: "/icons/ffmpeg.svg", desc: "Media Assembly" },
-    { title: t('tech_4'), icon: "/icons/cloud.svg", desc: "Zero-Egress Storage" },
-    { title: t('tech_5'), icon: "/icons/card.svg", desc: "Escrow Payments" },
-    { title: t('tech_6'), icon: "/icons/cache.svg", desc: "High-Speed Cache" },
+    { title: t('tech_1'), Icon: Cpu, desc: "Concurrent Orchestration" },
+    { title: t('tech_2'), Icon: Video, desc: "Video Synthesis" },
+    { title: t('tech_3'), Icon: Layers, desc: "Media Assembly" },
+    { title: t('tech_4'), Icon: HardDrive, desc: "Zero-Egress Storage" },
+    { title: t('tech_5'), Icon: ShieldCheck, desc: "Escrow Payments" },
+    { title: t('tech_6'), Icon: Zap, desc: "High-Speed Cache" },
   ];
 
   return (
@@ -85,7 +86,7 @@ export default function Home() {
 
         <div className="w-full max-w-6xl mx-auto mt-0 px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-[#27272a]">
-            <StatItem value="2 Min" label="Delivery Time" />
+            <StatItem value="5 Minutes" label="Delivery Time" />
             <StatItem value="100%" label="Escrow Protected" />
             <StatItem value="4K" label="Max Resolution" />
             <StatItem value="₦1,000" label="Rejection Fee" />
@@ -119,12 +120,14 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-white mb-4">Generate Motion Design.</h2>
           <p className="text-[#3b82f6] text-xl font-bold mb-12 tracking-wide uppercase">Don't Pay for Motion Designers.</p>
 
-          <div className="flex flex-wrap justify-center gap-8">
-            <ProductCard label="Beverages" image="/water_bottle_mockup.png" />
-            <ProductCard label="Tech" image="/laptop_mock.png" />
-            <ProductCard label="Fashion" image="/shirt_mock.png" />
-            <ProductCard label="Cosmetics" image="/cream_mock.png" />
-            <ProductCard label="Supplements" image="/jar_mock.png" />
+          <div className="perspective-center py-32 overflow-visible">
+            <div className="carousel-box">
+              <ProductCard index={0} label="Beverages" image="/water_bottle_mockup.png" />
+              <ProductCard index={1} label="Tech" image="/laptop_mock.png" />
+              <ProductCard index={2} label="Fashion" image="/shirt_mock.png" />
+              <ProductCard index={3} label="Cosmetics" image="/cream_mock.png" />
+              <ProductCard index={4} label="Supplements" image="/jar_mock.png" />
+            </div>
           </div>
         </div>
       </div>
@@ -133,14 +136,32 @@ export default function Home() {
         <HowItWorks />
       </div>
 
-      <div className="py-24 border-b border-[#27272a] bg-[#0c0c0e]">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-white mb-12 text-center tracking-tight">{t('enterprise_stack')}</h2>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-12 opacity-70">
+      <div className="py-32 border-b border-[#27272a] relative overflow-hidden bg-[#0c0c0e]">
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.05] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 mb-6 tracking-tight">
+              {t('enterprise_stack')}
+            </h2>
+            <p className="text-[#a1a1aa] text-lg max-w-2xl mx-auto">
+              Built on a foundation of industry-standard technologies for maximum reliability and speed.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {technologies.map((tech, i) => (
-              <div key={i} className="flex items-center gap-3 text-[#a1a1aa] font-mono text-sm border border-[#27272a] px-4 py-2 rounded bg-[#09090b]">
-                <Image src={tech.icon} width={16} height={16} alt="" />
-                <span>{tech.title}</span>
+              <div key={i} className="group relative bg-[#18181b]/50 border border-[#27272a] hover:border-[#3b82f6]/50 p-6 rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#3b82f6]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
+
+                <div className="relative flex items-start gap-4">
+                  <div className="p-3 bg-[#09090b] rounded-lg border border-[#27272a] group-hover:border-[#3b82f6] transition-colors">
+                    <tech.Icon className="w-6 h-6 text-[#a1a1aa] group-hover:text-[#3b82f6] transition-colors" />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-semibold text-lg mb-1 group-hover:text-[#3b82f6] transition-colors">{tech.title}</h3>
+                    <p className="text-[#a1a1aa] text-sm leading-relaxed">{tech.desc}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -169,33 +190,37 @@ function StatItem({ value, label }: { value: string; label: string }) {
   )
 }
 
-function ProductCard({ label, image }: { label: string, image: string }) {
+function ProductCard({ label, image, index }: { label: string, image: string, index?: number }) {
+  const style = { "--i": index } as React.CSSProperties;
+
   return (
-    <div className="bg-black/40 border border-[#27272a] p-5 rounded-none w-64 flex flex-col items-start hover:border-[#3b82f6] transition-all group cursor-pointer relative overflow-hidden group">
-      <div className="absolute top-2 right-2 flex items-center gap-1.5">
-        <span className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full animate-pulse" />
-        <span className="text-[10px] font-mono text-[#52525b] uppercase tracking-tighter group-hover:text-[#3b82f6]">Ready</span>
-      </div>
-
-      <div className="w-full aspect-square bg-[#09090b] rounded-none mb-4 flex items-center justify-center overflow-hidden relative border border-[#27272a] group-hover:border-[#3b82f6]/30 transition-colors">
-        <Image
-          src={image}
-          alt={label}
-          fill
-          className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-      </div>
-
-      <div className="w-full flex justify-between items-end">
-        <div>
-          <p className="text-[10px] font-mono text-[#52525b] uppercase mb-1">Category</p>
-          <span className="text-white font-bold text-sm tracking-tight uppercase">{label}</span>
+    <div className="carousel-item" style={style}>
+      <div className="bg-[#09090b] border border-[#27272a] p-5 rounded-none w-64 flex flex-col items-start hover:border-[#3b82f6] transition-all group cursor-pointer relative overflow-hidden h-full">
+        <div className="absolute top-2 right-2 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full animate-pulse" />
+          <span className="text-[10px] font-mono text-[#52525b] uppercase tracking-tighter group-hover:text-[#3b82f6]">Ready</span>
         </div>
-        <div className="w-6 h-6 border border-[#27272a] flex items-center justify-center group-hover:border-[#3b82f6] transition-colors">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-[#52525b] group-hover:text-[#3b82f6] transition-colors">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
+
+        <div className="w-full aspect-square bg-[#09090b] rounded-none mb-4 flex items-center justify-center overflow-hidden relative border border-[#27272a] group-hover:border-[#3b82f6]/30 transition-colors">
+          <Image
+            src={image}
+            alt={label}
+            fill
+            className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
+
+        <div className="w-full flex justify-between items-end">
+          <div>
+            <p className="text-[10px] font-mono text-[#52525b] uppercase mb-1">Category</p>
+            <span className="text-white font-bold text-sm tracking-tight uppercase">{label}</span>
+          </div>
+          <div className="w-6 h-6 border border-[#27272a] flex items-center justify-center group-hover:border-[#3b82f6] transition-colors">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-[#52525b] group-hover:text-[#3b82f6] transition-colors">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
         </div>
       </div>
     </div>

@@ -4,29 +4,44 @@ import (
 	"context"
 	"time"
 
+	"motion-pipe/pkg/clickhouse"
 	"motion-pipe/pkg/logger"
-	"motion-pipe/pkg/mongodb"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"
 )
 
 type AnalyticsService struct {
-	client *mongodb.Client
+	client *clickhouse.Client
 }
 
-func NewAnalyticsService(client *mongodb.Client) *AnalyticsService {
+func NewAnalyticsService(client *clickhouse.Client) *AnalyticsService {
 	return &AnalyticsService{client: client}
 }
 
-func (s *AnalyticsService) TrackEvent(ctx context.Context, event *mongodb.AnalyticsEvent) error {
+func (s *AnalyticsService) TrackEvent(ctx context.Context, event *clickhouse.AnalyticsEvent) error {
 	event.Timestamp = time.Now().UTC()
 
-	collection := s.client.Database.Collection("events")
-	_, err := collection.InsertOne(ctx, event)
+	query := `
+	INSERT INTO events (
+		type, user_id, ip, user_agent, path, method, status, latency_ms, metadata, timestamp
+	) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	`
+
+	err := s.client.Conn.Exec(ctx, query,
+		event.Type,
+		event.UserID,
+		event.IP,
+		event.UserAgent,
+		event.Path,
+		event.Method,
+		event.Status,
+		event.Latency,
+		event.Metadata,
+		event.Timestamp,
+	)
+
 	if err != nil {
-		logger.Error("Failed to track event", zap.Error(err))
+		logger.Error("Failed to track event in ClickHouse", zap.Error(err))
 		return err
 	}
 
@@ -34,12 +49,12 @@ func (s *AnalyticsService) TrackEvent(ctx context.Context, event *mongodb.Analyt
 }
 
 func (s *AnalyticsService) TrackLogin(ctx context.Context, userID, provider, ip, userAgent string) {
-	event := &mongodb.AnalyticsEvent{
+	event := &clickhouse.AnalyticsEvent{
 		Type:      "user_login",
 		UserID:    userID,
 		IP:        ip,
 		UserAgent: userAgent,
-		Metadata: map[string]interface{}{
+		Metadata: map[string]string{
 			"provider": provider,
 		},
 	}
@@ -50,7 +65,7 @@ func (s *AnalyticsService) TrackLogin(ctx context.Context, userID, provider, ip,
 }
 
 func (s *AnalyticsService) TrackLogout(ctx context.Context, userID, ip string) {
-	event := &mongodb.AnalyticsEvent{
+	event := &clickhouse.AnalyticsEvent{
 		Type:   "user_logout",
 		UserID: userID,
 		IP:     ip,
@@ -62,11 +77,11 @@ func (s *AnalyticsService) TrackLogout(ctx context.Context, userID, ip string) {
 }
 
 func (s *AnalyticsService) TrackSignup(ctx context.Context, userID, provider, ip string) {
-	event := &mongodb.AnalyticsEvent{
+	event := &clickhouse.AnalyticsEvent{
 		Type:   "user_signup",
 		UserID: userID,
 		IP:     ip,
-		Metadata: map[string]interface{}{
+		Metadata: map[string]string{
 			"provider": provider,
 		},
 	}
@@ -77,14 +92,14 @@ func (s *AnalyticsService) TrackSignup(ctx context.Context, userID, provider, ip
 }
 
 func (s *AnalyticsService) TrackAPIRequest(ctx context.Context, userID, path, method, ip, userAgent string, status int, latency time.Duration) {
-	event := &mongodb.AnalyticsEvent{
+	event := &clickhouse.AnalyticsEvent{
 		Type:      "api_request",
 		UserID:    userID,
 		IP:        ip,
 		UserAgent: userAgent,
 		Path:      path,
 		Method:    method,
-		Status:    status,
+		Status:    int32(status),
 		Latency:   latency.Milliseconds(),
 	}
 
@@ -94,123 +109,64 @@ func (s *AnalyticsService) TrackAPIRequest(ctx context.Context, userID, path, me
 }
 
 func (s *AnalyticsService) GetUserStats(ctx context.Context, userID string, from, to time.Time) (map[string]interface{}, error) {
-	collection := s.client.Database.Collection("events")
+	query := `
+	SELECT type, count() as count
+	FROM events
+	WHERE user_id = ? AND timestamp >= ? AND timestamp <= ?
+	GROUP BY type
+	`
 
-	pipeline := []bson.M{
-		{
-			"$match": bson.M{
-				"user_id": userID,
-				"timestamp": bson.M{
-					"$gte": from,
-					"$lte": to,
-				},
-			},
-		},
-		{
-			"$group": bson.M{
-				"_id":   "$type",
-				"count": bson.M{"$sum": 1},
-			},
-		},
-	}
-
-	cursor, err := collection.Aggregate(ctx, pipeline)
+	rows, err := s.client.Conn.Query(ctx, query, userID, from, to)
 	if err != nil {
 		return nil, err
 	}
-	defer cursor.Close(ctx)
+	defer rows.Close()
 
 	stats := make(map[string]interface{})
-	for cursor.Next(ctx) {
-		var result bson.M
-		if err := cursor.Decode(&result); err != nil {
+	for rows.Next() {
+		var (
+			eventType string
+			count     uint64
+		)
+		if err := rows.Scan(&eventType, &count); err != nil {
 			continue
 		}
-		if id, ok := result["_id"].(string); ok {
-			stats[id] = result["count"]
-		}
+		stats[eventType] = count
 	}
 
 	return stats, nil
 }
 
 func (s *AnalyticsService) GetSystemStats(ctx context.Context) (map[string]interface{}, error) {
-	collection := s.client.Database.Collection("events")
 	stats := make(map[string]interface{})
 	now := time.Now().UTC()
 	last24h := now.Add(-24 * time.Hour)
 
-	totalEvents, err := collection.EstimatedDocumentCount(ctx)
-	if err != nil {
+	var totalEvents uint64
+	if err := s.client.Conn.QueryRow(ctx, "SELECT count() FROM events").Scan(&totalEvents); err != nil {
 		return nil, err
 	}
 	stats["total_events"] = totalEvents
 
-	errorCount, err := collection.CountDocuments(ctx, bson.M{
-		"status": bson.M{"$gte": 500},
-		"timestamp": bson.M{"$gte": last24h},
-	})
-	if err != nil {
+	var errorCount uint64
+	if err := s.client.Conn.QueryRow(ctx, "SELECT count() FROM events WHERE status >= 500 AND timestamp >= ?", last24h).Scan(&errorCount); err != nil {
 		return nil, err
 	}
 	stats["errors_last_24h"] = errorCount
 
-	activeUsersPipeline := []bson.M{
-		{
-			"$match": bson.M{
-				"timestamp": bson.M{"$gte": last24h},
-				"user_id":   bson.M{"$ne": ""},
-			},
-		},
-		{
-			"$group": bson.M{
-				"_id": "$user_id",
-			},
-		},
-		{
-			"$count": "count",
-		},
+	var activeUsers uint64
+	if err := s.client.Conn.QueryRow(ctx, "SELECT count(DISTINCT user_id) FROM events WHERE timestamp >= ? AND user_id != ''", last24h).Scan(&activeUsers); err != nil {
+		stats["active_users_24h"] = 0
+	} else {
+		stats["active_users_24h"] = activeUsers
 	}
 
-	activeUsersCursor, err := collection.Aggregate(ctx, activeUsersPipeline)
-	if err == nil {
-		defer activeUsersCursor.Close(ctx)
-		if activeUsersCursor.Next(ctx) {
-			var result bson.M
-			if err := activeUsersCursor.Decode(&result); err == nil {
-				stats["active_users_24h"] = result["count"]
-			}
-		} else {
-			stats["active_users_24h"] = 0
-		}
-	}
-
-	apiVolumePipeline := []bson.M{
-		{
-			"$match": bson.M{
-				"type": "api_request",
-				"timestamp": bson.M{"$gte": last24h},
-			},
-		},
-		{
-			"$group": bson.M{
-				"_id": nil,
-				"avg_latency": bson.M{"$avg": "$latency_ms"},
-				"total_requests": bson.M{"$sum": 1},
-			},
-		},
-	}
-
-	apiCursor, err := collection.Aggregate(ctx, apiVolumePipeline)
-	if err == nil {
-		defer apiCursor.Close(ctx)
-		if apiCursor.Next(ctx) {
-			var result bson.M
-			if err := apiCursor.Decode(&result); err == nil {
-				stats["requests_24h"] = result["total_requests"]
-				stats["avg_latency_ms"] = result["avg_latency"]
-			}
-		}
+	var totalRequests uint64
+	var avgLatency float64
+	query := "SELECT count(), avg(latency_ms) FROM events WHERE type = 'api_request' AND timestamp >= ?"
+	if err := s.client.Conn.QueryRow(ctx, query, last24h).Scan(&totalRequests, &avgLatency); err == nil {
+		stats["requests_24h"] = totalRequests
+		stats["avg_latency_ms"] = avgLatency
 	}
 
 	return stats, nil

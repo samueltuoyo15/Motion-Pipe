@@ -2,18 +2,13 @@ const siteMetadata = {
     title: 'Motion Pipe',
     author: 'Samuel Tuoyo',
     headerTitle: 'Motion Pipe',
-    description: 'Dokugen is an open source command-line tool that effortlessly generates high-quality README.md files for your projects. It intelligently analyzes your project structure and code to create a detailed, professional README—saving you time while ensuring clarity and consistency.',
-    language: 'en-us',
+    description: 'Motion Pipe is a platform designed for high-velocity marketing teams and agencies to generate broadcast-ready motion graphics and product advertisements. It provides the core infrastructure for automated motion design, replacing traditional production cycles with a streamlined, API-first workflow.',
     theme: 'system',
     siteUrl: 'https://motion-pipe.vercel.app',
-    siteLogo: '/card.png',
-    socialBanner: '/card.png',
-    email: 'samueltuoyo9082@gmail.com',
+    siteLogo: '/logo.png',
+    socialBanner: '/logo.png',
+    email: 'motionpipehq@gmail.com',
     github: 'https://github.com/sameultuoyo15/Motion-Pipe',
-    twitter: 'https://x.com/TuoyoS26091?t=cauMkLaDHxTX_oieHzVjkw&s=09',
-    facebook: 'https://www.facebook.com/share/18XqXawpGj/',
-    youtube: 'https://youtube.com/@samuel-tuoyo?si=PtUHcfICRye1wvuk',
-    linkedin: 'https://www.linkedin.com/in/samuel-tuoyo-8568b62b6',
     locale: 'en-US'
 }
 export default siteMetadata

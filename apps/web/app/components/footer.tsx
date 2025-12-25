@@ -42,7 +42,6 @@ export default function Footer() {
             <li><Link href="/terms" className="hover:text-[#3b82f6] transition-colors">Terms of Service</Link></li>
             <li><Link href="/privacy" className="hover:text-[#3b82f6] transition-colors">Privacy Policy</Link></li>
             <li><Link href="/escrow" className="hover:text-[#3b82f6] transition-colors">Escrow Agreement</Link></li>
-            <li><Link href="/sla" className="hover:text-[#3b82f6] transition-colors">Service Level Agreement</Link></li>
           </ul>
         </div>
       </div>

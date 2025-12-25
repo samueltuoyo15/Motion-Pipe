@@ -38,19 +38,20 @@ services:
     networks:
       - motion-pipe-network
 
-  mongodb:
-    image: mongo:7
-    container_name: motion-pipe-mongodb
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: motion-pipe-clickhouse
     ports:
-      - '27017:27017'
+      - '8123:8123'
+      - '9000:9000'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: mongo_password
-      MONGO_INITDB_DATABASE: motion_pipe_analytics
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: clickhouse_password
+      CLICKHOUSE_DB: motion_pipe_analytics
     volumes:
-      - mongodb_data:/data/db
+      - clickhouse_data:/var/lib/clickhouse
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD", "wget", "--spider", "-q", "localhost:8123/ping"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -95,12 +96,47 @@ services:
     networks:
       - motion-pipe-network
 
+  app-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: motion-pipe-server
+    ports:
+      - '8080:8080'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      clickhouse:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    env_file: .env
+    restart: unless-stopped
+    networks:
+      - motion-pipe-network
+
+  app-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: motion-pipe-worker
+    command: ["./worker"]
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    env_file: .env
+    restart: unless-stopped
+    networks:
+      - motion-pipe-network
+
 volumes:
   postgres_data:
     driver: local
   redis_data:
     driver: local
-  mongodb_data:
+  clickhouse_data:
     driver: local
   prometheus_data:
     driver: local
@@ -110,9 +146,3 @@ volumes:
 networks:
   motion-pipe-network:
     driver: bridge
-redis:
-    image: "redis:7-alpine"
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data

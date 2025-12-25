@@ -1,6 +1,6 @@
 # Motion Pipe
 
-Motion Pipe is a professional platform designed for high-velocity marketing teams and agencies to generate broadcast-ready motion graphics and product advertisements. It provides the core infrastructure for automated motion design, replacing traditional production cycles with a streamlined, API-first workflow.
+Motion Pipe is a platform designed for high-velocity marketing teams and agencies to generate broadcast-ready motion graphics and product advertisements. It provides the core infrastructure for automated motion design, replacing traditional production cycles with a streamlined, API-first workflow.
 
 <img src="/public/preview.png" alt="Motion Pipe" width="100%">
 

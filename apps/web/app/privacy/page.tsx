@@ -141,7 +141,7 @@ export default function PrivacyPolicy() {
                             <li><strong className="text-white">Opt-out:</strong> Unsubscribe from marketing emails (transactional emails can't be disabled)</li>
                         </ul>
                         <p className="mt-4">
-                            To exercise these rights, email <a href="mailto:privacy@motionpipe.com" className="text-[#3b82f6] hover:underline">privacy@motionpipe.com</a>
+                            To exercise these rights, email <a href="mailto:motionpipehq@gmail.com" className="text-[#3b82f6] hover:underline">motionpipehq@gmail.com</a>
                         </p>
                     </section>
 
@@ -184,7 +184,7 @@ export default function PrivacyPolicy() {
 
                     <section className="border-t border-[#27272a] pt-8">
                         <p className="text-sm text-[#52525b]">
-                            Questions about privacy? Email us at <a href="mailto:privacy@motionpipe.com" className="text-[#3b82f6] hover:underline">privacy@motionpipe.com</a>
+                            Questions about privacy? Email us at <a href="mailto:motionpipehq@gmail.com" className="text-[#3b82f6] hover:underline">motionpipehq@gmail.com</a>
                         </p>
                     </section>
                 </div>

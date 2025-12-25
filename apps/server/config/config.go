@@ -13,7 +13,7 @@ type Config struct {
 	Server    ServerConfig
 	Database  DatabaseConfig
 	Redis     RedisConfig
-	MongoDB   MongoDBConfig
+	ClickHouse ClickHouseConfig
 	RabbitMQ  RabbitMQConfig
 	Email     EmailConfig
 	S3        S3Config
@@ -49,9 +49,11 @@ type RedisConfig struct {
 	DB       int
 }
 
-type MongoDBConfig struct {
-	URI      string
+type ClickHouseConfig struct {
+	Addr     string
 	Database string
+	Username string
+	Password string
 }
 
 type RabbitMQConfig struct {
@@ -170,9 +172,11 @@ func Load() (*Config, error) {
 			Password: getEnv("REDIS_PASSWORD", ""),
 			DB:       redisDB,
 		},
-		MongoDB: MongoDBConfig{
-			URI:      getEnv("MONGO_URI", "mongodb://localhost:27017"),
-			Database: getEnv("MONGO_DATABASE", "motion_pipe_analytics"),
+		ClickHouse: ClickHouseConfig{
+			Addr:     getEnv("CLICKHOUSE_ADDR", "localhost:9000"),
+			Database: getEnv("CLICKHOUSE_DATABASE", "motion_pipe_analytics"),
+			Username: getEnv("CLICKHOUSE_USER", "default"),
+			Password: getEnv("CLICKHOUSE_PASSWORD", ""),
 		},
 		RabbitMQ: RabbitMQConfig{
 			URL: getEnv("RABBITMQ_URL", "amqp://guest:guest@localhost:5672/"),
@@ -182,7 +186,7 @@ func Load() (*Config, error) {
 			SMTPPort:     getEnvAsInt("SMTP_PORT", 587),
 			SMTPUser:     getEnv("SMTP_USER", ""),
 			SMTPPassword: getEnv("SMTP_PASSWORD", ""),
-			FromEmail:    getEnv("EMAIL_FROM_ADDRESS", "noreply@motionpipe.ai"),
+			FromEmail:    getEnv("EMAIL_FROM_ADDRESS", "motionpipehq@gmail.com"),
 			FromName:     getEnv("EMAIL_FROM_NAME", "Motion Pipe"),
 		},
 		S3: S3Config{

@@ -80,8 +80,8 @@ export default function SupportPage() {
                     <div>
                         <h3 className="text-white font-bold mb-2">Still need help?</h3>
                         <p className="text-[#a1a1aa] text-sm mb-4">Our support team is available 24/7 to assist you with any questions or issues.</p>
-                        <a href="mailto:support@motionpipe.com" className="text-[#3b82f6] text-sm font-medium hover:underline">
-                            support@motionpipe.com
+                        <a href="mailto:motionpipehq@gmail.com" className="text-[#3b82f6] text-sm font-medium hover:underline">
+                            motionpipehq@gmail.com
                         </a>
                     </div>
                 </div>

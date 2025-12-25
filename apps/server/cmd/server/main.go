@@ -16,17 +16,14 @@ import (
 	"motion-pipe/internal/repository"
 	"motion-pipe/internal/routes"
 	"motion-pipe/internal/service"
-	"motion-pipe/internal/routes"
-	"motion-pipe/internal/service"
-	"motion-pipe/pkg/postgres"
+	"motion-pipe/pkg/clickhouse"
 	"motion-pipe/pkg/email"
 	"motion-pipe/pkg/jwt"
 	"motion-pipe/pkg/logger"
-	"motion-pipe/pkg/mongodb"
 	"motion-pipe/pkg/oauth"
+	"motion-pipe/pkg/postgres"
 	"motion-pipe/pkg/rabbitmq"
 	"motion-pipe/pkg/redis"
-	"motion-pipe/internal/worker"
 
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -35,24 +32,6 @@ import (
 	"go.uber.org/zap"
 )
 
-// @title Motion Pipe API
-// @version 1.0
-// @description Production-grade API for Motion Pipe platform with OAuth authentication, JWT tokens, and analytics
-// @termsOfService http://swagger.io/terms/
-
-// @contact.name Samuel Tuoyo
-// @contact.url https://github.com/samueltuoyo15
-
-// @license.name MIT
-// @license.url https://opensource.org/licenses/MIT
-
-// @host localhost:8080
-// @BasePath /api/v1
-
-// @securityDefinitions.apikey BearerAuth
-// @in header
-// @name Authorization
-// @description Type "Bearer" followed by a space and JWT token
 func main() {
 	cfg, err := config.Load()
 	if err != nil {
@@ -96,15 +75,19 @@ func main() {
 		}
 	}()
 
-	mongoClient, err := mongodb.NewClient(cfg)
+	clickhouseClient, err := clickhouse.Connect(cfg)
 	if err != nil {
-		logger.Fatal("Failed to connect to MongoDB", zap.Error(err))
+		logger.Fatal("Failed to connect to ClickHouse", zap.Error(err))
 	}
 	defer func() {
-		if err := mongoClient.Close(); err != nil {
-			logger.Error("Failed to close MongoDB connection", zap.Error(err))
+		if err := clickhouseClient.Close(); err != nil {
+			logger.Error("Failed to close ClickHouse connection", zap.Error(err))
 		}
 	}()
+
+	if err := clickhouseClient.InitSchema(context.Background()); err != nil {
+		logger.Fatal("Failed to initialize ClickHouse schema", zap.Error(err))
+	}
 
 	rabbitClient, err := rabbitmq.NewClient(cfg)
 	if err != nil {
@@ -121,19 +104,11 @@ func main() {
 	tokenBlacklist := redis.NewTokenBlacklist(redisClient)
 	logger.Info("Token blacklist initialized")
 
-	analyticsService := service.NewAnalyticsService(mongoClient)
+	analyticsService := service.NewAnalyticsService(clickhouseClient)
 	logger.Info("Analytics service initialized")
 
 	emailService := email.NewService(cfg)
 	logger.Info("Email service initialized")
-
-	emailWorker := worker.NewEmailWorker(rabbitClient, emailService)
-	// Start worker in background
-	ctx, cancel := context.WithCancel(context.Background())
-	if err := emailWorker.Start(ctx); err != nil {
-		logger.Fatal("Failed to start email worker", zap.Error(err))
-	}
-	defer cancel() // Stop worker on exit
 
 	jwtManager := jwt.NewManager(
 		cfg.JWT.Secret,
@@ -202,8 +177,8 @@ func main() {
 
 	logger.Info("Shutting down server...")
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
+	ctx, cancelShutdown := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancelShutdown()
 
 	if err := srv.Shutdown(ctx); err != nil {
 		logger.Error("Server forced to shutdown", zap.Error(err))
@@ -211,4 +186,3 @@ func main() {
 
 	logger.Info("Server exited gracefully")
 }
-

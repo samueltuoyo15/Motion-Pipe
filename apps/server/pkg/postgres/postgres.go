@@ -85,7 +85,7 @@ func Migrate(db *gorm.DB) error {
 			Description: "High volume infrastructure",
 			Price:       0,
 			Currency:    "NGN",
-			Features:    datatypes.JSON([]byte(`["Dedicated GPU Instances", "Custom Brand Models", "SLA & Support"]`)),
+			Features:    datatypes.JSON([]byte(`["Dedicated GPU Instances", "Custom Brand Models", "Priority Support"]`)),
 			IsActive:    true,
 		},
 	}

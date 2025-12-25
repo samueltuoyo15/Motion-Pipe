@@ -48,7 +48,7 @@ export default function Pricing() {
                                 <CheckIcon /> <span>Custom Brand Models</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-[#a1a1aa]">
-                                <CheckIcon /> <span>SLA & Support</span>
+                                <CheckIcon /> <span>Priority Support</span>
                             </li>
                         </ul>
                         <button className="w-full py-3 border border-[#27272a] text-white font-bold text-sm hover:bg-[#18181b] transition-colors">

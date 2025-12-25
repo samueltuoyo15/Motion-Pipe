@@ -9,7 +9,7 @@ export default function TermsOfService() {
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
                     Terms of Service
                 </h1>
-                <p className="text-[#52525b] text-sm mb-12 font-mono">Last Updated: December 25, 2024</p>
+                <p className="text-[#52525b] text-sm mb-12 font-mono">Last Updated: December 25, 2025</p>
 
                 <div className="space-y-8 text-[#a1a1aa] leading-relaxed">
                     <section>
@@ -17,7 +17,6 @@ export default function TermsOfService() {
                         <p>
                             Motion Pipe is an autonomous video generation platform that creates broadcast-quality product commercials using AI.
                             By using our service, you're agreeing to these terms. We've written them to be as straightforward as possible,
-                            but if you have questions, reach out to us at legal@motionpipe.com.
                         </p>
                     </section>
 
@@ -136,20 +135,6 @@ export default function TermsOfService() {
                         <p>
                             We may update these terms as our service evolves. Material changes will be announced via email 30 days
                             before taking effect. Continued use after changes means you accept the new terms.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl font-bold text-white mb-4">11. Governing Law</h2>
-                        <p>
-                            These terms are governed by the laws of Nigeria. Any disputes will be resolved through binding arbitration
-                            in Lagos, Nigeria.
-                        </p>
-                    </section>
-
-                    <section className="border-t border-[#27272a] pt-8">
-                        <p className="text-sm text-[#52525b]">
-                            Questions about these terms? Email us at <a href="mailto:legal@motionpipe.com" className="text-[#3b82f6] hover:underline">legal@motionpipe.com</a>
                         </p>
                     </section>
                 </div>

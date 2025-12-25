@@ -134,7 +134,7 @@ export default function EscrowAgreement() {
                         <h2 className="text-2xl font-bold text-white mb-4">7. Dispute Resolution</h2>
                         <p className="mb-4">
                             If you believe a rejection was unfairly denied or a video doesn't meet quality standards,
-                            contact support@motionpipe.com within 48 hours of the dispute.
+                            contact motionpipehq@gmail.com within 48 hours of the dispute.
                         </p>
                         <p>
                             Our team will review the video, your brief, and the rejection reason. We'll respond within 2 business days
@@ -178,7 +178,7 @@ export default function EscrowAgreement() {
 
                     <section className="border-t border-[#27272a] pt-8">
                         <p className="text-sm text-[#52525b]">
-                            Questions about escrow? Email us at <a href="mailto:escrow@motionpipe.com" className="text-[#3b82f6] hover:underline">escrow@motionpipe.com</a>
+                            Questions about escrow? Email us at <a href="mailto:motionpipehq@gmail.com" className="text-[#3b82f6] hover:underline">motionpipehq@gmail.com</a>
                         </p>
                     </section>
                 </div>

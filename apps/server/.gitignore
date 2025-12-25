@@ -10,7 +10,7 @@
 *.so
 *.dylib
 motion-pipe
-server
+# server removed
 bin/
 
 # Test binaries

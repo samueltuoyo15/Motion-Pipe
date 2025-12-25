@@ -55,7 +55,7 @@ export default function Careers() {
                 <div className="bg-[#18181b] p-8 rounded border border-[#27272a] text-center">
                     <h3 className="text-white text-xl font-bold mb-2">Don't see your role?</h3>
                     <p className="text-[#a1a1aa] mb-6">We are always looking for exceptional talent.</p>
-                    <a href="mailto:jobs@motionpipe.ai" className="bg-[#3b82f6] text-white px-6 py-3 rounded font-bold hover:bg-blue-600 transition-colors">
+                    <a href="mailto:motionpipehq@gmail.com" className="bg-[#3b82f6] text-white px-6 py-3 rounded font-bold hover:bg-blue-600 transition-colors">
                         Email Us
                     </a>
                 </div>

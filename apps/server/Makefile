@@ -13,39 +13,30 @@ help:
 	@echo "  make clean       - Clean build artifacts"
 
 install:
-	@echo "Installing dependencies..."
 	go mod download
 	go install github.com/cosmtrek/air@latest
 	go install github.com/swaggo/swag/cmd/swag@latest
 
 dev:
-	@echo "Starting development server with hot reload..."
 	air
 
 build:
-	@echo "Building server..."
-	go build -o bin/motion-pipe main.go
+	go build -o bin/motion-pipe cmd/server/main.go
 
 run:
-	@echo "Running server..."
-	go run main.go
+	go run cmd/server/main.go
 
 test:
-	@echo "Running tests..."
 	go test -v ./...
 
 swagger:
-	@echo "Generating Swagger documentation..."
-	swag init -g main.go --output ./docs
+	swag init -g cmd/server/main.go --output ./docs
 
 docker-up:
-	@echo "Starting Docker services..."
 	docker-compose up -d
 
 docker-down:
-	@echo "Stopping Docker services..."
 	docker-compose down
 
 clean:
-	@echo "Cleaning build artifacts..."
 	rm -rf bin/ tmp/ docs/

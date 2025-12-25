@@ -82,7 +82,6 @@ func (s *authService) HandleOAuthCallback(
 		}
 		logger.Info("Created new user", zap.String("user_id", user.ID.String()))
 
-		// Publish welcome email event
 		payload := worker.WelcomeEmailPayload{
 			UserID: user.ID.String(),
 			Email:  user.Email,
@@ -90,7 +89,6 @@ func (s *authService) HandleOAuthCallback(
 		}
 		if err := worker.PublishWelcomeEmail(ctx, s.rabbitClient, payload); err != nil {
 			logger.Error("Failed to publish welcome email event", zap.Error(err))
-			// Continue execution, don't block login
 		}
 	} else {
 		if err := s.updateUserFromOAuth(ctx, user, gothUser); err != nil {
