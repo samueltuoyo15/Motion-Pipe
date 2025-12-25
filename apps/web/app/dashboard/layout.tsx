@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { Toaster } from "sonner";
 
+import { useLanguage } from "../context/language-context";
+
 export default function DashboardLayout({
     children,
 }: {
@@ -26,6 +28,7 @@ export default function DashboardLayout({
 }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [inviteEmail, setInviteEmail] = useState("");
+    const { t } = useLanguage();
 
     const toggleMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
@@ -62,11 +65,11 @@ export default function DashboardLayout({
                 <nav className="flex-1 p-4 space-y-6 overflow-y-auto">
                     <div>
                         <p className="px-2 text-xs font-mono text-[#52525b] uppercase tracking-widest mb-2">Workspace</p>
-                        <NavItem href="/dashboard" icon={LayoutTemplate} label="Ad Editor" onClick={() => setMobileMenuOpen(false)} />
-                        <NavItem href="/dashboard/assets" icon={FolderOpen} label="Assets" onClick={() => setMobileMenuOpen(false)} />
-                        <NavItem href="/dashboard/tickets" icon={Ticket} label="Tickets" onClick={() => setMobileMenuOpen(false)} />
-                        <NavItem href="/dashboard/templates" icon={ImageIcon} label="Templates" onClick={() => setMobileMenuOpen(false)} />
-                        <NavItem href="/dashboard/history" icon={History} label="History" onClick={() => setMobileMenuOpen(false)} />
+                        <NavItem href="/dashboard" icon={LayoutTemplate} label={t('dash_home')} onClick={() => setMobileMenuOpen(false)} />
+                        <NavItem href="/dashboard/assets" icon={FolderOpen} label={t('dash_assets')} onClick={() => setMobileMenuOpen(false)} />
+                        <NavItem href="/dashboard/tickets" icon={Ticket} label={t('dash_tickets')} onClick={() => setMobileMenuOpen(false)} />
+                        <NavItem href="/dashboard/templates" icon={ImageIcon} label={t('dash_templates')} onClick={() => setMobileMenuOpen(false)} />
+                        <NavItem href="/dashboard/history" icon={History} label={t('dash_history')} onClick={() => setMobileMenuOpen(false)} />
                     </div>
 
                     <div className="px-2 mb-4">
@@ -87,14 +90,14 @@ export default function DashboardLayout({
 
                     <div>
                         <p className="px-2 text-xs font-mono text-[#52525b] uppercase tracking-widest mb-2">Finance</p>
-                        <NavItem href="/dashboard/billing" icon={CreditCard} label="Escrow & Billing" onClick={() => setMobileMenuOpen(false)} />
+                        <NavItem href="/dashboard/billing" icon={CreditCard} label={t('dash_billing')} onClick={() => setMobileMenuOpen(false)} />
                     </div>
 
                     <div>
                         <p className="px-2 text-xs font-mono text-[#52525b] uppercase tracking-widest mb-2">System</p>
                         <NavItem href="/dashboard/profile" icon={User} label="Profile" onClick={() => setMobileMenuOpen(false)} />
-                        <NavItem href="/dashboard/settings" icon={Settings} label="Settings" onClick={() => setMobileMenuOpen(false)} />
-                        <NavItem href="/dashboard/support" icon={HelpCircle} label="Support" onClick={() => setMobileMenuOpen(false)} />
+                        <NavItem href="/dashboard/settings" icon={Settings} label={t('dash_settings')} onClick={() => setMobileMenuOpen(false)} />
+                        <NavItem href="/dashboard/support" icon={HelpCircle} label={t('dash_support')} onClick={() => setMobileMenuOpen(false)} />
                     </div>
                 </nav>
 

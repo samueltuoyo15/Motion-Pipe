@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-
-type Language = 'EN' | 'FR' | 'ES' | 'DE';
+import React, { createContext, useContext } from 'react';
+import { useChunk } from 'stunk/react';
+import { languageChunk, Language } from '../lib/store';
 
 interface LanguageContextType {
     language: Language;
@@ -27,6 +27,15 @@ const translations: Record<Language, Record<string, string>> = {
         capabilities_desc: "Automated motion design infrastructure.",
         enterprise_stack: "Enterprise Stack",
         footer_tagline: "The automated motion design infrastructure for high-velocity marketing teams. Escrow-secured, AI-generated, broadcast-ready.",
+        // Dashboard
+        dash_home: "Dashboard",
+        dash_assets: "Assets",
+        dash_templates: "Templates",
+        dash_history: "History",
+        dash_billing: "Billing",
+        dash_support: "Support",
+        dash_settings: "Settings",
+        dash_tickets: "Tickets",
     },
     FR: {
         hero_title: "Votre Nouveau Freelance IA.",
@@ -44,6 +53,14 @@ const translations: Record<Language, Record<string, string>> = {
         capabilities_desc: "Infrastructure de conception de mouvement automatisée.",
         enterprise_stack: "Pile d'entreprise",
         footer_tagline: "L'infrastructure de conception de mouvement automatisée pour les équipes marketing à haute vélocité. Sécurisé par séquestre, généré par IA, prêt pour la diffusion.",
+        dash_home: "Tableau de Bord",
+        dash_assets: "Ressources",
+        dash_templates: "Modèles",
+        dash_history: "Historique",
+        dash_billing: "Facturation",
+        dash_support: "Support",
+        dash_settings: "Paramètres",
+        dash_tickets: "Tickets",
     },
     ES: {
         hero_title: "Tu Nuevo Freelancer de IA.",
@@ -61,6 +78,14 @@ const translations: Record<Language, Record<string, string>> = {
         capabilities_desc: "Infraestructura de diseño de movimiento automatizada.",
         enterprise_stack: "Pila Empresarial",
         footer_tagline: "La infraestructura de diseño de movimiento automatizada para equipos de marketing de alta velocidad. Depósito en garantía asegurado, generado por IA, listo para la emisión.",
+        dash_home: "Panel",
+        dash_assets: "Activos",
+        dash_templates: "Plantillas",
+        dash_history: "Historial",
+        dash_billing: "Facturación",
+        dash_support: "Soporte",
+        dash_settings: "Configuración",
+        dash_tickets: "Tickets",
     },
     DE: {
         hero_title: "Ihr neuer KI-Freelancer.",
@@ -78,16 +103,24 @@ const translations: Record<Language, Record<string, string>> = {
         capabilities_desc: "Automatisierte Motion-Design-Infrastruktur.",
         enterprise_stack: "Enterprise-Stack",
         footer_tagline: "Die automatisierte Motion-Design-Infrastruktur für hochfrequente Marketingteams. Treuhandgesichert, KI-generiert, sendefertig.",
+        dash_home: "Dashboard",
+        dash_assets: "Assets",
+        dash_templates: "Vorlagen",
+        dash_history: "Verlauf",
+        dash_billing: "Abrechnung",
+        dash_support: "Support",
+        dash_settings: "Einstellungen",
+        dash_tickets: "Tickets",
     }
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-    const [language, setLanguage] = useState<Language>('EN');
+    const [language, setLanguage] = useChunk(languageChunk);
 
     const t = (key: string) => {
-        return translations[language][key] || key;
+        return translations[language as Language][key] || key;
     };
 
     return (
