@@ -8,32 +8,19 @@ import (
 	"motion-pipe/pkg/mongodb"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"
 )
 
-type Event struct {
-	Type      string                 `bson:"type"`
-	UserID    string                 `bson:"user_id,omitempty"`
-	IP        string                 `bson:"ip"`
-	UserAgent string                 `bson:"user_agent"`
-	Path      string                 `bson:"path"`
-	Method    string                 `bson:"method"`
-	Status    int                    `bson:"status"`
-	Latency   int64                  `bson:"latency_ms"`
-	Metadata  map[string]interface{} `bson:"metadata,omitempty"`
-	Timestamp time.Time              `bson:"timestamp"`
-}
-
-type Service struct {
+type AnalyticsService struct {
 	client *mongodb.Client
 }
 
-func NewAnalyticsService(client *mongodb.Client) *Service {
-	return &Service{client: client}
+func NewAnalyticsService(client *mongodb.Client) *AnalyticsService {
+	return &AnalyticsService{client: client}
 }
 
-
-func (s *Service) TrackEvent(ctx context.Context, event *Event) error {
+func (s *AnalyticsService) TrackEvent(ctx context.Context, event *mongodb.AnalyticsEvent) error {
 	event.Timestamp = time.Now().UTC()
 
 	collection := s.client.Database.Collection("events")
@@ -46,8 +33,8 @@ func (s *Service) TrackEvent(ctx context.Context, event *Event) error {
 	return nil
 }
 
-func (s *Service) TrackLogin(ctx context.Context, userID, provider, ip, userAgent string) {
-	event := &Event{
+func (s *AnalyticsService) TrackLogin(ctx context.Context, userID, provider, ip, userAgent string) {
+	event := &mongodb.AnalyticsEvent{
 		Type:      "user_login",
 		UserID:    userID,
 		IP:        ip,
@@ -62,8 +49,8 @@ func (s *Service) TrackLogin(ctx context.Context, userID, provider, ip, userAgen
 	}
 }
 
-func (s *Service) TrackLogout(ctx context.Context, userID, ip string) {
-	event := &Event{
+func (s *AnalyticsService) TrackLogout(ctx context.Context, userID, ip string) {
+	event := &mongodb.AnalyticsEvent{
 		Type:   "user_logout",
 		UserID: userID,
 		IP:     ip,
@@ -74,8 +61,23 @@ func (s *Service) TrackLogout(ctx context.Context, userID, ip string) {
 	}
 }
 
-func (s *Service) TrackAPIRequest(ctx context.Context, userID, path, method, ip, userAgent string, status int, latency time.Duration) {
-	event := &Event{
+func (s *AnalyticsService) TrackSignup(ctx context.Context, userID, provider, ip string) {
+	event := &mongodb.AnalyticsEvent{
+		Type:   "user_signup",
+		UserID: userID,
+		IP:     ip,
+		Metadata: map[string]interface{}{
+			"provider": provider,
+		},
+	}
+
+	if err := s.TrackEvent(ctx, event); err != nil {
+		logger.Error("Failed to track signup", zap.Error(err))
+	}
+}
+
+func (s *AnalyticsService) TrackAPIRequest(ctx context.Context, userID, path, method, ip, userAgent string, status int, latency time.Duration) {
+	event := &mongodb.AnalyticsEvent{
 		Type:      "api_request",
 		UserID:    userID,
 		IP:        ip,
@@ -91,7 +93,7 @@ func (s *Service) TrackAPIRequest(ctx context.Context, userID, path, method, ip,
 	}
 }
 
-func (s *Service) GetUserStats(ctx context.Context, userID string, from, to time.Time) (map[string]interface{}, error) {
+func (s *AnalyticsService) GetUserStats(ctx context.Context, userID string, from, to time.Time) (map[string]interface{}, error) {
 	collection := s.client.Database.Collection("events")
 
 	pipeline := []bson.M{
@@ -124,7 +126,91 @@ func (s *Service) GetUserStats(ctx context.Context, userID string, from, to time
 		if err := cursor.Decode(&result); err != nil {
 			continue
 		}
-		stats[result["_id"].(string)] = result["count"]
+		if id, ok := result["_id"].(string); ok {
+			stats[id] = result["count"]
+		}
+	}
+
+	return stats, nil
+}
+
+func (s *AnalyticsService) GetSystemStats(ctx context.Context) (map[string]interface{}, error) {
+	collection := s.client.Database.Collection("events")
+	stats := make(map[string]interface{})
+	now := time.Now().UTC()
+	last24h := now.Add(-24 * time.Hour)
+
+	totalEvents, err := collection.EstimatedDocumentCount(ctx)
+	if err != nil {
+		return nil, err
+	}
+	stats["total_events"] = totalEvents
+
+	errorCount, err := collection.CountDocuments(ctx, bson.M{
+		"status": bson.M{"$gte": 500},
+		"timestamp": bson.M{"$gte": last24h},
+	})
+	if err != nil {
+		return nil, err
+	}
+	stats["errors_last_24h"] = errorCount
+
+	activeUsersPipeline := []bson.M{
+		{
+			"$match": bson.M{
+				"timestamp": bson.M{"$gte": last24h},
+				"user_id":   bson.M{"$ne": ""},
+			},
+		},
+		{
+			"$group": bson.M{
+				"_id": "$user_id",
+			},
+		},
+		{
+			"$count": "count",
+		},
+	}
+
+	activeUsersCursor, err := collection.Aggregate(ctx, activeUsersPipeline)
+	if err == nil {
+		defer activeUsersCursor.Close(ctx)
+		if activeUsersCursor.Next(ctx) {
+			var result bson.M
+			if err := activeUsersCursor.Decode(&result); err == nil {
+				stats["active_users_24h"] = result["count"]
+			}
+		} else {
+			stats["active_users_24h"] = 0
+		}
+	}
+
+	apiVolumePipeline := []bson.M{
+		{
+			"$match": bson.M{
+				"type": "api_request",
+				"timestamp": bson.M{"$gte": last24h},
+			},
+		},
+		{
+			"$group": bson.M{
+				"_id": nil,
+				"avg_latency": bson.M{"$avg": "$latency_ms"},
+				"total_requests": bson.M{"$sum": 1},
+			},
+		},
+	}
+
+	apiCursor, err := collection.Aggregate(ctx, apiVolumePipeline)
+	if err == nil {
+		defer apiCursor.Close(ctx)
+		if apiCursor.Next(ctx) {
+			var result bson.M
+			if err := apiCursor.Decode(&result); err == nil {
+				stats["requests_24h"] = result["total_requests"]
+				stats["avg_latency_ms"] = result["avg_latency"]
+			}
+		}
 	}
 
 	return stats, nil

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"motion-pipe/config"
@@ -26,17 +27,9 @@ func NewAuthHandler(authService service.AuthService, cfg *config.Config) *AuthHa
 	}
 }
 
-// BeginAuth godoc
-// @Summary Start OAuth authentication
-// @Description Initiates OAuth flow with specified provider
-// @Tags Authentication
-// @Param provider path string true "OAuth Provider" Enums(google, twitter)
-// @Success 302 {string} string "Redirect to OAuth provider"
-// @Failure 400 {object} map[string]string
-// @Router /auth/{provider} [get]
 func (h *AuthHandler) BeginAuth(c *gin.Context) {
 	provider := c.Param("provider")
-	
+
 	if provider != "google" && provider != "twitter" {
 		logger.Warn("Invalid OAuth provider", zap.String("provider", provider))
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -50,14 +43,6 @@ func (h *AuthHandler) BeginAuth(c *gin.Context) {
 	gothic.BeginAuthHandler(c.Writer, c.Request)
 }
 
-// Callback godoc
-// @Summary OAuth callback handler
-// @Description Handles OAuth provider callback and returns JWT tokens
-// @Tags Authentication
-// @Param provider path string true "OAuth Provider" Enums(google, twitter)
-// @Success 302 {string} string "Redirect to frontend with token"
-// @Failure 400 {object} map[string]string
-// @Router /auth/{provider}/callback [get]
 func (h *AuthHandler) Callback(c *gin.Context) {
 	provider := c.Param("provider")
 
@@ -80,7 +65,7 @@ func (h *AuthHandler) Callback(c *gin.Context) {
 	authResponse, err := h.authService.HandleOAuthCallback(c.Request.Context(), gothUser)
 	if err != nil {
 		logger.Error("Failed to handle OAuth callback", zap.Error(err))
-		
+
 		if errors.Is(err, service.ErrUserInactive) {
 			c.Redirect(http.StatusTemporaryRedirect, h.config.Server.FrontendURL+"/auth/error?message=account_inactive")
 			return
@@ -90,21 +75,14 @@ func (h *AuthHandler) Callback(c *gin.Context) {
 		return
 	}
 
-	redirectURL := h.config.Server.FrontendURL + "/auth/success?token=" + authResponse.Tokens.AccessToken
+	redirectURL := fmt.Sprintf("%s/auth/success?access_token=%s&refresh_token=%s",
+		h.config.Server.FrontendURL,
+		authResponse.Tokens.AccessToken,
+		authResponse.Tokens.RefreshToken,
+	)
 	c.Redirect(http.StatusTemporaryRedirect, redirectURL)
 }
 
-// RefreshToken godoc
-// @Summary Refresh access token
-// @Description Get new access token using refresh token
-// @Tags Authentication
-// @Accept json
-// @Produce json
-// @Param request body object{refresh_token=string} true "Refresh Token Request"
-// @Success 200 {object} map[string]interface{}
-// @Failure 400 {object} map[string]string
-// @Failure 401 {object} map[string]string
-// @Router /auth/refresh [post]
 func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	var req struct {
 		RefreshToken string `json:"refresh_token" binding:"required"`
@@ -122,7 +100,7 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	tokens, err := h.authService.RefreshToken(c.Request.Context(), req.RefreshToken)
 	if err != nil {
 		logger.Error("Failed to refresh token", zap.Error(err))
-		
+
 		if errors.Is(err, service.ErrInvalidCredentials) {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"error":   "Unauthorized",
@@ -143,15 +121,6 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	})
 }
 
-// Logout godoc
-// @Summary Logout user
-// @Description Blacklist current access token
-// @Tags Authentication
-// @Security BearerAuth
-// @Success 200 {object} map[string]string
-// @Failure 400 {object} map[string]string
-// @Failure 500 {object} map[string]string
-// @Router /auth/logout [post]
 func (h *AuthHandler) Logout(c *gin.Context) {
 	token, err := extractTokenFromHeader(c)
 	if err != nil {
@@ -177,15 +146,6 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 	})
 }
 
-// GetCurrentUser godoc
-// @Summary Get current user
-// @Description Get authenticated user information
-// @Tags Authentication
-// @Security BearerAuth
-// @Produce json
-// @Success 200 {object} map[string]interface{}
-// @Failure 401 {object} map[string]string
-// @Router /auth/me [get]
 func (h *AuthHandler) GetCurrentUser(c *gin.Context) {
 	user, exists := middleware.GetCurrentUser(c)
 	if !exists {

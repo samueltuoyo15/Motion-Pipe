@@ -50,6 +50,8 @@ export const metadata: Metadata = {
 
 import Providers from "./providers";
 
+import { AuthInitializer } from "@/components/auth-initializer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,6 +61,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${sans.variable} ${mono.variable} font-sans antialiased`}>
         <Providers>
+          <AuthInitializer />
           {children}
         </Providers>
       </body>

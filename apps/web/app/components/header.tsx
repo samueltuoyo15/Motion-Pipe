@@ -5,9 +5,13 @@ import Link from "next/link";
 import { Globe, ChevronDown } from "lucide-react";
 import { useLanguage } from "../context/language-context";
 
+import { useChunk } from "stunk/react";
+import { authChunk } from "@/lib/store";
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const [auth] = useChunk(authChunk);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#09090b]/80 backdrop-blur-md border-b border-[#27272a]">
@@ -56,12 +60,23 @@ export default function Header() {
               </div>
             </div>
 
-            <Link href="/login" className="text-[#a1a1aa] hover:text-white transition-colors text-sm font-medium">
-              {t('nav_login')}
-            </Link>
-            <Link href="/register" className="bg-white text-black px-5 py-2 rounded text-sm font-bold hover:bg-[#e4e4e7] transition-colors">
-              {t('nav_get_started')}
-            </Link>
+            {auth.isAuthenticated ? (
+              <Link href="/dashboard" className="bg-[#3b82f6] text-white px-5 py-2 rounded text-sm font-bold hover:bg-blue-600 transition-colors flex items-center gap-2">
+                <span>Dashboard</span>
+                {auth.user?.avatar && (
+                  <img src={auth.user.avatar} className="w-5 h-5 rounded-full border border-white/20" alt="" />
+                )}
+              </Link>
+            ) : (
+              <>
+                <Link href="/login" className="text-[#a1a1aa] hover:text-white transition-colors text-sm font-medium">
+                  {t('nav_login')}
+                </Link>
+                <Link href="/register" className="bg-white text-black px-5 py-2 rounded text-sm font-bold hover:bg-[#e4e4e7] transition-colors">
+                  {t('nav_get_started')}
+                </Link>
+              </>
+            )}
           </div>
         </div>
 

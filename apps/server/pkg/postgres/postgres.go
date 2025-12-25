@@ -9,6 +9,7 @@ import (
 	"motion-pipe/pkg/postgres/models"
 
 	"go.uber.org/zap"
+	"gorm.io/datatypes"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
@@ -51,7 +52,7 @@ func Migrate(db *gorm.DB) error {
 		logger.Warn("Failed to create uuid-ossp extension", zap.Error(err))
 	}
 
-	models := []interface{}{
+	modelsList := []interface{}{
 		&models.User{},
 		&models.Asset{},
 		&models.Template{},
@@ -59,18 +60,45 @@ func Migrate(db *gorm.DB) error {
 		&models.Subscription{},
 		&models.Ticket{},
 		&models.TicketMessage{},
+		&models.Plan{},
 	}
 
-	for _, model := range models {
+	for _, model := range modelsList {
 		if err := db.AutoMigrate(model); err != nil {
 			return fmt.Errorf("failed to migrate model: %w", err)
+		}
+	}
+
+	plans := []models.Plan{
+		{
+			Name:        "Pay-As-You-Go",
+			Slug:        "pay-as-you-go",
+			Description: "For agencies & brands",
+			Price:       10000,
+			Currency:    "NGN",
+			Features:    datatypes.JSON([]byte(`["4K Broadcast Quality", "AI Voiceover (ElevenLabs)", "No Watermark", "Escrow Protection"]`)),
+			IsActive:    true,
+		},
+		{
+			Name:        "Enterprise",
+			Slug:        "enterprise",
+			Description: "High volume infrastructure",
+			Price:       0,
+			Currency:    "NGN",
+			Features:    datatypes.JSON([]byte(`["Dedicated GPU Instances", "Custom Brand Models", "SLA & Support"]`)),
+			IsActive:    true,
+		},
+	}
+
+	for _, p := range plans {
+		if err := db.Where(models.Plan{Slug: p.Slug}).FirstOrCreate(&p).Error; err != nil {
+			logger.Warn("Failed to seed plan", zap.String("slug", p.Slug), zap.Error(err))
 		}
 	}
 
 	logger.Info("Database migrations completed successfully")
 	return nil
 }
-
 
 func Close(db *gorm.DB) error {
 	sqlDB, err := db.DB()

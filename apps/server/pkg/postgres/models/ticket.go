@@ -44,7 +44,7 @@ type TicketMessage struct {
 	ReplyToID   *uuid.UUID     `json:"reply_to_id" gorm:"type:uuid"`
 	ReplyTo     *TicketMessage `json:"reply_to" gorm:"foreignKey:ReplyToID"`
 	Content     string         `json:"content" gorm:"type:text;not null"`
-	Attachments datatypes.JSON `json:"attachments" gorm:"type:jsonb"` // Array of file URLs
+	Attachments datatypes.JSON `json:"attachments" gorm:"type:jsonb"`
 	CreatedAt   time.Time      `json:"created_at" gorm:"autoCreateTime"`
 }
 
