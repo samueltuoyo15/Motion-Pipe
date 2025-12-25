@@ -30,7 +30,7 @@ The platform is built on a high-performance monorepo architecture designed for c
 *   **Frontend:** Next.js 16, React 19, Tailwind CSS.
 *   **Media Processing:** FFmpeg, Google Veo 3 API.
 *   **Data & Real-time:** Redis, Gorilla WebSockets.
-*   **Storage:** Cloudflare R2 (Zero-Egress storage).
+*   **Storage:** Cloudinary (Media Cloud).
 
 
 ## Security & Reliability

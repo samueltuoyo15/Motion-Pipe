@@ -51,7 +51,7 @@ export default function Home() {
     { title: t('tech_1'), Icon: Cpu, desc: "Concurrent Orchestration" },
     { title: t('tech_2'), Icon: Video, desc: "Video Synthesis" },
     { title: t('tech_3'), Icon: Layers, desc: "Media Assembly" },
-    { title: t('tech_4'), Icon: HardDrive, desc: "Zero-Egress Storage" },
+    { title: t('tech_4'), Icon: HardDrive, desc: "Optimized Media Cloud" },
     { title: t('tech_5'), Icon: ShieldCheck, desc: "Escrow Payments" },
     { title: t('tech_6'), Icon: Zap, desc: "High-Speed Cache" },
   ];
@@ -105,7 +105,7 @@ export default function Home() {
             {features.map((feature, index) => (
               <div key={index} className="bg-[#09090b] p-8 hover:bg-[#18181b] transition-colors group">
                 <div className="w-10 h-10 border border-[#27272a] bg-[#18181b] rounded-lg flex items-center justify-center mb-6 text-[#3b82f6]">
-                  <Image src={feature.icon} width={20} height={20} alt="" className="invert opacity-80" />
+                  <img src={feature.icon} width={20} height={20} alt="" className="invert opacity-80" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
                 <p className="text-[#a1a1aa] leading-relaxed">{feature.description}</p>
@@ -115,18 +115,21 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full bg-[#0c0c0e] py-24 border-t border-[#27272a]">
+      <div className="w-full bg-[#0c0c0e] py-12 md:py-24 border-t border-[#27272a] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Generate Motion Design.</h2>
-          <p className="text-[#3b82f6] text-xl font-bold mb-12 tracking-wide uppercase">Don't Pay for Motion Designers.</p>
-
-          <div className="perspective-center py-32 overflow-visible">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+            Generate Real Videos Like These. <span className="text-[#52525b]">No Designers Needed.</span>
+          </h2>
+          <p className="text-lg text-[#a1a1aa] max-w-2xl mx-auto mb-12">
+            Create professional motion graphics using our pre-built real-world templates.
+          </p>
+          <div className="perspective-center py-16 md:py-32">
             <div className="carousel-box">
-              <ProductCard index={0} label="Beverages" image="/water_bottle_mockup.png" />
-              <ProductCard index={1} label="Tech" image="/laptop_mock.png" />
-              <ProductCard index={2} label="Fashion" image="/shirt_mock.png" />
-              <ProductCard index={3} label="Cosmetics" image="/cream_mock.png" />
-              <ProductCard index={4} label="Supplements" image="/jar_mock.png" />
+              <ProductCard index={0} label="AI Assistant" video="/motion-templates/ai.mp4" />
+              <ProductCard index={1} label="Crypto DeFi" video="/motion-templates/crypto.mp4" />
+              <ProductCard index={2} label="Fintech App" video="/motion-templates/fintech.mp4" />
+              <ProductCard index={3} label="Banking" video="/motion-templates/fintech (2).mp4" />
+              <ProductCard index={4} label="Healthcare" video="/motion-templates/healthcare.mp4" />
             </div>
           </div>
         </div>
@@ -190,26 +193,26 @@ function StatItem({ value, label }: { value: string; label: string }) {
   )
 }
 
-function ProductCard({ label, image, index }: { label: string, image: string, index?: number }) {
+function ProductCard({ label, video, index }: { label: string, video: string, index?: number }) {
   const style = { "--i": index } as React.CSSProperties;
-  const isPriority = index === 0;
 
   return (
     <div className="carousel-item" style={style}>
       <article className="bg-[#09090b] border border-[#27272a] p-3 md:p-5 rounded-none w-full flex flex-col items-start hover:border-[#3b82f6] transition-all group cursor-pointer relative overflow-hidden h-full">
-        <div className="absolute top-2 right-2 flex items-center gap-1.5">
+        <div className="absolute top-2 right-2 flex items-center gap-1.5 z-10">
           <span className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full animate-pulse" aria-hidden="true" />
           <span className="text-[10px] font-mono text-[#52525b] uppercase tracking-tighter group-hover:text-[#3b82f6]">Ready</span>
         </div>
 
         <div className="w-full aspect-square bg-[#09090b] rounded-none mb-4 flex items-center justify-center overflow-hidden relative border border-[#27272a] group-hover:border-[#3b82f6]/30 transition-colors">
-          <Image
-            src={image}
-            alt={`${label} product mockup for AI video generation`}
-            fill
-            sizes="(max-width: 768px) 180px, 256px"
-            priority={isPriority}
-            className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
+          <video
+            src={video}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-500"
+            aria-label={`${label} motion design example`}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
         </div>

@@ -93,7 +93,7 @@ export default function PrivacyPolicy() {
 
                         <h3 className="text-lg font-bold text-white mb-3 mt-6">Infrastructure Partners</h3>
                         <p className="mb-4">
-                            We use Cloudflare R2 for video storage, Redis for caching, and Paystack for payments.
+                            We use Cloudinary for video storage and optimization, Redis for caching, and Paystack for payments.
                             These services only access data necessary to perform their function.
                         </p>
 
