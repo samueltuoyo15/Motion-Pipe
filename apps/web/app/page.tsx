@@ -171,18 +171,33 @@ function StatItem({ value, label }: { value: string; label: string }) {
 
 function ProductCard({ label, image }: { label: string, image: string }) {
   return (
-    <div className="bg-[#18181b] border border-[#27272a] p-4 rounded-xl w-40 flex flex-col items-center hover:border-[#3b82f6] transition-colors group cursor-pointer">
-      <div className="w-24 h-24 bg-[#09090b] rounded-lg mb-4 flex items-center justify-center overflow-hidden relative border border-[#27272a]">
+    <div className="bg-black/40 border border-[#27272a] p-5 rounded-none w-64 flex flex-col items-start hover:border-[#3b82f6] transition-all group cursor-pointer relative overflow-hidden group">
+      <div className="absolute top-2 right-2 flex items-center gap-1.5">
+        <span className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full animate-pulse" />
+        <span className="text-[10px] font-mono text-[#52525b] uppercase tracking-tighter group-hover:text-[#3b82f6]">Ready</span>
+      </div>
+
+      <div className="w-full aspect-square bg-[#09090b] rounded-none mb-4 flex items-center justify-center overflow-hidden relative border border-[#27272a] group-hover:border-[#3b82f6]/30 transition-colors">
         <Image
           src={image}
           alt={label}
-          width={96}
-          height={96}
-          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+          fill
+          className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </div>
-      <span className="text-white font-medium text-sm">{label}</span>
+
+      <div className="w-full flex justify-between items-end">
+        <div>
+          <p className="text-[10px] font-mono text-[#52525b] uppercase mb-1">Category</p>
+          <span className="text-white font-bold text-sm tracking-tight uppercase">{label}</span>
+        </div>
+        <div className="w-6 h-6 border border-[#27272a] flex items-center justify-center group-hover:border-[#3b82f6] transition-colors">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-[#52525b] group-hover:text-[#3b82f6] transition-colors">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </div>
+      </div>
     </div>
   )
 }
-
