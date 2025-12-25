@@ -17,11 +17,14 @@ import (
 	"motion-pipe/internal/routes"
 	"motion-pipe/internal/service"
 	"motion-pipe/pkg/database"
+	"motion-pipe/pkg/email"
 	"motion-pipe/pkg/jwt"
 	"motion-pipe/pkg/logger"
 	"motion-pipe/pkg/mongodb"
 	"motion-pipe/pkg/oauth"
+	"motion-pipe/pkg/rabbitmq"
 	"motion-pipe/pkg/redis"
+	"motion-pipe/internal/worker"
 
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -101,6 +104,12 @@ func main() {
 		}
 	}()
 
+	rabbitClient, err := rabbitmq.NewClient(cfg)
+	if err != nil {
+		logger.Fatal("Failed to connect to RabbitMQ", zap.Error(err))
+	}
+	defer rabbitClient.Close()
+
 	oauth.Initialize(cfg)
 	logger.Info("OAuth providers initialized")
 
@@ -113,6 +122,17 @@ func main() {
 	analyticsService := service.NewAnalyticsService(mongoClient)
 	logger.Info("Analytics service initialized")
 
+	emailService := email.NewService(cfg)
+	logger.Info("Email service initialized")
+
+	emailWorker := worker.NewEmailWorker(rabbitClient, emailService)
+	// Start worker in background
+	ctx, cancel := context.WithCancel(context.Background())
+	if err := emailWorker.Start(ctx); err != nil {
+		logger.Fatal("Failed to start email worker", zap.Error(err))
+	}
+	defer cancel() // Stop worker on exit
+
 	jwtManager := jwt.NewManager(
 		cfg.JWT.Secret,
 		cfg.JWT.Expiration,
@@ -120,7 +140,7 @@ func main() {
 	)
 	logger.Info("JWT manager initialized")
 
-	authService := service.NewAuthService(userRepo, tokenBlacklist, jwtManager)
+	authService := service.NewAuthService(userRepo, tokenBlacklist, jwtManager, rabbitClient)
 	logger.Info("Services initialized")
 
 	authHandler := handler.NewAuthHandler(authService, cfg)

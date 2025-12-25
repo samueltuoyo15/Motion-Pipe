@@ -1,6 +1,16 @@
 # Motion Pipe
 
-Motion Pipe is a professional platform designed for high-velocity marketing teams and agencies to generate broadcast-ready motion graphics and product advertisements. It provides the core infrastructure for automated motion design, replacing traditional production cycles with a streamlined, API-first workflow.
+Motion Pipe is a professional platform designed for high-velocity marketing teams and agencies to generate broadcast-ready motioRABBITMQ_URL=amqp://guest:guest@localhost:5672/
+
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASSWORD=your_app_password
+EMAIL_FROM_ADDRESS=noreply@motionpipe.ai
+EMAIL_FROM_NAME=Motion Pipen graphics and product advertisements. It provides the core infrastructure for automated motion design, replacing traditional production cycles with a streamlined, API-first workflow.
+
+<img src="/public/preview.png" alt="Motion Pipe" width="100%">
+<img src="/public/preview-2.png" alt="Motion Pipe" width="100%">
 
 ## Core Platform Capabilities
 

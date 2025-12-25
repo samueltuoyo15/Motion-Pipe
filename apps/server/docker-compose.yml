@@ -75,6 +75,26 @@ services:
     networks:
       - motion-pipe-network
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: motion-pipe-rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - motion-pipe-network
+
 volumes:
   postgres_data:
     driver: local
@@ -83,6 +103,8 @@ volumes:
   mongodb_data:
     driver: local
   prometheus_data:
+    driver: local
+  rabbitmq_data:
     driver: local
 
 networks:

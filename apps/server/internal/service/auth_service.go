@@ -14,6 +14,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/markbates/goth"
 	"go.uber.org/zap"
+
+	"motion-pipe/internal/worker"
+	"motion-pipe/pkg/rabbitmq"
 )
 
 var (
@@ -36,20 +39,23 @@ type AuthResponse struct {
 }
 
 type authService struct {
-	userRepo  repository.UserRepository
-	blacklist *redis.TokenBlacklist
-	jwtManager *jwt.Manager
+	userRepo     repository.UserRepository
+	blacklist    *redis.TokenBlacklist
+	jwtManager   *jwt.Manager
+	rabbitClient *rabbitmq.Client
 }
 
 func NewAuthService(
 	userRepo repository.UserRepository,
 	blacklist *redis.TokenBlacklist,
 	jwtManager *jwt.Manager,
+	rabbitClient *rabbitmq.Client,
 ) AuthService {
 	return &authService{
-		userRepo:   userRepo,
-		blacklist:  blacklist,
-		jwtManager: jwtManager,
+		userRepo:     userRepo,
+		blacklist:    blacklist,
+		jwtManager:   jwtManager,
+		rabbitClient: rabbitClient,
 	}
 }
 
@@ -75,6 +81,17 @@ func (s *authService) HandleOAuthCallback(
 			return nil, err
 		}
 		logger.Info("Created new user", zap.String("user_id", user.ID.String()))
+
+		// Publish welcome email event
+		payload := worker.WelcomeEmailPayload{
+			UserID: user.ID.String(),
+			Email:  user.Email,
+			Name:   user.Name,
+		}
+		if err := worker.PublishWelcomeEmail(ctx, s.rabbitClient, payload); err != nil {
+			logger.Error("Failed to publish welcome email event", zap.Error(err))
+			// Continue execution, don't block login
+		}
 	} else {
 		if err := s.updateUserFromOAuth(ctx, user, gothUser); err != nil {
 			logger.Error("Failed to update user from OAuth", zap.Error(err))

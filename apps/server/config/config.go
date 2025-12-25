@@ -14,6 +14,8 @@ type Config struct {
 	Database  DatabaseConfig
 	Redis     RedisConfig
 	MongoDB   MongoDBConfig
+	RabbitMQ  RabbitMQConfig
+	Email     EmailConfig
 	JWT       JWTConfig
 	OAuth     OAuthConfig
 	Session   SessionConfig
@@ -48,6 +50,19 @@ type RedisConfig struct {
 type MongoDBConfig struct {
 	URI      string
 	Database string
+}
+
+type RabbitMQConfig struct {
+	URL string
+}
+
+type EmailConfig struct {
+	SMTPHost     string
+	SMTPPort     int
+	SMTPUser     string
+	SMTPPassword string
+	FromEmail    string
+	FromName     string
 }
 
 type JWTConfig struct {
@@ -143,6 +158,17 @@ func Load() (*Config, error) {
 			URI:      getEnv("MONGO_URI", "mongodb://localhost:27017"),
 			Database: getEnv("MONGO_DATABASE", "motion_pipe_analytics"),
 		},
+		RabbitMQ: RabbitMQConfig{
+			URL: getEnv("RABBITMQ_URL", "amqp://guest:guest@localhost:5672/"),
+		},
+		Email: EmailConfig{
+			SMTPHost:     getEnv("SMTP_HOST", "smtp.gmail.com"),
+			SMTPPort:     getEnvAsInt("SMTP_PORT", 587),
+			SMTPUser:     getEnv("SMTP_USER", ""),
+			SMTPPassword: getEnv("SMTP_PASSWORD", ""),
+			FromEmail:    getEnv("EMAIL_FROM_ADDRESS", "noreply@motionpipe.ai"),
+			FromName:     getEnv("EMAIL_FROM_NAME", "Motion Pipe"),
+		},
 		JWT: JWTConfig{
 			Secret:            getEnv("JWT_SECRET", ""),
 			Expiration:        jwtExp,
@@ -226,6 +252,18 @@ func getEnv(key, defaultValue string) string {
 		return value
 	}
 	return defaultValue
+}
+
+func getEnvAsInt(key string, defaultValue int) int {
+	valueStr := getEnv(key, "")
+	if valueStr == "" {
+		return defaultValue
+	}
+	value, err := strconv.Atoi(valueStr)
+	if err != nil {
+		return defaultValue
+	}
+	return value
 }
 
 func parseAllowedOrigins(origins string) []string {
