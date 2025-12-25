@@ -10,30 +10,13 @@ export default function Pricing() {
                     </h2>
                     <p className="text-[#a1a1aa] text-lg">No hidden fees. Pay for output.</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#27272a] border border-[#27272a]">
-
-                    <div className="bg-[#09090b] p-8 flex flex-col items-start">
-                        <h3 className="text-white font-bold text-xl mb-2">Starter</h3>
-                        <p className="text-[#a1a1aa] text-sm mb-6 h-10">For testing the waters.</p>
-                        <div className="text-3xl font-bold text-white mb-6">Free</div>
-                        <ul className="space-y-4 mb-8 flex-1">
-                            <li className="flex items-center gap-3 text-sm text-[#a1a1aa]">
-                                <CheckIcon /> <span>Watermarked Previews</span>
-                            </li>
-                            <li className="flex items-center gap-3 text-sm text-[#a1a1aa]">
-                                <CheckIcon /> <span>Standard Asset Discovery</span>
-                            </li>
-                        </ul>
-                        <button className="w-full py-3 border border-[#27272a] text-white font-bold text-sm hover:bg-[#18181b] transition-colors">
-                            Try Now
-                        </button>
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#27272a] border border-[#27272a]">
 
                     <div className="bg-[#09090b] p-8 flex flex-col items-start relative group">
                         <div className="absolute top-0 left-0 right-0 h-1 bg-[#3b82f6]" />
                         <h3 className="text-white font-bold text-xl mb-2">Pay-As-You-Go</h3>
                         <p className="text-[#a1a1aa] text-sm mb-6 h-10">For agencies & brands.</p>
-                        <div className="text-3xl font-bold text-white mb-6">₦5,000 <span className="text-sm font-normal text-[#52525b]">/ Video</span></div>
+                        <div className="text-3xl font-bold text-white mb-6">₦10,000 <span className="text-sm font-normal text-[#52525b]">/ Video</span></div>
                         <ul className="space-y-4 mb-8 flex-1">
                             <li className="flex items-center gap-3 text-sm text-white">
                                 <CheckIcon active /> <span>4K Broadcast Quality</span>

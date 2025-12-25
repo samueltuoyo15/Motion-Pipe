@@ -29,13 +29,13 @@ export default function Header() {
         <div className="hidden md:flex">
           <ul className="flex items-center gap-8 text-sm font-medium text-[#a1a1aa]">
             <li className="cursor-pointer hover:text-white transition-colors">
-              <Link href="#features">Capabilities</Link>
+              <Link href="/#features">Capabilities</Link>
             </li>
             <li className="cursor-pointer hover:text-white transition-colors">
-              <Link href="#how-it-works">Workflow</Link>
+              <Link href="/#how-it-works">Workflow</Link>
             </li>
             <li className="cursor-pointer hover:text-white transition-colors">
-              <Link href="#pricing">Pricing</Link>
+              <Link href="/#pricing">Pricing</Link>
             </li>
             <li className="flex items-center gap-4">
               <Link href="/login" className="text-[#a1a1aa] hover:text-white transition-colors text-sm font-medium">
@@ -50,9 +50,9 @@ export default function Header() {
 
         {open && (
           <div className="absolute top-16 left-0 right-0 bg-[#09090b] border-b border-[#27272a] p-6 md:hidden flex flex-col gap-6 text-center animate-slide-up-fade">
-            <Link href="#features" className="text-[#a1a1aa] hover:text-white text-lg font-medium" onClick={() => setOpen(false)}>Capabilities</Link>
-            <Link href="#how-it-works" className="text-[#a1a1aa] hover:text-white text-lg font-medium" onClick={() => setOpen(false)}>Workflow</Link>
-            <Link href="#pricing" className="text-[#a1a1aa] hover:text-white text-lg font-medium" onClick={() => setOpen(false)}>Pricing</Link>
+            <Link href="/#features" className="text-[#a1a1aa] hover:text-white text-lg font-medium" onClick={() => setOpen(false)}>Capabilities</Link>
+            <Link href="/#how-it-works" className="text-[#a1a1aa] hover:text-white text-lg font-medium" onClick={() => setOpen(false)}>Workflow</Link>
+            <Link href="/#pricing" className="text-[#a1a1aa] hover:text-white text-lg font-medium" onClick={() => setOpen(false)}>Pricing</Link>
             <hr className="border-[#27272a]" />
             <Link href="/login" className="text-white text-lg font-medium" onClick={() => setOpen(false)}>Login</Link>
             <Link href="/register" className="bg-[#3b82f6] text-white py-3 rounded text-lg font-bold" onClick={() => setOpen(false)}>Get Started</Link>

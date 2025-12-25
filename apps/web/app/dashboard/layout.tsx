@@ -107,7 +107,7 @@ export default function DashboardLayout({
                         <img src="https://github.com/shadcn.png" className="w-8 h-8 rounded-full bg-[#27272a]" alt="User" />
                         <div>
                             <p className="text-sm text-white font-medium">John Doe</p>
-                            <p className="text-xs text-[#52525b]">Free Plan</p>
+                            <p className="text-xs text-[#52525b]">Pay-As-You-Go</p>
                         </div>
                     </div>
                 </div>
