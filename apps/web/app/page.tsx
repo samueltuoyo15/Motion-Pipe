@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import Header from "./components/header";
@@ -6,8 +8,11 @@ import Pricing from "./components/pricing";
 import FAQ from "./components/faq";
 import CTA from "./components/cta";
 import Footer from "./components/footer";
+import { useLanguage } from "./context/language-context";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   const features = [
     {
       title: "AI Video Generation",
@@ -59,23 +64,21 @@ export default function Home() {
         <div className="z-10 text-center max-w-5xl px-4 mt-20">
 
           <h1 className="text-5xl md:text-7xl lg:text-[88px] font-bold text-white tracking-tighter leading-[1.1] mb-6 animate-enter">
-            Your New <br />
+            {t('hero_subtitle')} <br />
             <span className="text-[#3b82f6]">AI Freelancer.</span>
           </h1>
 
           <p className="text-lg md:text-xl text-[#a1a1aa] max-w-3xl mx-auto leading-relaxed mb-10 animate-enter" style={{ animationDelay: "100ms" }}>
-            Motion Pipe is an autonomous infrastructure that continuously generates broadcast-ready product commercials.
-            <br className="hidden md:block" />
-            We replace entire agencies with a single API call. Escrow secured.
+            {t('hero_description')}
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 animate-enter" style={{ animationDelay: "200ms" }}>
             <button className="bg-[#3b82f6] hover:bg-blue-600 text-white font-medium text-lg px-8 py-4 rounded-lg transition-all flex items-center justify-center gap-2">
-              Start Project
+              {t('start_project')}
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </button>
             <button className="bg-[#18181b] border border-[#27272a] hover:border-[#52525b] text-white font-medium text-lg px-8 py-4 rounded-lg transition-all">
-              View Demo
+              {t('view_demo')}
             </button>
           </div>
         </div>
@@ -93,8 +96,8 @@ export default function Home() {
       <div id="features" className="py-24 border-b border-[#27272a]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">Core Capabilities</h2>
-            <p className="text-[#a1a1aa] text-lg">Automated motion design infrastructure.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">{t('core_capabilities')}</h2>
+            <p className="text-[#a1a1aa] text-lg">{t('capabilities_desc')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#27272a] border border-[#27272a]">
@@ -132,7 +135,7 @@ export default function Home() {
 
       <div className="py-24 border-b border-[#27272a] bg-[#0c0c0e]">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-white mb-12 text-center tracking-tight">Enterprise Stack</h2>
+          <h2 className="text-2xl font-bold text-white mb-12 text-center tracking-tight">{t('enterprise_stack')}</h2>
           <div className="flex flex-wrap justify-center gap-4 md:gap-12 opacity-70">
             {technologies.map((tech, i) => (
               <div key={i} className="flex items-center gap-3 text-[#a1a1aa] font-mono text-sm border border-[#27272a] px-4 py-2 rounded bg-[#09090b]">

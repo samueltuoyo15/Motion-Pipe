@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useLanguage } from "../context/language-context";
 
 export default function HowItWorks() {
+    const { t } = useLanguage();
     const steps = [
         {
             step: 1,
@@ -31,18 +35,18 @@ export default function HowItWorks() {
     return (
         <div className="mt-24 px-4 max-w-7xl mx-auto">
             <h2 className="text-center text-[48px] text-[#FFFFFF] mb-16">
-                How it <span className="text-[#FF6C00]">Works</span>
+                {t('how_it_works').split(' ').slice(0, -1).join(' ')} <span className="text-[#3b82f6]">{t('how_it_works').split(' ').slice(-1)}</span>
             </h2>
 
             <div className="relative">
 
-                <div className="hidden md:block absolute top-6 left-0 w-full h-0.5 bg-gradient-to-r from-[#FF6C00]/0 via-[#FF6C00]/50 to-[#FF6C00]/0" />
+                <div className="hidden md:block absolute top-6 left-0 w-full h-0.5 bg-gradient-to-r from-[#3b82f6]/0 via-[#3b82f6]/50 to-[#3b82f6]/0" />
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {steps.map((item, index) => (
                         <div key={index} className="relative flex flex-col items-center text-center group">
 
-                            <div className="w-12 h-12 rounded-full bg-[#1C1C1C] border border-[#FF6C00] flex items-center justify-center text-[#FF6C00] font-bold text-xl mb-6 relative z-10 group-hover:scale-110 transition-transform duration-300">
+                            <div className="w-12 h-12 rounded-full bg-[#1C1C1C] border border-[#3b82f6] flex items-center justify-center text-[#3b82f6] font-bold text-xl mb-6 relative z-10 group-hover:scale-110 transition-transform duration-300">
                                 {item.step}
                             </div>
 
