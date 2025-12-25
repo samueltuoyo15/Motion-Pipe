@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
 import {
     Settings,
     LayoutTemplate,
@@ -17,8 +18,10 @@ import {
     Ticket,
     UserPlus,
 } from "lucide-react";
-import { Toaster } from "sonner";
-
+import { Toaster, toast } from "sonner";
+import { useChunk } from "stunk/react";
+import { authChunk, setAuthUser, logoutUser } from "@/lib/store";
+import { api } from "@/lib/api";
 import { useLanguage } from "../context/language-context";
 
 export default function DashboardLayout({
@@ -29,14 +32,54 @@ export default function DashboardLayout({
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [inviteEmail, setInviteEmail] = useState("");
     const { t } = useLanguage();
+    const router = useRouter();
+    const [auth] = useChunk(authChunk);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            if (!auth.isAuthenticated && !auth.isLoading) {
+                try {
+                    const user = await api.get("/auth/me");
+                    setAuthUser(user as any);
+                } catch (error) {
+                    console.error("Not authenticated", error);
+                    router.push("/login");
+                }
+            }
+        };
+        checkAuth();
+    }, [auth.isAuthenticated, auth.isLoading, router]);
 
     const toggleMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
     const handleInvite = () => {
         if (inviteEmail) {
-            alert(`Invitation sent to ${inviteEmail}`);
+            toast.success(`Invitation sent to ${inviteEmail}`);
             setInviteEmail("");
         }
+    };
+
+    const handleLogout = async () => {
+        try {
+            await api.post("/auth/logout");
+            logoutUser();
+            toast.success("Logged out successfully");
+            router.push("/login");
+        } catch (error) {
+            console.error("Logout failed", error);
+            toast.error("Failed to logout");
+        }
+    };
+
+    if (auth.isLoading) {
+        return (
+            <div className="flex h-screen items-center justify-center bg-[#09090b]">
+                <div className="text-center">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent mx-auto mb-4"></div>
+                    <p className="text-[#a1a1aa]">Loading...</p>
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -102,14 +145,18 @@ export default function DashboardLayout({
                 </nav>
 
                 <div className="p-4 border-t border-[#27272a]">
-                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md transition-colors text-sm font-medium hover:bg-[#18181b] hover:text-red-500 text-[#a1a1aa] mb-2">
+                    <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2 rounded-md transition-colors text-sm font-medium hover:bg-[#18181b] hover:text-red-500 text-[#a1a1aa] mb-2">
                         <LogOutIcon className="w-4 h-4" />
                         Log Out
                     </button>
                     <div className="flex items-center gap-3 px-2 py-2">
-                        <img src="https://github.com/shadcn.png" className="w-8 h-8 rounded-full bg-[#27272a]" alt="User" />
+                        <img
+                            src={auth.user?.avatar || "https://github.com/shadcn.png"}
+                            className="w-8 h-8 rounded-full bg-[#27272a]"
+                            alt="User"
+                        />
                         <div>
-                            <p className="text-sm text-white font-medium">John Doe</p>
+                            <p className="text-sm text-white font-medium">{auth.user?.name || "User"}</p>
                             <p className="text-xs text-[#52525b]">Pay-As-You-Go</p>
                         </div>
                     </div>

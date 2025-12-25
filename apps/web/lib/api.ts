@@ -8,29 +8,13 @@ const api = axios.create({
     withCredentials: true,
 });
 
-api.interceptors.request.use(
-    (config) => {
-        if (typeof window !== "undefined") {
-            const token = localStorage.getItem("access_token");
-            if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
-            }
-        }
-        return config;
-    },
-    (error) => Promise.reject(error)
-);
-
 api.interceptors.response.use(
     (response) => response.data,
     (error) => {
         if (error.response?.status === 401) {
             if (typeof window !== "undefined") {
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("refresh_token");
-
-                if (!window.location.pathname.includes("/login") && !window.location.pathname.includes("/auth")) {
-                    // window.location.href = "/login";
+                if (!window.location.pathname.includes("/login") && !window.location.pathname.includes("/register") && !window.location.pathname.includes("/auth")) {
+                    window.location.href = "/login";
                 }
             }
         }

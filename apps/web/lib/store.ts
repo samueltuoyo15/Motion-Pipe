@@ -1,5 +1,7 @@
 import { chunk } from "stunk";
 
+export type Language = "EN" | "FR" | "ES" | "DE";
+
 export interface User {
     id: string;
     email: string;
@@ -19,6 +21,8 @@ export const authChunk = chunk<AuthState>({
     isLoading: true,
     isAuthenticated: false,
 });
+
+export const languageChunk = chunk<Language>("EN");
 
 export const setAuthUser = (user: User) => {
     authChunk.set({

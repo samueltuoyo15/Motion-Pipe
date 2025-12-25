@@ -1,5 +1,6 @@
 {
   "name": "motion-pipe",
+  "author": "Samuel Tuoyo",
   "private": true,
   "scripts": {
     "build": "turbo run build",

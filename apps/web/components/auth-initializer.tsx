@@ -7,19 +7,11 @@ import { setAuthUser, setAuthLoading } from "@/lib/store";
 export function AuthInitializer() {
     useEffect(() => {
         const initAuth = async () => {
-            const token = localStorage.getItem("access_token");
-            if (!token) {
-                setAuthLoading(false);
-                return;
-            }
-
             try {
                 const user = (await api.get("/auth/me")) as any;
                 setAuthUser(user);
             } catch (error) {
-                console.warn("Auth check failed:", error);
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("refresh_token");
+                console.warn("Auth check failed - user not logged in");
             } finally {
                 setAuthLoading(false);
             }

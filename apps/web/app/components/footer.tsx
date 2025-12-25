@@ -1,11 +1,39 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Twitter, Github, Linkedin, Mail } from "lucide-react";
 import { useLanguage } from "../context/language-context";
+import { api } from "@/lib/api";
+
+type HealthStatus = 'online' | 'degraded' | 'offline';
 
 export default function Footer() {
   const { t } = useLanguage();
+  const [healthStatus, setHealthStatus] = useState<HealthStatus>('online');
+
+  useEffect(() => {
+    const checkHealth = async () => {
+      try {
+        const response = await api.get("/health");
+        setHealthStatus('online');
+      } catch (error) {
+        setHealthStatus('offline');
+      }
+    };
+
+    checkHealth();
+    const interval = setInterval(checkHealth, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const statusConfig = {
+    online: { color: 'bg-[#10b981]', text: 'ALL SYSTEMS OPERATIONAL' },
+    degraded: { color: 'bg-[#f59e0b]', text: 'DEGRADED PERFORMANCE' },
+    offline: { color: 'bg-[#ef4444]', text: 'SYSTEMS OFFLINE' }
+  };
+
   return (
     <footer className="bg-[#09090b] border-t border-[#27272a] pt-24 pb-12 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
@@ -19,10 +47,10 @@ export default function Footer() {
             {t('footer_tagline')}
           </p>
           <div className="flex gap-4">
-            <SocialLink href="#" icon={Twitter} />
-            <SocialLink href="#" icon={Github} />
-            <SocialLink href="#" icon={Linkedin} />
-            <SocialLink href="#" icon={Mail} />
+            <SocialLink href="#" icon={Twitter} label="Twitter" />
+            <SocialLink href="#" icon={Github} label="GitHub" />
+            <SocialLink href="#" icon={Linkedin} label="LinkedIn" />
+            <SocialLink href="#" icon={Mail} label="Email" />
           </div>
         </div>
 
@@ -49,17 +77,24 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto border-t border-[#27272a] pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#52525b] font-mono">
         <p>&copy; {new Date().getFullYear()} MOTION PIPE SYSTEMS INC. ALL RIGHTS RESERVED.</p>
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#10b981]" />
-          <span>ALL SYSTEMS OPERATIONAL</span>
+          <span
+            className={`w-2 h-2 rounded-full ${statusConfig[healthStatus].color} ${healthStatus === 'online' ? 'animate-pulse' : ''}`}
+            aria-label={`System status: ${healthStatus}`}
+          />
+          <span>{statusConfig[healthStatus].text}</span>
         </div>
       </div>
     </footer>
   );
 }
 
-function SocialLink({ href, icon: Icon }: { href: string, icon: any }) {
+function SocialLink({ href, icon: Icon, label }: { href: string, icon: any, label: string }) {
   return (
-    <a href={href} className="w-10 h-10 border border-[#27272a] bg-[#18181b] flex items-center justify-center text-[#a1a1aa] hover:border-[#3b82f6] hover:text-white transition-all">
+    <a
+      href={href}
+      className="w-10 h-10 border border-[#27272a] bg-[#18181b] flex items-center justify-center text-[#a1a1aa] hover:border-[#3b82f6] hover:text-white transition-all"
+      aria-label={label}
+    >
       <Icon className="w-4 h-4" />
     </a>
   )
