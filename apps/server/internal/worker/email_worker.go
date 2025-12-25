@@ -59,15 +59,15 @@ func (w *EmailWorker) Start(ctx context.Context) error {
 				var payload WelcomeEmailPayload
 				if err := json.Unmarshal(d.Body, &payload); err != nil {
 					logger.Error("Failed to unmarshal welcome email payload", zap.Error(err))
-					d.Nack(false, false) // Requeue set to false for now, maybe dead letter later
+					d.Nack(false, false) 
+					// Requeue set to false for now, maybe dead letter later
 					continue
 				}
 
 				logger.Info("Processing welcome email job", zap.String("email", payload.Email))
 				if err := w.emailService.SendWelcomeEmail(payload.Email, payload.Name); err != nil {
 					logger.Error("Failed to send welcome email", zap.Error(err))
-					// Retry logic could go here
-					d.Nack(false, true) // Requeue
+					d.Nack(false, true) 
 					continue
 				}
 

@@ -1,12 +1,12 @@
-package database
+package postgres
 
 import (
 	"fmt"
 	"time"
 
 	"motion-pipe/config"
-	"motion-pipe/internal/models"
 	"motion-pipe/pkg/logger"
+	"motion-pipe/pkg/postgres/models"
 
 	"go.uber.org/zap"
 	"gorm.io/driver/postgres"
@@ -53,6 +53,12 @@ func Migrate(db *gorm.DB) error {
 
 	models := []interface{}{
 		&models.User{},
+		&models.Asset{},
+		&models.Template{},
+		&models.Project{},
+		&models.Subscription{},
+		&models.Ticket{},
+		&models.TicketMessage{},
 	}
 
 	for _, model := range models {

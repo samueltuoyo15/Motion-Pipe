@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"strings"
 
-	"motion-pipe/internal/models"
 	"motion-pipe/pkg/jwt"
+	"motion-pipe/pkg/postgres/models"
+
 	"motion-pipe/pkg/logger"
 
 	"github.com/gin-gonic/gin"

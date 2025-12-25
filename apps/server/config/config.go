@@ -16,6 +16,8 @@ type Config struct {
 	MongoDB   MongoDBConfig
 	RabbitMQ  RabbitMQConfig
 	Email     EmailConfig
+	S3        S3Config
+	Paystack  PaystackConfig
 	JWT       JWTConfig
 	OAuth     OAuthConfig
 	Session   SessionConfig
@@ -63,6 +65,20 @@ type EmailConfig struct {
 	SMTPPassword string
 	FromEmail    string
 	FromName     string
+}
+
+type S3Config struct {
+	Endpoint        string
+	AccessKeyID     string
+	SecretAccessKey string
+	BucketName      string
+	Region          string
+	PublicURL       string
+}
+
+type PaystackConfig struct {
+	SecretKey string
+	PublicKey string
 }
 
 type JWTConfig struct {
@@ -168,6 +184,18 @@ func Load() (*Config, error) {
 			SMTPPassword: getEnv("SMTP_PASSWORD", ""),
 			FromEmail:    getEnv("EMAIL_FROM_ADDRESS", "noreply@motionpipe.ai"),
 			FromName:     getEnv("EMAIL_FROM_NAME", "Motion Pipe"),
+		},
+		S3: S3Config{
+			Endpoint:        getEnv("S3_ENDPOINT", ""),
+			AccessKeyID:     getEnv("S3_ACCESS_KEY_ID", ""),
+			SecretAccessKey: getEnv("S3_SECRET_ACCESS_KEY", ""),
+			BucketName:      getEnv("S3_BUCKET_NAME", "motion-pipe-assets"),
+			Region:          getEnv("S3_REGION", "auto"),
+			PublicURL:       getEnv("S3_PUBLIC_URL", ""),
+		},
+		Paystack: PaystackConfig{
+			SecretKey: getEnv("PAYSTACK_SECRET_KEY", ""),
+			PublicKey: getEnv("PAYSTACK_PUBLIC_KEY", ""),
 		},
 		JWT: JWTConfig{
 			Secret:            getEnv("JWT_SECRET", ""),

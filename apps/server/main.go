@@ -16,7 +16,9 @@ import (
 	"motion-pipe/internal/repository"
 	"motion-pipe/internal/routes"
 	"motion-pipe/internal/service"
-	"motion-pipe/pkg/database"
+	"motion-pipe/internal/routes"
+	"motion-pipe/internal/service"
+	"motion-pipe/pkg/postgres"
 	"motion-pipe/pkg/email"
 	"motion-pipe/pkg/jwt"
 	"motion-pipe/pkg/logger"
@@ -70,17 +72,17 @@ func main() {
 		zap.String("api_version", cfg.Server.APIVersion),
 	)
 
-	db, err := database.Connect(cfg)
+	db, err := postgres.Connect(cfg)
 	if err != nil {
 		logger.Fatal("Failed to connect to database", zap.Error(err))
 	}
 	defer func() {
-		if err := database.Close(db); err != nil {
+		if err := postgres.Close(db); err != nil {
 			logger.Error("Failed to close database connection", zap.Error(err))
 		}
 	}()
 
-	if err := database.Migrate(db); err != nil {
+	if err := postgres.Migrate(db); err != nil {
 		logger.Fatal("Failed to run database migrations", zap.Error(err))
 	}
 

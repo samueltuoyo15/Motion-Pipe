@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"motion-pipe/internal/models"
+	"motion-pipe/pkg/postgres/models"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
