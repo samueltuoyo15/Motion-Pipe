@@ -192,37 +192,40 @@ function StatItem({ value, label }: { value: string; label: string }) {
 
 function ProductCard({ label, image, index }: { label: string, image: string, index?: number }) {
   const style = { "--i": index } as React.CSSProperties;
+  const isPriority = index === 0;
 
   return (
     <div className="carousel-item" style={style}>
-      <div className="bg-[#09090b] border border-[#27272a] p-5 rounded-none w-64 flex flex-col items-start hover:border-[#3b82f6] transition-all group cursor-pointer relative overflow-hidden h-full">
+      <article className="bg-[#09090b] border border-[#27272a] p-3 md:p-5 rounded-none w-full flex flex-col items-start hover:border-[#3b82f6] transition-all group cursor-pointer relative overflow-hidden h-full">
         <div className="absolute top-2 right-2 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full animate-pulse" />
+          <span className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full animate-pulse" aria-hidden="true" />
           <span className="text-[10px] font-mono text-[#52525b] uppercase tracking-tighter group-hover:text-[#3b82f6]">Ready</span>
         </div>
 
         <div className="w-full aspect-square bg-[#09090b] rounded-none mb-4 flex items-center justify-center overflow-hidden relative border border-[#27272a] group-hover:border-[#3b82f6]/30 transition-colors">
           <Image
             src={image}
-            alt={label}
+            alt={`${label} product mockup for AI video generation`}
             fill
+            sizes="(max-width: 768px) 180px, 256px"
+            priority={isPriority}
             className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
         </div>
 
         <div className="w-full flex justify-between items-end">
           <div>
             <p className="text-[10px] font-mono text-[#52525b] uppercase mb-1">Category</p>
-            <span className="text-white font-bold text-sm tracking-tight uppercase">{label}</span>
+            <span className="text-white font-bold text-xs md:text-sm tracking-tight uppercase">{label}</span>
           </div>
-          <div className="w-6 h-6 border border-[#27272a] flex items-center justify-center group-hover:border-[#3b82f6] transition-colors">
+          <div className="w-5 h-5 md:w-6 md:h-6 border border-[#27272a] flex items-center justify-center group-hover:border-[#3b82f6] transition-colors" aria-hidden="true">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="text-[#52525b] group-hover:text-[#3b82f6] transition-colors">
               <polyline points="9 18 15 12 9 6" />
             </svg>
           </div>
         </div>
-      </div>
+      </article>
     </div>
   )
 }

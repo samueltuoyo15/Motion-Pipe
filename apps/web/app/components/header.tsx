@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Globe, ChevronDown } from "lucide-react";
 import { useLanguage } from "../context/language-context";
 
@@ -15,15 +16,17 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#09090b]/80 backdrop-blur-md border-b border-[#27272a]">
-      <nav className="flex justify-between items-center max-w-7xl mx-auto px-6 h-16">
+      <nav className="flex justify-between items-center max-w-7xl mx-auto px-6 h-16" aria-label="Main navigation">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="Motion Pipe Logo" className="w-8 h-8 rounded-sm" />
+          <Image src="/logo.png" alt="Motion Pipe Logo" width={32} height={32} className="rounded-sm" priority />
           <span className="text-lg text-white font-bold tracking-tight">Motion Pipe</span>
         </Link>
 
         <button
           className="md:hidden text-white"
           onClick={() => setOpen((prev) => !prev)}
+          aria-label="Toggle menu"
+          aria-expanded={open}
         >
           <div className="space-y-1.5 cursor-pointer">
             <div className={`w-6 h-0.5 bg-white transition-transform ${open ? 'rotate-45 translate-y-2' : ''}`}></div>

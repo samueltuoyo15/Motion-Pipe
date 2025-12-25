@@ -61,15 +61,28 @@ pre {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 500px;
+  min-height: 400px;
+}
+
+@media (min-width: 768px) {
+  .perspective-center {
+    min-height: 500px;
+  }
 }
 
 .carousel-box {
   position: relative;
-  width: 256px;
-  height: 384px;
+  width: 180px;
+  height: 280px;
   transform-style: preserve-3d;
   animation: carousel-rotate 30s linear infinite;
+}
+
+@media (min-width: 768px) {
+  .carousel-box {
+    width: 256px;
+    height: 384px;
+  }
 }
 
 .carousel-box:hover {
@@ -84,6 +97,11 @@ pre {
   height: 100%;
   transform-origin: center;
   transform-style: preserve-3d;
-  transform: rotateY(calc(var(--i) * 72deg)) translateZ(450px);
-  -webkit-box-reflect: below 2px linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.2));
+  transform: rotateY(calc(var(--i) * 72deg)) translateZ(300px);
+}
+
+@media (min-width: 768px) {
+  .carousel-item {
+    transform: rotateY(calc(var(--i) * 72deg)) translateZ(450px);
+  }
 }
