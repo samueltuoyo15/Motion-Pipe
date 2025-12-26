@@ -51,8 +51,8 @@ services:
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "localhost:8123/ping"]
       interval: 10s
-      timeout: 5s
-      retries: 5
+      timeout: 10s
+      retries: 30
     restart: unless-stopped
     networks:
       - motion-pipe-network
@@ -88,8 +88,8 @@ services:
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       interval: 10s
-      timeout: 5s
-      retries: 5
+      timeout: 10s
+      retries: 30
     restart: unless-stopped
     networks:
       - motion-pipe-network
