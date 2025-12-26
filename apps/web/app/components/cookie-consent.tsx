@@ -9,20 +9,17 @@ export default function CookieConsent() {
     const { t } = useLanguage();
 
     useEffect(() => {
-        // Check if consent cookie exists
         const consent = document.cookie
             .split("; ")
             .find((row) => row.startsWith("motion_pipe_consent="));
 
         if (!consent) {
-            // Delay appearance for smooth entry
             const timer = setTimeout(() => setIsVisible(true), 1500);
             return () => clearTimeout(timer);
         }
     }, []);
 
     const acceptCookies = () => {
-        // Set cookie for 1 year
         document.cookie = "motion_pipe_consent=true; path=/; max-age=31536000; SameSite=Lax";
         setIsVisible(false);
     };
@@ -32,8 +29,6 @@ export default function CookieConsent() {
     return (
         <div className="fixed bottom-6 left-6 z-[100] max-w-sm w-[calc(100vw-3rem)] md:w-full animate-in slide-in-from-bottom-10 fade-in duration-700 ease-out fill-mode-forwards">
             <div className="bg-[#0c0c0e]/90 backdrop-blur-md border border-[#27272a] p-6 rounded-2xl shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] relative overflow-hidden">
-
-                {/* Subtle decorative glow */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#3b82f6] opacity-[0.03] blur-[60px] pointer-events-none transform translate-x-1/2 -translate-y-1/2" />
 
                 <div className="flex flex-col gap-4 relative z-10">
