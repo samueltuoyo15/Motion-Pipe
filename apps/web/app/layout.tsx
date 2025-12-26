@@ -51,6 +51,7 @@ export const metadata: Metadata = {
 import Providers from "./providers";
 
 import { AuthInitializer } from "@/components/auth-initializer";
+import CookieConsent from "./components/cookie-consent";
 
 export default function RootLayout({
   children,
@@ -62,6 +63,7 @@ export default function RootLayout({
       <body className={`${sans.variable} ${mono.variable} font-sans antialiased`}>
         <Providers>
           <AuthInitializer />
+          <CookieConsent />
           {children}
         </Providers>
       </body>
