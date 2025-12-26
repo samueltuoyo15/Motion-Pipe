@@ -104,10 +104,10 @@ func main() {
 	tokenBlacklist := redis.NewTokenBlacklist(redisClient)
 	logger.Info("Token blacklist initialized")
 
-	analyticsService := service.NewAnalyticsService(clickhouseClient)
+	_ = service.NewAnalyticsService(clickhouseClient)
 	logger.Info("Analytics service initialized")
 
-	emailService := email.NewService(cfg)
+	_ = email.NewService(cfg)
 	logger.Info("Email service initialized")
 
 	jwtManager := jwt.NewManager(
