@@ -10,8 +10,6 @@ import (
 	"motion-pipe/pkg/postgres/models"
 	"motion-pipe/pkg/logger"
 	"motion-pipe/pkg/redis"
-
-	"github.com/google/uuid"
 	"github.com/markbates/goth"
 	"go.uber.org/zap"
 

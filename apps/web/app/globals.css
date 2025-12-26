@@ -57,43 +57,26 @@ pre {
   }
 }
 
+
+
 .perspective-center {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px;
-  max-width: 100%;
+  min-height: 340px;
+  width: 100%;
   overflow: hidden;
   position: relative;
-}
-
-@media (min-width: 768px) {
-  .perspective-center {
-    min-height: 500px;
-  }
+  perspective: 1000px;
 }
 
 .carousel-box {
   position: relative;
-  width: 120px;
-  height: 180px;
+  width: 130px;
+  height: 195px;
   transform-style: preserve-3d;
   animation: carousel-rotate 30s linear infinite;
   margin: 0 auto;
-}
-
-@media (min-width: 640px) {
-  .carousel-box {
-    width: 180px;
-    height: 270px;
-  }
-}
-
-@media (min-width: 768px) {
-  .carousel-box {
-    width: 256px;
-    height: 384px;
-  }
 }
 
 .carousel-box:hover {
@@ -108,17 +91,35 @@ pre {
   height: 100%;
   transform-origin: center;
   transform-style: preserve-3d;
-  transform: rotateY(calc(var(--i) * 51.43deg)) translateZ(210px);
+  transform: rotateY(calc(var(--i) * 51.43deg)) translateZ(220px);
 }
 
 @media (min-width: 640px) {
+  .perspective-center {
+    min-height: 450px;
+  }
+
+  .carousel-box {
+    width: 180px;
+    height: 270px;
+  }
+
   .carousel-item {
-    transform: rotateY(calc(var(--i) * 51.43deg)) translateZ(310px);
+    transform: rotateY(calc(var(--i) * 51.43deg)) translateZ(320px);
   }
 }
 
 @media (min-width: 768px) {
+  .perspective-center {
+    min-height: 600px;
+  }
+
+  .carousel-box {
+    width: 260px;
+    height: 390px;
+  }
+
   .carousel-item {
-    transform: rotateY(calc(var(--i) * 51.43deg)) translateZ(580px);
+    transform: rotateY(calc(var(--i) * 51.43deg)) translateZ(550px);
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Cpu, Video, Layers, HardDrive, ShieldCheck, Zap } from "lucide-react";
 import Header from "./components/header";
@@ -73,15 +74,15 @@ export default function Home() {
             {t('hero_description')}
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4 animate-enter mb-12" style={{ animationDelay: "200ms" }}>
-            <Link href="/register">
-              <button className="bg-[#3b82f6] hover:bg-blue-600 text-white font-medium text-lg px-8 py-4 rounded-lg transition-all flex items-center justify-center gap-2">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 animate-enter mb-12 w-full px-4 sm:px-0" style={{ animationDelay: "200ms" }}>
+            <Link href="/register" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto bg-[#3b82f6] hover:bg-blue-600 text-white font-medium text-lg px-8 py-4 rounded-lg transition-all flex items-center justify-center gap-2">
                 {t('start_project')}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </button>
             </Link>
-            <Link href="#demo">
-              <button className="bg-[#18181b] border border-[#27272a] hover:border-[#52525b] text-white font-medium text-lg px-8 py-4 rounded-lg transition-all">
+            <Link href="#demo" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto bg-[#18181b] border border-[#27272a] hover:border-[#52525b] text-white font-medium text-lg px-8 py-4 rounded-lg transition-all">
                 {t('view_demo')}
               </button>
             </Link>
@@ -201,25 +202,56 @@ function StatItem({ value, label }: { value: string; label: string }) {
 
 function ProductCard({ label, video, index }: { label: string, video: string, index?: number }) {
   const style = { "--i": index } as React.CSSProperties;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldLoad(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: "200px" } // Start loading slightly before it comes into view
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="carousel-item" style={style}>
       <article className="bg-[#09090b] border border-[#27272a] p-3 md:p-5 rounded-none w-full flex flex-col items-start hover:border-[#3b82f6] transition-all group cursor-pointer relative overflow-hidden h-full">
         <div className="absolute top-2 right-2 flex items-center gap-1.5 z-10">
-          <span className="w-1.5 h-1.5 bg-[#3b82f6] rounded-full animate-pulse" aria-hidden="true" />
-          <span className="text-[10px] font-mono text-[#52525b] uppercase tracking-tighter group-hover:text-[#3b82f6]">Ready</span>
+          <span className={`w-1.5 h-1.5 rounded-full ${shouldLoad ? 'bg-[#3b82f6] animate-pulse' : 'bg-gray-600'}`} aria-hidden="true" />
+          <span className="text-[10px] font-mono text-[#52525b] uppercase tracking-tighter group-hover:text-[#3b82f6]">
+            {shouldLoad ? 'Ready' : 'Standby'}
+          </span>
         </div>
 
         <div className="w-full aspect-square bg-[#09090b] rounded-none mb-4 flex items-center justify-center overflow-hidden relative border border-[#27272a] group-hover:border-[#3b82f6]/30 transition-colors">
           <video
-            src={video}
-            autoPlay
+            ref={videoRef}
+            src={shouldLoad ? video : undefined}
+            preload="none"
+            autoPlay={shouldLoad}
             loop
             muted
             playsInline
-            className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-500"
+            className={`w-full h-full object-cover transition-all duration-500 ${shouldLoad ? 'opacity-70 group-hover:opacity-100' : 'opacity-0'}`}
             aria-label={`${label} motion design example`}
           />
+          {!shouldLoad && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-[#3b82f6] border-t-transparent rounded-full animate-spin opacity-20"></div>
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
         </div>
 
