@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link";
 import { useLanguage } from "../context/language-context";
 
 export default function CTA() {
@@ -14,9 +14,11 @@ export default function CTA() {
                 <p className="text-[#a1a1aa] text-lg mb-10 max-w-xl mx-auto">
                     {t('cta_desc')}
                 </p>
-                <button className="bg-[#3b82f6] hover:bg-blue-600 text-white text-lg font-bold px-10 py-5 rounded-lg transition-all">
-                    {t('cta_button')}
-                </button>
+                <Link href="/register">
+                    <button className="bg-[#3b82f6] hover:bg-blue-600 text-white text-lg font-bold px-10 py-5 rounded-lg transition-all">
+                        {t('cta_button')}
+                    </button>
+                </Link>
             </div>
         </div>
     );

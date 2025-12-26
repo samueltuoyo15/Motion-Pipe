@@ -74,13 +74,17 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 animate-enter mb-12" style={{ animationDelay: "200ms" }}>
-            <button className="bg-[#3b82f6] hover:bg-blue-600 text-white font-medium text-lg px-8 py-4 rounded-lg transition-all flex items-center justify-center gap-2">
-              {t('start_project')}
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-            </button>
-            <button className="bg-[#18181b] border border-[#27272a] hover:border-[#52525b] text-white font-medium text-lg px-8 py-4 rounded-lg transition-all">
-              {t('view_demo')}
-            </button>
+            <Link href="/register">
+              <button className="bg-[#3b82f6] hover:bg-blue-600 text-white font-medium text-lg px-8 py-4 rounded-lg transition-all flex items-center justify-center gap-2">
+                {t('start_project')}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </button>
+            </Link>
+            <Link href="#demo">
+              <button className="bg-[#18181b] border border-[#27272a] hover:border-[#52525b] text-white font-medium text-lg px-8 py-4 rounded-lg transition-all">
+                {t('view_demo')}
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -115,7 +119,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full bg-[#0c0c0e] py-12 md:py-24 border-t border-[#27272a] overflow-hidden">
+      <div id="demo" className="w-full bg-[#0c0c0e] py-12 md:py-24 border-t border-[#27272a] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
             Generate Real Videos Like These. <span className="text-[#52525b]">No Designers Needed.</span>
