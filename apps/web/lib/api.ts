@@ -32,7 +32,9 @@ api.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             if (typeof window !== "undefined") {
-                if (!window.location.pathname.includes("/login") && !window.location.pathname.includes("/register") && !window.location.pathname.includes("/auth")) {
+                const isProtectedRoute = window.location.pathname.startsWith("/dashboard");
+
+                if (isProtectedRoute) {
                     document.cookie = "access_token=; path=/; max-age=0";
                     document.cookie = "refresh_token=; path=/; max-age=0";
                     window.location.href = "/login";

@@ -41,7 +41,6 @@ func (h *AuthHandler) BeginAuth(c *gin.Context) {
 	if provider != "google" && provider != "twitter" {
 		logger.Warn("Invalid OAuth provider", zap.String("provider", provider))
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "Invalid provider",
 			"message": "Only 'google' and 'twitter' providers are supported",
 		})
 		return
@@ -68,7 +67,6 @@ func (h *AuthHandler) Callback(c *gin.Context) {
 	if provider != "google" && provider != "twitter" {
 		logger.Warn("Invalid OAuth provider in callback", zap.String("provider", provider))
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "Invalid provider",
 			"message": "Only 'google' and 'twitter' providers are supported",
 		})
 		return
@@ -125,7 +123,6 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	if err := c.ShouldBindJSON(&req); err != nil {
 		logger.Warn("Invalid refresh token request", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "Bad Request",
 			"message": "refresh_token is required",
 		})
 		return
@@ -137,14 +134,12 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 
 		if errors.Is(err, service.ErrInvalidCredentials) {
 			c.JSON(http.StatusUnauthorized, gin.H{
-				"error":   "Unauthorized",
 				"message": "Invalid refresh token",
 			})
 			return
 		}
 
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error":   "Internal Server Error",
 			"message": "Failed to refresh token",
 		})
 		return
@@ -170,7 +165,6 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 	if err != nil {
 		logger.Warn("Failed to extract token for logout", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   "Bad Request",
 			"message": "Invalid authorization header",
 		})
 		return
@@ -179,7 +173,6 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 	if err := h.authService.Logout(c.Request.Context(), token, h.config.JWT.Expiration); err != nil {
 		logger.Error("Failed to logout", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error":   "Internal Server Error",
 			"message": "Failed to logout",
 		})
 		return
@@ -203,7 +196,6 @@ func (h *AuthHandler) GetCurrentUser(c *gin.Context) {
 	user, exists := middleware.GetCurrentUser(c)
 	if !exists {
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"error":   "Unauthorized",
 			"message": "User not authenticated",
 		})
 		return

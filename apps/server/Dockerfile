@@ -9,7 +9,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o worker ./cmd/worker/ma
 
 FROM alpine:latest
 WORKDIR /app
-RUN apk add --no-cache ffmpeg ca-certificates tzdata
+RUN apk add --no-cache ffmpeg ca-certificates tzdata wget
 COPY --from=builder /app/server .
 COPY --from=builder /app/worker .
 EXPOSE 8080

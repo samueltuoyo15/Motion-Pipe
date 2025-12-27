@@ -7,7 +7,7 @@ import (
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
 	"github.com/markbates/goth/providers/google"
-	"github.com/markbates/goth/providers/twitter"
+	"github.com/markbates/goth/providers/twitterv2"
 )
 
 func Initialize(cfg *config.Config) {
@@ -26,10 +26,11 @@ func Initialize(cfg *config.Config) {
 			cfg.OAuth.Google.CallbackURL,
 			"email", "profile",
 		),
-		twitter.New(
+		twitterv2.NewAuthenticate(
 			cfg.OAuth.Twitter.ClientID,
 			cfg.OAuth.Twitter.ClientSecret,
 			cfg.OAuth.Twitter.CallbackURL,
+			"tweet.read", "users.read",
 		),
 	)
 }

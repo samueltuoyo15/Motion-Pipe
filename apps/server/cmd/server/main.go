@@ -161,16 +161,19 @@ func main() {
 	)
 	router.Use(rateLimiter.Limit())
 
-	router.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"status":  "healthy",
-			"version": cfg.Server.APIVersion,
-			"time":    time.Now().UTC(),
+	api := router.Group("/api/" + cfg.Server.APIVersion)
+	{
+		api.GET("/health", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "healthy",
+				"version": cfg.Server.APIVersion,
+				"time":    time.Now().UTC(),
+			})
 		})
-	})
 
-	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+		api.GET("/metrics", gin.WrapH(promhttp.Handler()))
+		api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
 
 	routes.SetupRoutes(router, cfg, authHandler, jwtManager)
 	logger.Info("Routes configured")

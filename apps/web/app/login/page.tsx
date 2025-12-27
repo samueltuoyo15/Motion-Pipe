@@ -17,7 +17,7 @@ export default function Login() {
             <div className="z-10 w-full max-w-sm px-6">
                 <div className="text-center mb-10">
                     <Link href="/" className="flex justify-center mb-6">
-                        <img src="/logo.png" alt="Motion Pipe Logo" className="w-16 h-16 rounded-xl" />
+                        <Image src="/logo.png" alt="Motion Pipe Logo" width={64} height={64} className="rounded-xl" />
                     </Link>
                     <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">{t('auth_welcome')}</h1>
                     <p className="text-[#a1a1aa] text-sm">{t('auth_access')}</p>
