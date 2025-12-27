@@ -21,8 +21,15 @@ func SetupRoutes(
 	{
 		auth := api.Group("/auth")
 		{
-			auth.GET("/:provider", authHandler.BeginAuth)
-			auth.GET("/:provider/callback", authHandler.Callback)
+			// Twitter/X OAuth 2.0 with PKCE (new implementation)
+			auth.GET("/twitter", authHandler.XAuthBegin)
+			auth.GET("/twitter/callback", authHandler.XAuthCallback)
+			
+			// Google OAuth (using goth)
+			auth.GET("/google", authHandler.BeginAuth)
+			auth.GET("/google/callback", authHandler.Callback)
+			
+			// Other auth endpoints
 			auth.POST("/refresh", authHandler.RefreshToken)
 			
 			authenticated := auth.Group("")

@@ -7,8 +7,10 @@ import (
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
 	"github.com/markbates/goth/providers/google"
-	"github.com/markbates/goth/providers/twitterv2"
+	"golang.org/x/oauth2"
 )
+
+var XOAuthConfig *oauth2.Config
 
 func Initialize(cfg *config.Config) {
 	store := sessions.NewCookieStore([]byte(cfg.Session.Secret))
@@ -19,6 +21,7 @@ func Initialize(cfg *config.Config) {
 
 	gothic.Store = store
 
+	// Initialize Google OAuth (using goth)
 	goth.UseProviders(
 		google.New(
 			cfg.OAuth.Google.ClientID,
@@ -26,11 +29,17 @@ func Initialize(cfg *config.Config) {
 			cfg.OAuth.Google.CallbackURL,
 			"email", "profile",
 		),
-		twitterv2.NewAuthenticate(
-			cfg.OAuth.Twitter.ClientID,
-			cfg.OAuth.Twitter.ClientSecret,
-			cfg.OAuth.Twitter.CallbackURL,
-			"tweet.read", "users.read",
-		),
 	)
+
+	// Initialize X (Twitter) OAuth 2.0 with PKCE
+	XOAuthConfig = &oauth2.Config{
+		ClientID:     cfg.OAuth.Twitter.ClientID,
+		ClientSecret: cfg.OAuth.Twitter.ClientSecret,
+		Endpoint: oauth2.Endpoint{
+			AuthURL:  "https://x.com/i/oauth2/authorize",
+			TokenURL: "https://api.x.com/2/oauth2/token",
+		},
+		RedirectURL: cfg.OAuth.Twitter.CallbackURL,
+		Scopes:      []string{"tweet.read", "users.read", "offline.access"},
+	}
 }
