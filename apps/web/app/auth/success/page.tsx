@@ -13,6 +13,20 @@ function AuthSuccessContent() {
         const handleAuth = async () => {
             try {
                 setAuthLoading(true);
+
+                const params = new URLSearchParams(window.location.search);
+                const accessToken = params.get("access_token");
+                const refreshToken = params.get("refresh_token");
+
+                if (!accessToken || !refreshToken) {
+                    toast.error("No authentication tokens received");
+                    router.push("/login");
+                    return;
+                }
+
+                document.cookie = `access_token=${accessToken}; path=/; max-age=86400; SameSite=Lax`;
+                document.cookie = `refresh_token=${refreshToken}; path=/; max-age=604800; SameSite=Lax`;
+
                 const user = (await api.get("/auth/me")) as any;
                 setAuthUser(user);
 

@@ -27,6 +27,14 @@ func NewAuthHandler(authService service.AuthService, cfg *config.Config) *AuthHa
 	}
 }
 
+// BeginAuth godoc
+// @Summary      Begin OAuth authentication
+// @Description  Initiates OAuth flow with the specified provider (google or twitter)
+// @Tags         Authentication
+// @Param        provider  path  string  true  "OAuth provider (google or twitter)"
+// @Success      302  "Redirects to OAuth provider"
+// @Failure      400  {object}  map[string]string
+// @Router       /auth/{provider} [get]
 func (h *AuthHandler) BeginAuth(c *gin.Context) {
 	provider := c.Param("provider")
 
@@ -39,10 +47,21 @@ func (h *AuthHandler) BeginAuth(c *gin.Context) {
 		return
 	}
 
-	c.Request = c.Request.WithContext(c.Request.Context())
+	q := c.Request.URL.Query()
+	q.Add("provider", provider)
+	c.Request.URL.RawQuery = q.Encode()
+
 	gothic.BeginAuthHandler(c.Writer, c.Request)
 }
 
+// Callback godoc
+// @Summary      OAuth callback handler
+// @Description  Handles the OAuth provider callback and creates user session
+// @Tags         Authentication
+// @Param        provider  path  string  true  "OAuth provider (google or twitter)"
+// @Success      302  "Redirects to frontend with tokens"
+// @Failure      400  {object}  map[string]string
+// @Router       /auth/{provider}/callback [get]
 func (h *AuthHandler) Callback(c *gin.Context) {
 	provider := c.Param("provider")
 
@@ -54,6 +73,10 @@ func (h *AuthHandler) Callback(c *gin.Context) {
 		})
 		return
 	}
+
+	q := c.Request.URL.Query()
+	q.Add("provider", provider)
+	c.Request.URL.RawQuery = q.Encode()
 
 	gothUser, err := gothic.CompleteUserAuth(c.Writer, c.Request)
 	if err != nil {
@@ -83,6 +106,17 @@ func (h *AuthHandler) Callback(c *gin.Context) {
 	c.Redirect(http.StatusTemporaryRedirect, redirectURL)
 }
 
+// RefreshToken godoc
+// @Summary      Refresh access token
+// @Description  Generates a new access token using a valid refresh token
+// @Tags         Authentication
+// @Accept       json
+// @Produce      json
+// @Param        request  body  object{refresh_token=string}  true  "Refresh token request"
+// @Success      200  {object}  map[string]interface{}
+// @Failure      400  {object}  map[string]string
+// @Failure      401  {object}  map[string]string
+// @Router       /auth/refresh [post]
 func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	var req struct {
 		RefreshToken string `json:"refresh_token" binding:"required"`
@@ -121,6 +155,16 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	})
 }
 
+// Logout godoc
+// @Summary      Logout user
+// @Description  Blacklists the current access token to log out the user
+// @Tags         Authentication
+// @Security     BearerAuth
+// @Produce      json
+// @Success      200  {object}  map[string]string
+// @Failure      400  {object}  map[string]string
+// @Failure      500  {object}  map[string]string
+// @Router       /auth/logout [post]
 func (h *AuthHandler) Logout(c *gin.Context) {
 	token, err := extractTokenFromHeader(c)
 	if err != nil {
@@ -146,6 +190,15 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 	})
 }
 
+// GetCurrentUser godoc
+// @Summary      Get current authenticated user
+// @Description  Returns the current user's information from the JWT token
+// @Tags         Authentication
+// @Security     BearerAuth
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Failure      401  {object}  map[string]string
+// @Router       /auth/me [get]
 func (h *AuthHandler) GetCurrentUser(c *gin.Context) {
 	user, exists := middleware.GetCurrentUser(c)
 	if !exists {
