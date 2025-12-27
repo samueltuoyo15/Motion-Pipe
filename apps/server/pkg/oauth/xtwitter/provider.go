@@ -5,7 +5,6 @@ import (
 	"github.com/mrjones/oauth"
 )
 
-// New creates a new X (Twitter) OAuth 1.0a provider using api.x.com endpoints
 func New(clientKey, secret, callbackURL string) goth.Provider {
 	return &Provider{
 		clientKey:    clientKey,

@@ -21,7 +21,6 @@ func Initialize(cfg *config.Config) {
 
 	gothic.Store = store
 
-	// Initialize Google OAuth (using goth)
 	goth.UseProviders(
 		google.New(
 			cfg.OAuth.Google.ClientID,
@@ -31,7 +30,6 @@ func Initialize(cfg *config.Config) {
 		),
 	)
 
-	// Initialize X (Twitter) OAuth 2.0 with PKCE
 	XOAuthConfig = &oauth2.Config{
 		ClientID:     cfg.OAuth.Twitter.ClientID,
 		ClientSecret: cfg.OAuth.Twitter.ClientSecret,
