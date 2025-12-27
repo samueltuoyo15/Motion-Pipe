@@ -29,19 +29,19 @@ func NewAuthHandler(authService service.AuthService, cfg *config.Config) *AuthHa
 
 // BeginAuth godoc
 // @Summary      Begin OAuth authentication
-// @Description  Initiates OAuth flow with the specified provider (google or twitter)
+// @Description  Initiates OAuth flow with Google (Twitter uses separate endpoint)
 // @Tags         Authentication
-// @Param        provider  path  string  true  "OAuth provider (google or twitter)"
+// @Param        provider  path  string  true  "OAuth provider (google only - use /auth/twitter for X)"
 // @Success      302  "Redirects to OAuth provider"
 // @Failure      400  {object}  map[string]string
 // @Router       /auth/{provider} [get]
 func (h *AuthHandler) BeginAuth(c *gin.Context) {
 	provider := c.Param("provider")
 
-	if provider != "google" && provider != "twitter" {
+	if provider != "google" {
 		logger.Warn("Invalid OAuth provider", zap.String("provider", provider))
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Only 'google' and 'twitter' providers are supported",
+			"message": "Only 'google' provider is supported. Use /auth/twitter for X sign-in",
 		})
 		return
 	}
@@ -57,17 +57,17 @@ func (h *AuthHandler) BeginAuth(c *gin.Context) {
 // @Summary      OAuth callback handler
 // @Description  Handles the OAuth provider callback and creates user session
 // @Tags         Authentication
-// @Param        provider  path  string  true  "OAuth provider (google or twitter)"
+// @Param        provider  path  string  true  "OAuth provider (google only - use /auth/twitter/callback for X)"
 // @Success      302  "Redirects to frontend with tokens"
 // @Failure      400  {object}  map[string]string
 // @Router       /auth/{provider}/callback [get]
 func (h *AuthHandler) Callback(c *gin.Context) {
 	provider := c.Param("provider")
 
-	if provider != "google" && provider != "twitter" {
+	if provider != "google" {
 		logger.Warn("Invalid OAuth provider in callback", zap.String("provider", provider))
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Only 'google' and 'twitter' providers are supported",
+			"message": "Only 'google' provider is supported. Use /auth/twitter/callback for X",
 		})
 		return
 	}
