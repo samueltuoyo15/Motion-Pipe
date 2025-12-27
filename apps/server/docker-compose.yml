@@ -111,6 +111,11 @@ services:
       rabbitmq:
         condition: service_healthy
     env_file: .env
+    environment:
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+      - CLICKHOUSE_ADDR=clickhouse:9000
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
     restart: unless-stopped
     networks:
       - motion-pipe-network
@@ -125,6 +130,11 @@ services:
       rabbitmq:
         condition: service_healthy
     env_file: .env
+    environment:
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+      - CLICKHOUSE_ADDR=clickhouse:9000
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
     restart: unless-stopped
     networks:
       - motion-pipe-network
