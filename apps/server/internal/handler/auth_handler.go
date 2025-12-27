@@ -29,22 +29,14 @@ func NewAuthHandler(authService service.AuthService, cfg *config.Config) *AuthHa
 
 // BeginAuth godoc
 // @Summary      Begin OAuth authentication
-// @Description  Initiates OAuth flow with Google (Twitter uses separate endpoint)
+// @Description  Initiates OAuth flow with Google
 // @Tags         Authentication
-// @Param        provider  path  string  true  "OAuth provider (google only - use /auth/twitter for X)"
 // @Success      302  "Redirects to OAuth provider"
 // @Failure      400  {object}  map[string]string
-// @Router       /auth/{provider} [get]
+// @Router       /auth/google [get]
 func (h *AuthHandler) BeginAuth(c *gin.Context) {
-	provider := c.Param("provider")
-
-	if provider != "google" {
-		logger.Warn("Invalid OAuth provider", zap.String("provider", provider))
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Only 'google' provider is supported. Use /auth/twitter for X sign-in",
-		})
-		return
-	}
+	// Since we have specific routes now, this handler is exclusively for Google
+	provider := "google"
 
 	q := c.Request.URL.Query()
 	q.Add("provider", provider)
@@ -57,20 +49,12 @@ func (h *AuthHandler) BeginAuth(c *gin.Context) {
 // @Summary      OAuth callback handler
 // @Description  Handles the OAuth provider callback and creates user session
 // @Tags         Authentication
-// @Param        provider  path  string  true  "OAuth provider (google only - use /auth/twitter/callback for X)"
 // @Success      302  "Redirects to frontend with tokens"
 // @Failure      400  {object}  map[string]string
-// @Router       /auth/{provider}/callback [get]
+// @Router       /auth/google/callback [get]
 func (h *AuthHandler) Callback(c *gin.Context) {
-	provider := c.Param("provider")
-
-	if provider != "google" {
-		logger.Warn("Invalid OAuth provider in callback", zap.String("provider", provider))
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Only 'google' provider is supported. Use /auth/twitter/callback for X",
-		})
-		return
-	}
+	// Since we have specific routes now, this handler is exclusively for Google
+	provider := "google"
 
 	q := c.Request.URL.Query()
 	q.Add("provider", provider)
