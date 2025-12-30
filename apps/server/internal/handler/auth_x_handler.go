@@ -144,14 +144,19 @@ func (h *AuthHandler) XAuthCallback(c *gin.Context) {
 		h.redirectWithError(c, "Authentication failed")
 		return
 	}
-	
+
+	domain := ""
+	if h.config.IsProduction() {
+		domain = h.config.Server.Domain
+	}
+
 	c.SetCookie(
 		"access_token",
 		authResp.Tokens.AccessToken,
 		86400,
 		"/",
-		"",
-		true,
+		domain,
+		h.config.IsProduction(),
 		true,
 	)
 
@@ -160,8 +165,18 @@ func (h *AuthHandler) XAuthCallback(c *gin.Context) {
 		authResp.Tokens.RefreshToken,
 		604800,
 		"/",
-		"",
+		domain,
+		h.config.IsProduction(),
 		true,
+	)
+
+	c.SetCookie(
+		"x-auth-session",
+		"",
+		-1,
+		"/",
+		domain,
+		h.config.IsProduction(),
 		true,
 	)
 

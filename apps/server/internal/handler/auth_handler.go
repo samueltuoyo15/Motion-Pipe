@@ -78,13 +78,18 @@ func (h *AuthHandler) Callback(c *gin.Context) {
 		return
 	}
 
+	domain := ""
+	if h.config.IsProduction() {
+		domain = h.config.Server.Domain
+	}
+
 	c.SetCookie(
 		"access_token",
 		authResponse.Tokens.AccessToken,
 		86400,
 		"/",
-		"",
-		true,
+		domain,
+		h.config.IsProduction(),
 		true,
 	)
 
@@ -93,8 +98,8 @@ func (h *AuthHandler) Callback(c *gin.Context) {
 		authResponse.Tokens.RefreshToken,
 		604800,
 		"/",
-		"",
-		true,
+		domain,
+		h.config.IsProduction(),
 		true,
 	)
 
@@ -175,13 +180,18 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 		return
 	}
 
+	domain := ""
+	if h.config.IsProduction() {
+		domain = h.config.Server.Domain
+	}
+
 	c.SetCookie(
 		"access_token",
 		"",
 		-1,
 		"/",
-		"",
-		true,
+		domain,
+		h.config.IsProduction(),
 		true,
 	)
 
@@ -190,8 +200,8 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 		"",
 		-1,
 		"/",
-		"",
-		true,
+		domain,
+		h.config.IsProduction(),
 		true,
 	)
 
