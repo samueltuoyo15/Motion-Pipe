@@ -32,25 +32,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// @title Motion Pipe API
-// @version 1.0
-// @description AI-powered video generation platform API
-// @termsOfService http://localhost:3000/terms
 
-// @contact.name Motion Pipe Support
-// @contact.email motionpipehq@gmail.com
-// @contact.url http://localhost:3000/support
-
-// @license.name MIT
-// @license.url https://opensource.org/licenses/MIT
-
-// @host localhost:8080
-// @schemes http https
-
-// @securityDefinitions.apikey BearerAuth
-// @in header
-// @name Authorization
-// @description Type "Bearer" followed by a space and JWT token.
 
 func main() {
 	cfg, err := config.Load()

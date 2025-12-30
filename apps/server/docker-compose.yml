@@ -97,10 +97,12 @@ services:
   app-server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: motion-pipe-server
     ports:
       - '8080:8080'
+    volumes:
+      - .:/app
     depends_on:
       postgres:
         condition: service_healthy
@@ -129,9 +131,11 @@ services:
   app-worker:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: motion-pipe-worker
-    command: ["./worker"]
+    command: ["go", "run", "./cmd/worker/main.go"] # Simple run for worker, or configure air for it too
+    volumes:
+      - .:/app
     depends_on:
       rabbitmq:
         condition: service_healthy

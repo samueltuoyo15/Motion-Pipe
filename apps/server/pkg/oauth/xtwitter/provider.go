@@ -1,6 +1,9 @@
 package xtwitter
 
 import (
+	"encoding/json"
+	"errors"
+
 	"github.com/markbates/goth"
 	"github.com/mrjones/oauth"
 )
