@@ -115,6 +115,11 @@ func (m *AuthMiddleware) OptionalAuth() gin.HandlerFunc {
 }
 
 func extractToken(c *gin.Context) (string, error) {
+	token, err := c.Cookie("access_token")
+	if err == nil && token != "" {
+		return token, nil
+	}
+
 	authHeader := c.GetHeader(AuthorizationHeader)
 	if authHeader == "" {
 		return "", errors.New("authorization header is missing")

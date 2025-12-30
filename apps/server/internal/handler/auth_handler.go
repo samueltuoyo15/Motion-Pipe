@@ -35,7 +35,6 @@ func NewAuthHandler(authService service.AuthService, cfg *config.Config) *AuthHa
 // @Failure      400  {object}  map[string]string
 // @Router       /auth/google [get]
 func (h *AuthHandler) BeginAuth(c *gin.Context) {
-	// Since we have specific routes now, this handler is exclusively for Google
 	provider := "google"
 
 	q := c.Request.URL.Query()
@@ -53,7 +52,6 @@ func (h *AuthHandler) BeginAuth(c *gin.Context) {
 // @Failure      400  {object}  map[string]string
 // @Router       /auth/google/callback [get]
 func (h *AuthHandler) Callback(c *gin.Context) {
-	// Since we have specific routes now, this handler is exclusively for Google
 	provider := "google"
 
 	q := c.Request.URL.Query()
@@ -80,12 +78,27 @@ func (h *AuthHandler) Callback(c *gin.Context) {
 		return
 	}
 
-	redirectURL := fmt.Sprintf("%s/auth/success?access_token=%s&refresh_token=%s",
-		h.config.Server.FrontendURL,
+	c.SetCookie(
+		"access_token",
 		authResponse.Tokens.AccessToken,
-		authResponse.Tokens.RefreshToken,
+		86400,
+		"/",
+		"",
+		true,
+		true,
 	)
-	c.Redirect(http.StatusTemporaryRedirect, redirectURL)
+
+	c.SetCookie(
+		"refresh_token",
+		authResponse.Tokens.RefreshToken,
+		604800,
+		"/",
+		"",
+		true,
+		true,
+	)
+
+	c.Redirect(http.StatusTemporaryRedirect, h.config.Server.FrontendURL+"/auth/success")
 }
 
 // RefreshToken godoc
@@ -145,7 +158,7 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 // @Failure      500  {object}  map[string]string
 // @Router       /auth/logout [post]
 func (h *AuthHandler) Logout(c *gin.Context) {
-	token, err := extractTokenFromHeader(c)
+	token, err := c.Cookie("access_token")
 	if err != nil {
 		logger.Warn("Failed to extract token for logout", zap.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -161,6 +174,26 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 		})
 		return
 	}
+
+	c.SetCookie(
+		"access_token",
+		"",
+		-1,
+		"/",
+		"",
+		true,
+		true,
+	)
+
+	c.SetCookie(
+		"refresh_token",
+		"",
+		-1,
+		"/",
+		"",
+		true,
+		true,
+	)
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Logged out successfully",
@@ -190,18 +223,3 @@ func (h *AuthHandler) GetCurrentUser(c *gin.Context) {
 	})
 }
 
-func extractTokenFromHeader(c *gin.Context) (string, error) {
-	authHeader := c.GetHeader("Authorization")
-	if authHeader == "" {
-		return "", errors.New("authorization header is missing")
-	}
-
-	var token string
-	if len(authHeader) > 7 && authHeader[:7] == "Bearer " {
-		token = authHeader[7:]
-	} else {
-		return "", errors.New("invalid authorization header format")
-	}
-
-	return token, nil
-}

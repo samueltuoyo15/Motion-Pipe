@@ -145,13 +145,27 @@ func (h *AuthHandler) XAuthCallback(c *gin.Context) {
 		return
 	}
 	
-	redirectURL := fmt.Sprintf("%s/auth/success?access_token=%s&refresh_token=%s",
-
-		h.config.Server.FrontendURL,
+	c.SetCookie(
+		"access_token",
 		authResp.Tokens.AccessToken,
-		authResp.Tokens.RefreshToken,
+		86400,
+		"/",
+		"",
+		true,
+		true,
 	)
-	c.Redirect(http.StatusTemporaryRedirect, redirectURL)
+
+	c.SetCookie(
+		"refresh_token",
+		authResp.Tokens.RefreshToken,
+		604800,
+		"/",
+		"",
+		true,
+		true,
+	)
+
+	c.Redirect(http.StatusTemporaryRedirect, h.config.Server.FrontendURL+"/auth/success")
 }
 
 func fetchXUserInfo(accessToken string) (*XUser, error) {
