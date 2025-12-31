@@ -1,0 +1,27 @@
+services:
+  postgresql:
+    image: postgres:15-alpine
+    container_name: motion-pipe-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: motionpipe
+      POSTGRES_PASSWORD: motionpipe
+      POSTGRES_DB: motion_pipe
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U motionpipe"]
+      interval: 10s
+      timeout: 6s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - motion-pipe-network
+
+volumes:
+  postgres_data:
+
+networks:
+  motion-pipe-network:
+    driver: bridge

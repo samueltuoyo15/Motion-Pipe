@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS accounts (
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	provider VARCHAR(255) NOT NULL,
+	provider_id VARCHAR(255) NOT NULL,
+	created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS index_accounts_provider_id ON accounts(provider_id)
