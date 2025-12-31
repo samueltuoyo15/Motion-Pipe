@@ -42,7 +42,6 @@ func main() {
 			"message": "Hello, World! from Gin",
 		})
 	})
-
 	logger.Log.Info("Server starting ", zap.String("environment", GO_ENV))
 	server.Run(":8080")
 }
