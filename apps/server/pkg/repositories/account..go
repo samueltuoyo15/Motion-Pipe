@@ -3,8 +3,9 @@ package repositories
 import (
 	"context"
 	"errors"
-	"motion-pipe/pkg/entities"
+	"motion-pipe/pkg/database/entities"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -20,7 +21,8 @@ func (accountRepo *AccountRepository) Register(ctx context.Context, account *ent
 	query := `
 	INSERT INTO accounts (name, email, provider, provider_id, created_at, updated_at
 	VALUES ($1, $2, $3, $4, now(), now())
-	RETURNING id, created_at, updated_at
+	ON CONFLICT (provider, provider_id) DO UPDATE SET name = EXCLUDED.name
+	RETURNING id, created_at, updated_at)
 	`
 
 	err := accountRepo.DB.QueryRow(ctx, query, account.Name, account.Email, account.Provider, account.ProviderID).Scan(&account.ID, &account.CreatedAt, &account.UpdatedAt)
@@ -56,7 +58,7 @@ func (accountRepo *AccountRepository) FindOrCreate(ctx context.Context, account 
 		return existing, nil
 	}
 
-	if errors.Is(err, pgxpool.ErrNoRows) {
+	if errors.Is(err, pgx.ErrNoRows) {
 		if err := accountRepo.Register(ctx, account); err != nil {
 			return nil, err
 		}
