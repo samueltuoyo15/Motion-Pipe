@@ -3,7 +3,7 @@ package repositories
 import (
 	"context"
 	"errors"
-	"motion-pipe/pkg/database/entities"
+	"motion-pipe/entities"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"

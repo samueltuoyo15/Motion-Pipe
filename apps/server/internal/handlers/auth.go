@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"motion-pipe/pkg/oauth"
 	"motion-pipe/pkg/repositories"
 	"net/http"
 
@@ -16,14 +17,8 @@ func NewAuthHandler(accountRepo *repositories.AccountRepository) *AuthHandler {
 }
 
 func (h *AuthHandler) GoogleLogin(c *gin.Context) {
-	var req struct {
-		Name       string `json:"name"`
-		Email      string `json:"email"`
-		ProviderID string `json:"provider_id"`
-	}
+	config := oauth.GoogleConfig()
 
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	authUrl := config.AuthCodeURL("state")
+	c.Redirect(http.StatusTemporaryRedirect, authUrl)
 }

@@ -3,9 +3,12 @@ package main
 import (
 	"context"
 	"log"
+	"motion-pipe/internal/handlers"
 	"motion-pipe/internal/middlewares"
-	"motion-pipe/pkg/database"
+	"motion-pipe/internal/routes"
 	"motion-pipe/pkg/logger"
+	database "motion-pipe/pkg/postgres"
+	"motion-pipe/pkg/repositories"
 	"net/http"
 	"os"
 	"time"
@@ -33,6 +36,9 @@ func main() {
 	defer db.Close()
 	log.Println("Connected to PostgreSQL")
 
+	accountRepo := repositories.NewAccountRepository(db.Pool)
+	authHandler := handlers.NewAuthHandler(accountRepo)
+
 	server.Use(middlewares.CORS([]string{
 		"http://localhost:3000",
 		"https://motion-pipe.vercel.app",
@@ -42,6 +48,8 @@ func main() {
 			"message": "Hello, World! from Gin",
 		})
 	})
+
+	routes.RegisterAuthRoutes(server, authHandler)
 	logger.Log.Info("Server starting ", zap.String("environment", GO_ENV))
 	server.Run(":8080")
 }
