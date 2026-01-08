@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Cpu, Video, Layers, HardDrive, ShieldCheck, Zap } from "lucide-react";
+import { Cpu, Video, Layers, HardDrive, ShieldCheck, Zap, Volume2, VolumeX } from "lucide-react";
 import Header from "./components/header";
 import HowItWorks from "./components/how-it-works";
 import Pricing from "./components/pricing";
@@ -204,6 +204,7 @@ function ProductCard({ label, video, index }: { label: string, video: string, in
   const style = { "--i": index } as React.CSSProperties;
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -227,7 +228,11 @@ function ProductCard({ label, video, index }: { label: string, video: string, in
 
   return (
     <div className="carousel-item" style={style}>
-      <article className="bg-[#09090b] border border-[#27272a] p-3 md:p-5 rounded-none w-full flex flex-col items-start hover:border-[#3b82f6] transition-all group cursor-pointer relative overflow-hidden h-full">
+      <article
+        className="bg-[#09090b] border border-[#27272a] p-3 md:p-5 rounded-none w-full flex flex-col items-start hover:border-[#3b82f6] transition-all group cursor-pointer relative overflow-hidden h-full"
+        onMouseEnter={() => setIsMuted(false)}
+        onMouseLeave={() => setIsMuted(true)}
+      >
         <div className="absolute top-2 right-2 flex items-center gap-1.5 z-10">
           <span className={`w-1.5 h-1.5 rounded-full ${shouldLoad ? 'bg-[#3b82f6] animate-pulse' : 'bg-gray-600'}`} aria-hidden="true" />
           <span className="text-[10px] font-mono text-[#52525b] uppercase tracking-tighter group-hover:text-[#3b82f6]">
@@ -242,11 +247,17 @@ function ProductCard({ label, video, index }: { label: string, video: string, in
             preload="none"
             autoPlay={shouldLoad}
             loop
-            muted
+            muted={isMuted}
             playsInline
             className={`w-full h-full object-cover transition-all duration-500 ${shouldLoad ? 'opacity-70 group-hover:opacity-100' : 'opacity-0'}`}
             aria-label={`${label} motion design example`}
           />
+
+          <div className={`absolute bottom-3 right-3 z-20 transition-all duration-300 ${isMuted ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+            <div className={`p-2 rounded-full backdrop-blur border ${isMuted ? 'bg-black/40 border-white/10' : 'bg-[#3b82f6]/20 border-[#3b82f6]/50'}`}>
+              {isMuted ? <VolumeX size={14} className="text-white/70" /> : <Volume2 size={14} className="text-[#3b82f6]" />}
+            </div>
+          </div>
           {!shouldLoad && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-6 h-6 border-2 border-[#3b82f6] border-t-transparent rounded-full animate-spin opacity-20"></div>

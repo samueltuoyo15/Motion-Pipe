@@ -12,6 +12,6 @@ func RegisterAuthRoutes(router *gin.Engine, authHandler *handlers.AuthHandler) {
 	{
 		auth.GET("/google", authHandler.GoogleLogin)
 
-		auth.GET("/google/callback", authHandler.GoogleLogin)
+		auth.GET("/google/callback", authHandler.GoogleCallback)
 	}
 }

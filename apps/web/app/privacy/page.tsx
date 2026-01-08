@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
                         </ul>
 
                         <h3 className="text-lg font-bold text-white mb-3 mt-6">Content You Upload</h3>
-                        <p className="mb-4">To generate videos, we process:</p>
+                        <p className="mb-4">To generate videos and marketing assets, we process:</p>
                         <ul className="list-disc list-inside space-y-2 ml-4">
                             <li>Product images and assets you upload</li>
                             <li>Product URLs you provide for asset discovery</li>
@@ -86,14 +86,14 @@ export default function PrivacyPolicy() {
 
                         <h3 className="text-lg font-bold text-white mb-3 mt-6">AI Service Providers</h3>
                         <p className="mb-4">
-                            Your content is processed by Google Veo (video generation) and ElevenLabs (voiceover).
+                            Your content is processed by our generative video partners and audio synthesis providers.
                             These providers have their own privacy policies and data retention rules. We use enterprise agreements
                             that prohibit them from training public models on your data.
                         </p>
 
                         <h3 className="text-lg font-bold text-white mb-3 mt-6">Infrastructure Partners</h3>
                         <p className="mb-4">
-                            We use Cloudinary for video storage and optimization, Redis for caching, and Paystack for payments.
+                            We use enterprise-grade cloud storage for video optimization, high-performance caching, and Paystack for payments.
                             These services only access data necessary to perform their function.
                         </p>
 

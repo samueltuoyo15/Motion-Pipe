@@ -15,7 +15,7 @@ export default function TermsOfService() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">Welcome to Motion Pipe</h2>
                         <p>
-                            Motion Pipe is an autonomous video generation platform that creates broadcast-quality product commercials using AI.
+                            Motion Pipe is a marketing automation platform that creates broadcast-ready motion graphics, product advertisements, and marketing images using AI.
                             By using our service, you're agreeing to these terms. We've written them to be as straightforward as possible,
                         </p>
                     </section>
@@ -23,8 +23,8 @@ export default function TermsOfService() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">1. What We Do</h2>
                         <p className="mb-4">
-                            Motion Pipe generates video content based on your product information and creative brief. We use AI models,
-                            including Google Veo 3 for video synthesis, ElevenLabs for voiceover, and proprietary algorithms for asset discovery
+                            Motion Pipe generates video and image marketing content based on your product information and creative brief. We use AI models,
+                            including advanced generative video models for synthesis, neural audio engines for voiceover, and proprietary algorithms for asset discovery
                             and composition.
                         </p>
                         <p>
@@ -42,7 +42,7 @@ export default function TermsOfService() {
                         <ul className="list-disc list-inside space-y-2 ml-4">
                             <li>You don't pay until you approve the final video</li>
                             <li>We're guaranteed payment for completed work you accept</li>
-                            <li>If you reject the video, funds are refunded minus a ₦500 processing fee</li>
+                            <li>If you reject the video, funds are refunded minus a ₦1,000 processing fee</li>
                             <li>Escrow releases automatically 7 days after delivery if no action is taken</li>
                         </ul>
                     </section>
@@ -86,7 +86,7 @@ export default function TermsOfService() {
                     <section>
                         <h2 className="text-2xl font-bold text-white mb-4">6. Service Availability</h2>
                         <p className="mb-4">
-                            We target 99.5% uptime, but we're dependent on third-party AI providers. If Google Veo, ElevenLabs,
+                            We target 99.5% uptime, but we're dependent on third-party AI providers. If our generative models, audio synthesis engines,
                             or our infrastructure partners experience outages, your generation may be delayed.
                         </p>
                         <p>
@@ -102,7 +102,7 @@ export default function TermsOfService() {
                             you have 7 days to approve or reject it.
                         </p>
                         <p>
-                            Rejections incur a ₦500 fee to cover infrastructure costs. Repeated rejections without valid technical
+                            Rejections incur a ₦1,000 fee to cover infrastructure costs. Repeated rejections without valid technical
                             reasons may result in account review.
                         </p>
                     </section>

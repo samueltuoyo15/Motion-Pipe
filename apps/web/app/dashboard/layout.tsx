@@ -109,6 +109,7 @@ export default function DashboardLayout({
                     <div>
                         <p className="px-2 text-xs font-mono text-[#52525b] uppercase tracking-widest mb-2">{t('dash_workspace')}</p>
                         <NavItem href="/dashboard" icon={LayoutTemplate} label={t('dash_home')} onClick={() => setMobileMenuOpen(false)} />
+                        <NavItem href="/dashboard/campaigns" icon={ImageIcon} label="Campaigns" onClick={() => setMobileMenuOpen(false)} />
                         <NavItem href="/dashboard/assets" icon={FolderOpen} label={t('dash_assets')} onClick={() => setMobileMenuOpen(false)} />
                         <NavItem href="/dashboard/tickets" icon={Ticket} label={t('dash_tickets')} onClick={() => setMobileMenuOpen(false)} />
                         <NavItem href="/dashboard/templates" icon={ImageIcon} label={t('dash_templates')} onClick={() => setMobileMenuOpen(false)} />

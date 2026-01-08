@@ -2,7 +2,7 @@ const siteMetadata = {
     title: 'Motion Pipe',
     author: 'Samuel Tuoyo',
     headerTitle: 'Motion Pipe',
-    description: 'Motion Pipe is a platform designed for high-velocity marketing teams and agencies to generate broadcast-ready motion graphics and product advertisements. It provides the core infrastructure for automated motion design, replacing traditional production cycles with a streamlined, API-first workflow.',
+    description: 'Motion Pipe is a marketing automation infrastructure for high-velocity teams. Generate broadcast-ready motion graphics, product advertisements, and high-impact campaign graphics optimized to boost your social media engagement. Scale your creative output without scaling your headcount.',
     theme: 'system',
     siteUrl: 'https://motion-pipe.vercel.app',
     siteLogo: '/logo.png',

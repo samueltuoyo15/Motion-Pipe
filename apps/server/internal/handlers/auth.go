@@ -22,3 +22,7 @@ func (h *AuthHandler) GoogleLogin(c *gin.Context) {
 	authUrl := config.AuthCodeURL("state")
 	c.Redirect(http.StatusTemporaryRedirect, authUrl)
 }
+
+func (h *AuthHandler) GoogleCallback(c *gin.Context) {
+
+}

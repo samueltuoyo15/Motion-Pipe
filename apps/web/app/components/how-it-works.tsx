@@ -10,13 +10,13 @@ export default function HowItWorks() {
             step: 1,
             title: "Submit Context",
             description:
-                "Provide your product link or upload assets. Our smart bots trigger Selenium agents to scrape necessary brand assets automatically.",
+                "Provide your product link or upload assets. Our smart bots trigger automated agents to scrape necessary brand assets automatically.",
         },
         {
             step: 2,
             title: "AI Production",
             description:
-                "Google Veo 3 generates the video while ElevenLabs handles voiceovers. Everything is orchestrated in parallel for speed.",
+                "Advanced AI generates the video while our audio engine handles voiceovers. Everything is orchestrated in parallel for speed.",
         },
         {
             step: 3,
@@ -28,7 +28,7 @@ export default function HowItWorks() {
             step: 4,
             title: "Escrow Release",
             description:
-                "Love it? Release the payment from escrow to download the 4k broadcast-ready file. Hate it? Reject and pay only a ₦500 processing fee.",
+                "Love it? Release the payment from escrow to download the 4k broadcast-ready file. Hate it? Reject and pay only a ₦1,000 processing fee.",
         },
     ];
 
