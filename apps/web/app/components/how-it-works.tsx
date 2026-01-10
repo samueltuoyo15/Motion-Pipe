@@ -16,7 +16,7 @@ export default function HowItWorks() {
             step: 2,
             title: "AI Production",
             description:
-                "Advanced AI generates the video while our audio engine handles voiceovers. Everything is orchestrated in parallel for speed.",
+                "Advanced AI generates the video and high-quality graphic designs while our audio engine handles voiceovers. Everything is orchestrated in parallel for speed.",
         },
         {
             step: 3,

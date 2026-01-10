@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "../context/language-context";
 
 export default function Login() {
@@ -15,6 +16,11 @@ export default function Login() {
             <div className="absolute inset-0 bg-grid-pattern opacity-[0.1] z-0 pointer-events-none" />
 
             <div className="z-10 w-full max-w-sm px-6">
+                <Link href="/" className="flex items-center text-[#a1a1aa] hover:text-white mb-8 transition-colors text-sm font-mono">
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    {t('auth_back_home')}
+                </Link>
+
                 <div className="text-center mb-10">
                     <Link href="/" className="flex justify-center mb-6">
                         <Image src="/logo.png" alt="Motion Pipe Logo" width={64} height={64} className="rounded-xl" />

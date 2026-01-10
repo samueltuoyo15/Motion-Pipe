@@ -46,6 +46,11 @@ export default function Home() {
       icon: "/icons/robot.svg",
       description: t('feat_6_desc'),
     },
+    {
+      title: t('feat_7_title'),
+      icon: "/icons/window.svg",
+      description: t('feat_7_desc'),
+    },
   ];
 
   const technologies = [

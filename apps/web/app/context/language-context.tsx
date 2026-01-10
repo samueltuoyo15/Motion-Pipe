@@ -74,6 +74,8 @@ const translations: Record<Language, Record<string, string>> = {
         feat_5_desc: "WebSocket-powered live progress tracking.",
         feat_6_title: "Smart Asset Discovery",
         feat_6_desc: "Smart crawling agents find brand assets automatically.",
+        feat_7_title: "Startup Graphic Design",
+        feat_7_desc: "Social media ready posts generated for your brand.",
         // Tech
         tech_1: "High-Performance Backend",
         tech_2: "Next-Gen Video AI",
@@ -185,6 +187,8 @@ const translations: Record<Language, Record<string, string>> = {
         feat_5_desc: "Suivi en direct de la progression via WebSocket.",
         feat_6_title: "Découverte Intelligente des Ressources",
         feat_6_desc: "Des agents intelligents trouvent automatiquement les ressources de la marque.",
+        feat_7_title: "Conception Graphique Startup",
+        feat_7_desc: "Publications prêtes pour les réseaux sociaux générées pour votre marque.",
         // Tech
         tech_1: "Backend Haute Performance",
         tech_2: "Vidéo IA Nouvelle Gen",
@@ -296,6 +300,8 @@ const translations: Record<Language, Record<string, string>> = {
         feat_5_desc: "Seguimiento en vivo del progreso impulsado por WebSocket.",
         feat_6_title: "Descubrimiento Inteligente de Activos",
         feat_6_desc: "Agentes inteligentes encuentran activos de marca automáticamente.",
+        feat_7_title: "Diseño Gráfico para Startups",
+        feat_7_desc: "Publicaciones listas para redes sociales generadas para tu marca.",
         // Tech
         tech_1: "Backend de Alto Rendimiento",
         tech_2: "IA de Video Next-Gen",
@@ -407,6 +413,8 @@ const translations: Record<Language, Record<string, string>> = {
         feat_5_desc: "WebSocket-gestütztes Live-Fortschritts-Tracking.",
         feat_6_title: "Intelligente Asset-Suche",
         feat_6_desc: "Intelligente Agenten finden Marken-Assets automatisch.",
+        feat_7_title: "Grafikdesign für Startups",
+        feat_7_desc: "Social-Media-fertige Beiträge für Ihre Marke generiert.",
         // Tech
         tech_1: "Hochleistungs-Backend",
         tech_2: "Next-Gen Video-KI",
